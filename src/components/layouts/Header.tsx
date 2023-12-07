@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ModalOverlay from "../modals/ModalOverlay";
+import JoinModal from "../modals/JoinModal";
 
 const Header = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -15,8 +15,9 @@ const Header = () => {
   return (
     <div>
       <h1>Header</h1>
-      <button onClick={openModal}>로그인</button>
-      {isOpenModal && <ModalOverlay closeModal={closeModal} />}
+      <button>로그인</button>
+      <button onClick={openModal}>회원가입</button>
+      {isOpenModal && <JoinModal closeModal={closeModal} />}
     </div>
   );
 };
