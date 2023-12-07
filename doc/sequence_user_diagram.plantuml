@@ -1,0 +1,57 @@
+@startuml
+actor "User"
+participant "Web Client" as C
+participant "Frontend" as F
+participant "Backend" as B
+participant "Database" as D
+
+User -> C: login 클릭
+activate C
+alt Login 
+C --> User: 로그인(이메일) Modal 렌더링
+  alt 이메일 로그인
+    User -> C: 1. 이메일, 비밀번호 입력
+    C -> F: 아이디(이메일), 비밀번호 전송
+    activate F
+    F -> F: 입력 데이터 검증
+    alt 입력 데이터 검증 에러
+      Loop
+
+        F --> C : 검증 에러 메시지
+        C --> User : Modal 에러 메시지 렌더링
+        User -> C : 아이디(이메일), 비밀번호 입력
+        C -> F: 아이디(이메일), 비밀번호 전송
+      end
+    end
+  else 소셜 로그인
+    User -> C: 2. 소셜 로그인 선택
+    C --> User : 소셜 로그인 항목 렌더링
+    User -> C: 소셜 로그인
+    C -> F: 소셜 로그인 후 Token 전송
+  end
+
+F -> B: 계정 정보 전송
+activate B
+B -> D: 계정 정보 요청
+
+activate D
+D --> B: 계정 정보 응답
+deactivate D
+B -> B: 계정 정보 검증
+B --> F : 로그인 성공 응답
+F --> C : 로그인 성공 응답
+C --> User : 로그인 Modal 종료
+deactivate F
+
+else login fail
+B --> F: 인증 실패 
+deactivate B
+activate F
+F --> C: 인증 에레 메시지 응답
+deactivate F
+C --> User: Modal 인증 에러 alert
+deactivate C
+end
+@enduml
+
+
