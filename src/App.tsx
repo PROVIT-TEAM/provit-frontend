@@ -1,11 +1,13 @@
 import React from "react";
 import Main from "./pages/Main";
-
+import { RecoilRoot } from "recoil";
 function App() {
   return (
-    <div className="App">
-      <Main></Main>
-    </div>
+    <RecoilRoot>
+      <div className="App">
+        <Main></Main>
+      </div>
+    </RecoilRoot>
   );
 }
 

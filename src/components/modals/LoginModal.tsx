@@ -1,15 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ModalOverlay from "./ModalOverlay";
 import axios from "../../api/axios";
 import apis from "../../api/apis";
 
+import { authAtom } from "../../recoil/auth";
+import { useRecoilState } from "recoil";
+
 const LoginModal = ({ closeModal }: any) => {
+  const [auth, setAuth] = useRecoilState(authAtom);
+
+  useEffect(() => {
+    if (auth) closeModal();
+  }, [auth]);
+
   const [user, setUser] = useState({
     username: "",
     password: "",
   });
-
-  const [isAuthenticated, setAuthenticated] = useState(false);
 
   const handleChange = (event: any) => {
     setUser({ ...user, [event.target.name]: event.target.value });
@@ -21,7 +28,7 @@ const LoginModal = ({ closeModal }: any) => {
       const jwtToken = response.data["token"];
       if (jwtToken !== null) {
         sessionStorage.setItem("jwt", jwtToken);
-        setAuthenticated(true);
+        setAuth(true);
       }
     } catch (err) {
       console.log(err);
