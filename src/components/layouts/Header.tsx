@@ -1,23 +1,33 @@
 import React, { useState } from "react";
 import JoinModal from "../modals/JoinModal";
-
+import LoginModal from "../modals/LoginModal";
 const Header = () => {
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenLoginModal, setIspenLoginModal] = useState(false);
+  const [isOpenJoinModal, setIsOpenJoinModal] = useState(false);
 
-  const openModal = () => {
-    setIsOpenModal(true);
+  const openLoginModal = () => {
+    setIspenLoginModal(true);
   };
 
-  const closeModal = () => {
-    setIsOpenModal(false);
+  const closeLoginModal = () => {
+    setIspenLoginModal(false);
+  };
+
+  const openJoinModal = () => {
+    setIsOpenJoinModal(true);
+  };
+
+  const closeJoinModal = () => {
+    setIsOpenJoinModal(false);
   };
 
   return (
     <div>
       <h1>Header</h1>
-      <button>로그인</button>
-      <button onClick={openModal}>회원가입</button>
-      {isOpenModal && <JoinModal closeModal={closeModal} />}
+      <button onClick={openLoginModal}>로그인</button>
+      {isOpenLoginModal && <LoginModal closeModal={closeLoginModal} />}
+      <button onClick={openJoinModal}>회원가입</button>
+      {isOpenJoinModal && <JoinModal closeModal={closeJoinModal} />}
     </div>
   );
 };
