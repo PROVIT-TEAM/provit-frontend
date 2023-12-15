@@ -1,5 +1,10 @@
+/**
+ * component 설명 : 회원가입 버튼 클릭 시 열리는 모달
+ * 작업자 : 김연정
+ * 수정일 : 2023/12/15
+ */
+
 import { Dispatch, SetStateAction } from "react";
-import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { Modal } from "../Modal";
 import kakaoLogin from "../../../assets/img/button/kakao_login.png";
@@ -8,7 +13,7 @@ import googleIcon from "../../../assets/img/button/google_icon.png";
 import { useState } from "react";
 import { EmailLoginModal } from "./EmailLoginModal";
 
-const Title = styled.p`
+const StyledTitle = styled.p`
   text-align: center;
   font-size: 3rem;
   margin-top: 90px;
@@ -20,12 +25,12 @@ const Title = styled.p`
   }
 `;
 
-const LoginContainer = styled.div`
+const StyledLoginContainer = styled.div`
   width: 100%;
   height: auto;
 `;
 
-const EasyText = styled.p`
+const StyledEasyText = styled.p`
   width: 10%;
   padding: 3%;
   text-align: center;
@@ -40,25 +45,25 @@ const EasyText = styled.p`
   }
 `;
 
-const Bar = styled.span`
+const StyledBar = styled.span`
   width: 100%;
   height: 1px;
   display: block;
   background-color: #636366;
 `;
 
-const LogoDiv = styled.div`
+const StyledLogoDiv = styled.div`
   width: 100%;
   height: auto;
   margin-top: -10px;
   float: left;
 `;
 
-const LoginLogo = styled.div`
+const StyledLoginLogo = styled.div`
   padding-bottom: 50px;
 `;
 
-const LoginIcon = styled.div`
+const StyledLoginIcon = styled.div`
   width: 33%;
   margin: 0 auto;
   :last-child {
@@ -72,7 +77,7 @@ const LoginIcon = styled.div`
   }
 `;
 
-const KakaoBtn = styled.button`
+const StyledKakaoBtn = styled.button`
   width: 100%;
   height: 56px;
   margin-bottom: 15px;
@@ -88,7 +93,8 @@ const KakaoBtn = styled.button`
     left: 0%;
   }
 `;
-const EmailBtn = styled.button`
+
+const StyledEmailBtn = styled.button`
   width: 100%;
   height: 56px;
   font-size: 1.1rem;
@@ -98,9 +104,13 @@ const EmailBtn = styled.button`
   border-radius: 10px;
   border: none;
   cursor: pointer;
+  &:hover {
+    transition: all 0.3s;
+    background-color: #3d62db;
+  }
 `;
 
-const CheckText = styled.p`
+const StyledCheckText = styled.p`
   color: #fff;
   font-size: 1.1rem;
   text-align: center;
@@ -110,30 +120,37 @@ const CheckText = styled.p`
   }
 `;
 
-const GotoLogin = styled.span`
+const StyledGotoLogin = styled.span`
   margin-left: 2%;
   color: #446ff6;
   cursor: pointer;
+  &:hover {
+    transition: all 0.3s;
+    color: #4168e5;
+  }
 `;
 
 interface props {
-  setIsOpenMembershipModal: Dispatch<SetStateAction<boolean>>;
-  setIsOpenLoginModal: Dispatch<SetStateAction<boolean>>;
+  setIsOpenMembershipModal?: Dispatch<SetStateAction<boolean>>;
+  setIsOpenLoginModal?: Dispatch<SetStateAction<boolean>>;
+  setIsOpenJoinModal?: Dispatch<SetStateAction<boolean>>;
 }
-export function MembershipModal({
+export function JoinModal({
   setIsOpenMembershipModal,
   setIsOpenLoginModal,
+  setIsOpenJoinModal,
 }: props) {
   const [isOpenEmailLoginModal, setIsOpenEmailLoginModal] =
     useState<boolean>(false);
 
   const closeModal = () => {
-    setIsOpenMembershipModal(false);
+    if (setIsOpenMembershipModal) setIsOpenMembershipModal(false);
+    if (setIsOpenJoinModal) setIsOpenJoinModal(false);
   };
 
   const goToLogin = () => {
-    setIsOpenMembershipModal(false);
-    setIsOpenLoginModal(true);
+    if (setIsOpenMembershipModal) setIsOpenMembershipModal(false);
+    if (setIsOpenLoginModal) setIsOpenLoginModal(true);
   };
 
   const gotoEmail = () => {
@@ -152,27 +169,29 @@ export function MembershipModal({
         minleft="36%"
         onClose={closeModal}
       >
-        <Title>PROVIT</Title>
-        <LoginContainer>
-          <LogoDiv>
-            <LoginLogo>
-              <KakaoBtn>
+        <StyledTitle>PROVIT</StyledTitle>
+        <StyledLoginContainer>
+          <StyledLogoDiv>
+            <StyledLoginLogo>
+              <StyledKakaoBtn>
                 <img src={kakaoLogin} /> 카카오로 시작하기
-              </KakaoBtn>
-              <EmailBtn onClick={gotoEmail}>이메일로 가입하기</EmailBtn>
-            </LoginLogo>
-            <Bar></Bar>
-            <EasyText>또는</EasyText>
-          </LogoDiv>
-          <LoginIcon>
+              </StyledKakaoBtn>
+              <StyledEmailBtn onClick={gotoEmail}>
+                이메일로 가입하기
+              </StyledEmailBtn>
+            </StyledLoginLogo>
+            <StyledBar></StyledBar>
+            <StyledEasyText>또는</StyledEasyText>
+          </StyledLogoDiv>
+          <StyledLoginIcon>
             <img src={naverIcon} />
             <img src={googleIcon} />
-          </LoginIcon>
-          <CheckText>
+          </StyledLoginIcon>
+          <StyledCheckText>
             이미 회원이신가요?
-            <GotoLogin onClick={goToLogin}>로그인하기</GotoLogin>
-          </CheckText>
-        </LoginContainer>
+            <StyledGotoLogin onClick={goToLogin}>로그인하기</StyledGotoLogin>
+          </StyledCheckText>
+        </StyledLoginContainer>
       </Modal>
       {isOpenEmailLoginModal && (
         <EmailLoginModal setIsOpenEmailLoginModal={setIsOpenEmailLoginModal} />
