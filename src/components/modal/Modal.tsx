@@ -2,7 +2,7 @@ import { Dispatch, ReactNode, SetStateAction } from "react";
 import styled from "styled-components";
 import closeModalBtn from "../../assets/img/button/closeBtn.png";
 
-const ModalContainer = styled.div<styleProps>`
+const StyledModalContainer = styled.div<styleProps>`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   position: absolute;
@@ -19,11 +19,14 @@ const ModalContainer = styled.div<styleProps>`
   }
 `;
 
-const CloseBtn = styled.button`
+const StyledCloseBtn = styled.button`
   float: right;
   font-size: 1.2rem;
   border: none;
   background-color: transparent;
+  img {
+    cursor: pointer;
+  }
 `;
 
 interface styleProps {
@@ -61,7 +64,7 @@ export function Modal({
   };
 
   return (
-    <ModalContainer
+    <StyledModalContainer
       width={width}
       height={height}
       top={top}
@@ -70,10 +73,10 @@ export function Modal({
       minleft={minleft}
       minheight={minheight}
     >
-      <CloseBtn onClick={closeModal}>
+      <StyledCloseBtn onClick={closeModal}>
         <img src={closeModalBtn} />
-      </CloseBtn>
+      </StyledCloseBtn>
       {children}
-    </ModalContainer>
+    </StyledModalContainer>
   );
 }

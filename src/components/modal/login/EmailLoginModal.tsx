@@ -1,17 +1,21 @@
+/**
+ * component 설명 : 회원가입 모달에서 이메일로 가입하기 버튼 클릭 시 열리는 모달
+ * 작업자 : 김연정
+ * 수정일 : 2023/12/15
+ */
+
 import { Dispatch, SetStateAction, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Modal } from "../Modal";
-import kakaoIcon from "../../../assets/img/button/kakao_icon.png";
-import naverIcon from "../../../assets/img/button/naver_icon.png";
-import googleIcon from "../../../assets/img/button/google_icon.png";
+import successCheckImg from "../../../assets/img/button/success_check.png";
 import { useEffect } from "react";
 
-const Title = styled.p`
+const StyledTitle = styled.p`
   text-align: center;
   font-size: 1rem;
   margin-left: 5%;
-  margin-top: 10px;
+  margin-top: 5px;
   margin-bottom: 40px;
   color: #fff;
   @media (max-width: 1600px) {
@@ -20,34 +24,28 @@ const Title = styled.p`
   }
 `;
 
-const LoginContainer = styled.p`
+const StyledLoginContainer = styled.p`
   width: 100%;
   height: auto;
 `;
-const CheckMessage = styled.p`
-  /* text-align: center; */
-  font-size: 1.1rem;
-  margin-bottom: 15px;
-  margin-left: 5.3%;
-`;
-const GoLogin = styled(Link)`
-  color: blue;
-`;
-const LoginDiv = styled.div`
+
+const StyledLoginDiv = styled.div`
   width: 95%;
   height: auto;
   margin: 0 auto;
   margin-bottom: 20px;
 `;
-const InputTitle = styled.p`
-  color: #8e8e93;
+const StyledInputTitle = styled.p`
+  color: ${(props) => props.color};
   margin-bottom: 5px;
 `;
-const LoginInput = styled.input`
+
+const StyledEmailInput = styled.input`
   height: 48px;
-  width: 95%;
+  width: 65.5%;
   font-size: 0.9rem;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
+  margin-right: 5%;
   border-radius: 8px;
   border: 1px solid #666;
   background-color: #3a3a3c;
@@ -58,12 +56,50 @@ const LoginInput = styled.input`
     color: #3a3a3c;
   }
 `;
-const SelectBoxDiv = styled.div`
+
+const SuccessCheck = styled.img`
+  margin-left: -48px;
+  margin-right: 9.5%;
+`;
+
+const StyledCertificationBtn = styled.button`
+  /* margin-left: 4%; */
+  height: 47px;
+  width: 24%;
+  border-radius: 10px;
+  background-color: #446ff6;
+  border: none;
+  /* padding: 0px 15px; */
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  &:hover {
+    transition: all 0.3s;
+    background-color: #3d62db;
+  }
+`;
+
+const StyledLoginInput = styled.input`
+  height: 48px;
+  width: 95%;
+  font-size: 0.9rem;
+  margin-bottom: 30px;
+  border-radius: 8px;
+  border: 1px solid #666;
+  background-color: #3a3a3c;
+  padding-left: 5%;
+  border: none;
+  color: #fff;
+  ::placeholder {
+    color: #3a3a3c;
+  }
+`;
+const StyledSelectBoxDiv = styled.div`
   :nth-of-type(2) {
     margin: 0 3.5%;
   }
 `;
-const Select = styled.select`
+const StyledSelect = styled.select`
   width: 31%;
   height: 45px;
   margin: 0 auto;
@@ -76,83 +112,36 @@ const Select = styled.select`
   padding-left: 4%;
   /* margin-right: 3%; */
 `;
+
 const LoginBtn = styled.button`
   width: 100%;
   height: 56px;
-  background-color: #4529fc;
+  background-color: #446ff6;
   color: #fff;
   border: none;
   border-radius: 5px;
+  margin-top: 45px;
+  font-size: 1rem;
   cursor: pointer;
-  :hover {
+  &:hover {
     transition: all 0.3s;
-    background-color: #3221a3;
+    background-color: #3d62db;
   }
 `;
 
-const OtherLogin = styled.div`
-  width: 50%;
-  margin: 0 auto;
-  @media (max-width: 1600px) {
-    width: 54%;
-  }
+const StyledRadiobox = styled.input`
+  margin-right: 3%;
+  margin-top: 13px;
+  display: inline-block;
+  /* height: 40px; */
 `;
 
-const Other = styled.p`
-  float: left;
-  color: #8e8e93;
-  margin: 10px 9px;
-  cursor: pointer;
-`;
-
-const EasyLogin = styled.div`
-  width: 98%;
-  height: auto;
-  margin: 100px auto;
-`;
-
-const EasyText = styled.p`
-  width: 22%;
-  padding: 3%;
-  text-align: center;
-  color: #636366;
-  position: relative;
-  left: 35.5%;
-  top: -20px;
-  background-color: #2c2c2e;
-  @media (max-width: 1600px) {
-    width: 24%;
-    left: 34.5%;
-  }
-`;
-
-const Bar = styled.span`
-  width: 100%;
-  height: 1px;
-  display: block;
-  background-color: #636366;
-`;
-
-const LogoDiv = styled.div`
-  width: 100%;
-  height: 50px;
-  margin-top: -10px;
-  float: left;
-`;
-
-const LoginLogo = styled.div`
-  width: 60%;
-  height: 50px;
-  margin: 0 auto;
-  img {
-    margin-right: 8%;
-    cursor: pointer;
-  }
-  :first-of-type {
-    margin-left: 7%;
-  }
-  @media (max-width: 1600px) {
-    width: 64%;
+const StyledCheckText = styled.span`
+  color: #fff;
+  line-height: 10px;
+  font-weight: lighter;
+  span {
+    color: #446ff6;
   }
 `;
 
@@ -162,6 +151,27 @@ interface props {
 export function EmailLoginModal({ setIsOpenEmailLoginModal }: props) {
   const currentYear = new Date().getFullYear();
   const [yearOption, setYearOption] = useState<number[]>([]);
+  const [monthOption, setMonthOption] = useState<number[]>([]);
+  const [dayOption, setDayOption] = useState<number[]>([]);
+  const [certificationText, setCertificationText] =
+    useState<string>("인증받기");
+  const [isSuccessCheck, setIsSuccessCheck] = useState<boolean>(false);
+  const [checkEmail, setCheckEmail] = useState<string>("이메일");
+  const [checkPassword, setCheckPassword] = useState<string>("비밀번호");
+  const [checkName, setCheckName] = useState<string>("이름");
+  const [checkBirth, setCheckBirth] = useState<string>("생년월일");
+  const [emailValue, setEmailValue] = useState<string>("");
+  const [passwordValue, setPasswordValue] = useState<string>("");
+  const [nameValue, setNameValue] = useState<string>("");
+  const [checkEmailColor, setCheckEmailColor] = useState<string>("#8e8e93");
+  const [checkPasswordColor, setCheckPasswordColor] =
+    useState<string>("#8e8e93");
+  const [checkNameColor, setCheckNameColor] = useState<string>("#8e8e93");
+  const [checkBirthColor, setCheckBirthColor] = useState<string>("#8e8e93");
+  const [isValidPassword, setIsValidPassword] = useState<boolean>(false);
+  const [selectYearValue, setSelectYearValue] = useState<string>("년");
+  const [selectMonthValue, setSelectMonthValue] = useState<string>("월");
+  const [selectDayValue, setSelectDayValue] = useState<string>("일");
 
   const closeModal = () => {
     setIsOpenEmailLoginModal(false);
@@ -169,7 +179,16 @@ export function EmailLoginModal({ setIsOpenEmailLoginModal }: props) {
 
   useEffect(() => {
     getYear();
+    getMonth();
+    getDate();
   }, []);
+
+  useEffect(() => {
+    if (isSuccessCheck) {
+      setCheckEmail("이메일");
+      setCheckEmailColor("#8e8e93");
+    }
+  }, [isSuccessCheck]);
 
   const getYear = () => {
     let year = [];
@@ -179,7 +198,119 @@ export function EmailLoginModal({ setIsOpenEmailLoginModal }: props) {
     setYearOption(year);
   };
 
-  console.log(yearOption);
+  const getMonth = () => {
+    let month = [];
+    for (let i = 1; i <= 12; i++) {
+      month.push(i);
+    }
+    setMonthOption(month);
+  };
+
+  const getDate = () => {
+    let day = [];
+    for (let i = 1; i <= 31; i++) {
+      day.push(i);
+    }
+    setDayOption(day);
+  };
+
+  /**
+   * 인증 버튼 텍스트 변경 & 인증 성공 체크 이미지 상태 변경 함수
+   */
+  const handleCertification = () => {
+    setCertificationText("재발송");
+    if (certificationText === "인증받기") {
+      if (emailValue === "") {
+        setCheckEmail("이메일을 입력해주세요");
+        setCheckEmailColor("#FF2828");
+        setCertificationText("인증받기");
+      } else {
+        setIsSuccessCheck(true);
+      }
+    }
+  };
+
+  /**
+   * 모든 항목 잘 입력했는지 체크 함수
+   */
+  const isValidInput = () => {
+    if (emailValue === "") {
+      setCheckEmail("이메일을 입력해주세요");
+      setCheckEmailColor("#FF2828");
+    } else if (certificationText === "인증받기") {
+      setCheckEmail("이메일 인증을 완료해주세요");
+      setCheckEmailColor("#FF2828");
+    } else {
+      setCheckEmail("이메일");
+      setCheckEmailColor("#8e8e93");
+    }
+    if (passwordValue === "") {
+      setCheckPassword("비밀번호를 입력해주세요");
+      setCheckPasswordColor("#FF2828");
+    } else if (isValidPassword === false) {
+      setCheckPassword("영문, 슛저 조합 8자 이상 입력해주세요.");
+      setCheckPasswordColor("#FF2828");
+    } else {
+      setCheckPassword("비밀번호");
+      setCheckPasswordColor("#8e8e93");
+    }
+    if (nameValue === "") {
+      setCheckName("이름을 입력해주세요");
+      setCheckNameColor("#FF2828");
+    } else {
+      setCheckName("이름");
+      setCheckNameColor("#8e8e93");
+    }
+    if (
+      selectYearValue === "년" ||
+      selectMonthValue === "월" ||
+      selectDayValue === "일"
+    ) {
+      setCheckBirth("생년월일을 선택해주세요");
+      setCheckBirthColor("#FF2828");
+    } else {
+      setCheckBirth("생년월일");
+      setCheckBirthColor("#8e8e93");
+    }
+  };
+
+  /**
+   * 가입하기 버튼 클릭 시 실행되는 함수
+   */
+  const handleJoinButton = () => {
+    isValidInput();
+  };
+
+  const handleEmail = (event: any) => {
+    setEmailValue(event.target.value);
+    // console.log(event.target.value);
+  };
+
+  const handlePassword = (event: any) => {
+    setPasswordValue(event.target.value);
+    // console.log(event.target.value);
+
+    // 영문, 숫자 조합 8자 이상인지 체크
+    const isValidPassword = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(passwordValue);
+    setIsValidPassword(isValidPassword);
+  };
+
+  const handleName = (event: any) => {
+    setNameValue(event.target.value);
+    // console.log(event.target.value);
+  };
+
+  const handleYear = (event: any) => {
+    setSelectYearValue(event.target.value);
+  };
+
+  const handleMonth = (event: any) => {
+    setSelectMonthValue(event.target.value);
+  };
+
+  const handleDay = (event: any) => {
+    setSelectDayValue(event.target.value);
+  };
 
   return (
     <>
@@ -193,42 +324,74 @@ export function EmailLoginModal({ setIsOpenEmailLoginModal }: props) {
         minleft="36%"
         onClose={closeModal}
       >
-        <Title>회원가입</Title>
-        <LoginContainer>
-          <LoginDiv>
-            <InputTitle>이메일</InputTitle>
-            <LoginInput
+        <StyledTitle>회원가입</StyledTitle>
+        <StyledLoginContainer>
+          <StyledLoginDiv>
+            <StyledInputTitle color={checkEmailColor}>
+              {checkEmail}
+            </StyledInputTitle>
+            <StyledEmailInput
               type="text"
               placeholder="이메일을 입력해주세요."
-            ></LoginInput>
-            <InputTitle>비밀번호</InputTitle>
-            <LoginInput
+              onChange={handleEmail}
+            />
+            {isSuccessCheck && <SuccessCheck src={successCheckImg} />}
+            <StyledCertificationBtn onClick={handleCertification}>
+              {certificationText}
+            </StyledCertificationBtn>
+            <StyledInputTitle color={checkPasswordColor}>
+              {checkPassword}
+            </StyledInputTitle>
+            <StyledLoginInput
               type="password"
               placeholder="비밀번호를 입력해주세요."
-            ></LoginInput>
-            <InputTitle>이름</InputTitle>
-            <LoginInput type="text" placeholder="홍길동"></LoginInput>
-            <InputTitle>생년월일</InputTitle>
-            <SelectBoxDiv>
-              <Select>
+              onChange={handlePassword}
+            ></StyledLoginInput>
+            <StyledInputTitle color={checkNameColor}>
+              {checkName}
+            </StyledInputTitle>
+            <StyledLoginInput
+              type="text"
+              placeholder="홍길동"
+              onChange={handleName}
+            ></StyledLoginInput>
+            <StyledInputTitle color={checkBirthColor}>
+              {checkBirth}
+            </StyledInputTitle>
+            <StyledSelectBoxDiv>
+              <StyledSelect onChange={handleYear} value={selectYearValue}>
+                <option value="년">년</option>
                 {yearOption.map((item: number) => (
-                  <option>{item}</option>
+                  <option key={item} value={item.toString()}>
+                    {item}
+                  </option>
                 ))}
-              </Select>
-              <Select>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-              </Select>
-              <Select>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-              </Select>
-            </SelectBoxDiv>
-            <LoginBtn>가입하기</LoginBtn>
-          </LoginDiv>
-        </LoginContainer>
+              </StyledSelect>
+              <StyledSelect onChange={handleMonth}>
+                <option value="월">월</option>
+                {monthOption.map((item: number) => (
+                  <option key={item} value={item.toString()}>
+                    {item}
+                  </option>
+                ))}
+              </StyledSelect>
+              <StyledSelect onChange={handleDay}>
+                <option value="일">일</option>
+                {dayOption.map((item: number) => (
+                  <option key={item} value={item.toString()}>
+                    {item}
+                  </option>
+                ))}
+              </StyledSelect>
+            </StyledSelectBoxDiv>
+            <StyledRadiobox type="radio" />
+            <StyledCheckText>
+              프루빗의 <span>서비스 이용 약관</span>과
+              <span>개인정보 보호 정책</span>을 읽었으며 동의합니다.
+            </StyledCheckText>
+            <LoginBtn onClick={handleJoinButton}>가입하기</LoginBtn>
+          </StyledLoginDiv>
+        </StyledLoginContainer>
       </Modal>
     </>
   );
