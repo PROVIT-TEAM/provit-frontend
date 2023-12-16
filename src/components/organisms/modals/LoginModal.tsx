@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import ModalOverlay from "./ModalOverlay";
-import axios from "../../api/axios";
-import apis from "../../api/apis";
-
-import { authAtom } from "../../recoil/auth";
+import axios from "../../../api/axios";
+import apis from "../../../api/apis";
+import { authAtom } from "../../../recoil/auth";
 import { useRecoilState } from "recoil";
+import LoginForm from "../LoginForm";
+import Text from "../../atoms/Text";
+import Flex from "../../layouts/Flex";
+import Box from "../../layouts/Box";
 
 const LoginModal = ({ closeModal }: any) => {
   const [auth, setAuth] = useRecoilState(authAtom);
@@ -37,22 +40,13 @@ const LoginModal = ({ closeModal }: any) => {
 
   return (
     <ModalOverlay closeModal={closeModal}>
-      <div>
-        <div>
-          <input name="username" placeholder="아이디" onChange={handleChange} />
-        </div>
-        <div>
-          <input
-            type="password"
-            name="password"
-            placeholder="비밀번호"
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <button onClick={login}>로그인</button>
-        </div>
-      </div>
+      <Flex flexDirection="column" justifyContent="center" alignItems="center">
+        <Box marginTop="64px" marginBottom="64px">
+          <Text variant="large">PROVIT</Text>
+        </Box>
+
+        <LoginForm></LoginForm>
+      </Flex>
     </ModalOverlay>
   );
 };

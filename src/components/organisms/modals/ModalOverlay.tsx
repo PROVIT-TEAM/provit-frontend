@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { styled } from "styled-components";
+import Icon from "../../atoms/Icon";
 
 const StyledModalContainer = styled.div`
   position: fixed;
@@ -17,18 +18,18 @@ const StyledModalWrap = styled.div`
   top: 50%;
   left: 50%;
 
-  width: 50vw;
-  height: 50vh;
+  width: 360px;
+  height: 640px;
+  border-radius: 8px 8px;
   transform: translate(-50%, -50%);
-  border-radius: 13px;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
-  background-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
+  background-color: #2c2c2e;
 `;
 
 const StyledModalCloseButton = styled.div`
   position: absolute;
-  right: 10px;
-  top: 10px;
+  left: 312px;
+  top: 24px;
 `;
 
 const ModalOverlay = ({ closeModal, children }: any) => {
@@ -43,7 +44,9 @@ const ModalOverlay = ({ closeModal, children }: any) => {
   return (
     <StyledModalContainer ref={modalRef} onClick={modalOutSideClick}>
       <StyledModalWrap>
-        <StyledModalCloseButton onClick={closeModal}>X</StyledModalCloseButton>
+        <StyledModalCloseButton onClick={closeModal}>
+          <Icon iconName="close" />
+        </StyledModalCloseButton>
         {children}
       </StyledModalWrap>
     </StyledModalContainer>

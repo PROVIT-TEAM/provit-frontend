@@ -1,0 +1,12 @@
+:root {
+  --logo-width: 162px;
+  --logo-height: 54px;
+  --logo-fontsize: 45px;
+  --logo-bold: 400;
+
+  --modal-width: 421px;
+  --modal-height: 604px;
+  --modal-color: #ffffff;
+
+  --title1: 40px;
+}

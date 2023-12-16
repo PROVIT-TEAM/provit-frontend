@@ -1,11 +1,18 @@
 import React from "react";
-import Header from "../components/layouts/Header";
+import HeaderContainer from "../containers/HeaderContainer";
+import { styled } from "styled-components";
+
+const StyledContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+`;
 
 const Main = () => {
   return (
-    <div>
-      <Header></Header>
-    </div>
+    <StyledContainer>
+      <HeaderContainer></HeaderContainer>
+    </StyledContainer>
   );
 };
 
