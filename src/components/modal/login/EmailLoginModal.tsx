@@ -10,6 +10,9 @@ import styled from "styled-components";
 import { Modal } from "../Modal";
 import successCheckImg from "../../../assets/img/button/success_check.png";
 import { useEffect } from "react";
+import { CommonInputBox } from "../../commonInput/CommonInputBox";
+import { ActiveButton } from "../../commonButton/ActiveButton";
+import { InActiveButton } from "../../commonButton/InActiveButton";
 
 const StyledTitle = styled.p`
   text-align: center;
@@ -40,60 +43,11 @@ const StyledInputTitle = styled.p`
   margin-bottom: 5px;
 `;
 
-const StyledEmailInput = styled.input`
-  height: 48px;
-  width: 65.5%;
-  font-size: 0.9rem;
-  margin-bottom: 30px;
-  margin-right: 5%;
-  border-radius: 8px;
-  border: 1px solid #666;
-  background-color: #3a3a3c;
-  padding-left: 5%;
-  border: none;
-  color: #fff;
-  ::placeholder {
-    color: #3a3a3c;
-  }
-`;
-
-const SuccessCheck = styled.img`
+const StyledSuccessCheck = styled.img`
   margin-left: -48px;
   margin-right: 9.5%;
 `;
 
-const StyledCertificationBtn = styled.button`
-  /* margin-left: 4%; */
-  height: 47px;
-  width: 24%;
-  border-radius: 10px;
-  background-color: #446ff6;
-  border: none;
-  /* padding: 0px 15px; */
-  color: #fff;
-  font-size: 1rem;
-  cursor: pointer;
-  &:hover {
-    transition: all 0.3s;
-    background-color: #3d62db;
-  }
-`;
-
-const StyledLoginInput = styled.input`
-  height: 48px;
-  width: 95%;
-  font-size: 0.9rem;
-  margin-bottom: 30px;
-  border-radius: 8px;
-  border: 1px solid #666;
-  background-color: #3a3a3c;
-  padding-left: 5%;
-  border: none;
-  color: #fff;
-  ::placeholder {
-    color: #3a3a3c;
-  }
-`;
 const StyledSelectBoxDiv = styled.div`
   :nth-of-type(2) {
     margin: 0 3.5%;
@@ -113,22 +67,6 @@ const StyledSelect = styled.select`
   /* margin-right: 3%; */
 `;
 
-const LoginBtn = styled.button`
-  width: 100%;
-  height: 56px;
-  background-color: #446ff6;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  margin-top: 45px;
-  font-size: 1rem;
-  cursor: pointer;
-  &:hover {
-    transition: all 0.3s;
-    background-color: #3d62db;
-  }
-`;
-
 const StyledRadiobox = styled.input`
   margin-right: 3%;
   margin-top: 13px;
@@ -140,6 +78,7 @@ const StyledCheckText = styled.span`
   color: #fff;
   line-height: 10px;
   font-weight: lighter;
+
   span {
     color: #446ff6;
   }
@@ -172,10 +111,29 @@ export function EmailLoginModal({ setIsOpenEmailLoginModal }: props) {
   const [selectYearValue, setSelectYearValue] = useState<string>("년");
   const [selectMonthValue, setSelectMonthValue] = useState<string>("월");
   const [selectDayValue, setSelectDayValue] = useState<string>("일");
+  const [signBtnState, setSignBtnState] = useState<boolean>(false);
 
-  const closeModal = () => {
-    setIsOpenEmailLoginModal(false);
-  };
+  useEffect(() => {
+    if (
+      emailValue !== "" &&
+      passwordValue !== "" &&
+      nameValue !== "" &&
+      selectYearValue !== "년" &&
+      selectMonthValue !== "월" &&
+      selectDayValue !== "일"
+    ) {
+      setSignBtnState(true);
+    } else {
+      setSignBtnState(false);
+    }
+  }, [
+    emailValue,
+    passwordValue,
+    nameValue,
+    selectYearValue,
+    selectMonthValue,
+    selectDayValue,
+  ]);
 
   useEffect(() => {
     getYear();
@@ -312,49 +270,60 @@ export function EmailLoginModal({ setIsOpenEmailLoginModal }: props) {
     setSelectDayValue(event.target.value);
   };
 
+  const closeModal = () => {
+    setIsOpenEmailLoginModal(false);
+  };
+
   return (
     <>
       <Modal
         width="18.75%"
-        minwidth="22.5%"
+        $minWidth="22.5%"
         height="640px"
-        minheight="620px"
-        top="13%"
-        left="39%"
-        minleft="36%"
+        $minHeight="620px"
+        $top="13%"
+        $left="39%"
+        $minLeft="36%"
         onClose={closeModal}
       >
         <StyledTitle>회원가입</StyledTitle>
         <StyledLoginContainer>
           <StyledLoginDiv>
-            <StyledInputTitle color={checkEmailColor}>
-              {checkEmail}
-            </StyledInputTitle>
-            <StyledEmailInput
+            <CommonInputBox
+              text={checkEmail}
+              color={checkEmailColor}
               type="text"
               placeholder="이메일을 입력해주세요."
               onChange={handleEmail}
+              $width="65.5%"
+              value={emailValue}
             />
-            {isSuccessCheck && <SuccessCheck src={successCheckImg} />}
-            <StyledCertificationBtn onClick={handleCertification}>
-              {certificationText}
-            </StyledCertificationBtn>
-            <StyledInputTitle color={checkPasswordColor}>
-              {checkPassword}
-            </StyledInputTitle>
-            <StyledLoginInput
+            {isSuccessCheck && <StyledSuccessCheck src={successCheckImg} />}
+            <ActiveButton
+              $width="24%"
+              $height="47px"
+              $bgColor="#446ff6"
+              color="#fff"
+              $marginLeft="5%"
+              text={certificationText}
+              onClick={handleCertification}
+            />
+            <CommonInputBox
+              text={checkPassword}
+              color={checkPasswordColor}
               type="password"
               placeholder="비밀번호를 입력해주세요."
               onChange={handlePassword}
-            ></StyledLoginInput>
-            <StyledInputTitle color={checkNameColor}>
-              {checkName}
-            </StyledInputTitle>
-            <StyledLoginInput
+              value={passwordValue}
+            />
+            <CommonInputBox
+              text={checkName}
+              color={checkNameColor}
               type="text"
               placeholder="홍길동"
               onChange={handleName}
-            ></StyledLoginInput>
+              value={nameValue}
+            />
             <StyledInputTitle color={checkBirthColor}>
               {checkBirth}
             </StyledInputTitle>
@@ -389,7 +358,23 @@ export function EmailLoginModal({ setIsOpenEmailLoginModal }: props) {
               프루빗의 <span>서비스 이용 약관</span>과
               <span>개인정보 보호 정책</span>을 읽었으며 동의합니다.
             </StyledCheckText>
-            <LoginBtn onClick={handleJoinButton}>가입하기</LoginBtn>
+            {signBtnState ? (
+              <ActiveButton
+                text="가입하기"
+                onClick={handleJoinButton}
+                $bgColor="#446FF6"
+                color="#fff"
+                $hoverColor="#4168e5"
+                $marginTop="45px"
+              />
+            ) : (
+              <InActiveButton
+                text="가입하기"
+                $bgColor="#636366"
+                color="#8E8E93"
+                $marginTop="45px"
+              />
+            )}
           </StyledLoginDiv>
         </StyledLoginContainer>
       </Modal>

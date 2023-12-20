@@ -13,10 +13,14 @@ import googleIcon from "../../../assets/img/button/google_icon.png";
 import { useState } from "react";
 import { JoinModal } from "./JoinModal";
 import { FindPasswordModal } from "./FindPasswordModal";
+import { CommonInputBox } from "../../commonInput/CommonInputBox";
+import { ActiveButton } from "../../commonButton/ActiveButton";
+import { useEffect } from "react";
+import { InActiveButton } from "../../commonButton/InActiveButton";
 
 const StyledTitle = styled.p`
   text-align: center;
-  font-size: 3rem;
+  font-size: 2rem;
   margin-top: 60px;
   margin-bottom: 70px;
   color: #fff;
@@ -38,41 +42,6 @@ const StyledLoginDiv = styled.div`
   margin-bottom: 20px;
 `;
 
-const StyledInputTitle = styled.p`
-  color: ${(props) => props.color};
-  margin-bottom: 5px;
-`;
-
-const StyledLoginInput = styled.input`
-  height: 48px;
-  width: 95%;
-  font-size: 0.9rem;
-  margin-bottom: 25px;
-  border-radius: 8px;
-  border: 1px solid #666;
-  background-color: #3a3a3c;
-  padding-left: 5%;
-  border: none;
-  color: #fff;
-  ::placeholder {
-    color: #3a3a3c;
-  }
-`;
-
-const StyledLoginBtn = styled.button`
-  width: 100%;
-  height: 56px;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: #446ff6;
-  &:hover {
-    transition: all 0.3s;
-    background-color: #4168e5;
-  }
-`;
-
 const StyledOtherLogin = styled.div`
   width: 50%;
   margin: 0 auto;
@@ -86,6 +55,10 @@ const StyledOther = styled.p`
   color: #8e8e93;
   margin: 10px 9px;
   cursor: pointer;
+  &:hover {
+    transition: all 0.3s;
+    color: #707077;
+  }
 `;
 
 const StyledEasyLogin = styled.div`
@@ -154,23 +127,22 @@ export function LoginModal({ setIsOpenLoginModal }: props) {
   const [checkEmailColor, setCheckEmailColor] = useState<string>("#8e8e93");
   const [checkPasswordColor, setCheckPasswordColor] =
     useState<string>("#8e8e93");
+  const [loginBtnState, setLoginBtnState] = useState<boolean>(false);
 
-  const closeModal = () => {
-    setIsOpenLoginModal(false);
-  };
-
-  const openJoinModal = () => {
-    setIsOpenJoinModal(true);
-  };
-
-  const openFindPasswordModal = () => {
-    setIsOpenFindPasswordModal(true);
-  };
+  useEffect(() => {
+    if (emailValue !== "" && passwordValue !== "") {
+      setLoginBtnState(true);
+    }
+    if (passwordValue !== "") {
+      setCheckPassword("비밀번호");
+      setCheckPasswordColor("#8e8e93");
+    } else {
+      setLoginBtnState(false);
+    }
+  }, [emailValue, passwordValue]);
 
   const handlePassword = (event: any) => {
     setPasswordValue(event.target.value);
-    // console.log(event.target.value);
-
     // 영문, 숫자 조합 8자 이상인지 체크
     const isValidPassword = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(passwordValue);
     setIsValidPassword(isValidPassword);
@@ -178,7 +150,6 @@ export function LoginModal({ setIsOpenLoginModal }: props) {
 
   const handleEmail = (event: any) => {
     setEmailValue(event.target.value);
-    // console.log(event.target.value);
   };
 
   /**
@@ -195,9 +166,12 @@ export function LoginModal({ setIsOpenLoginModal }: props) {
     if (passwordValue === "") {
       setCheckPassword("비밀번호를 입력해주세요");
       setCheckPasswordColor("#FF2828");
+      setLoginBtnState(false);
     } else if (isValidPassword === false) {
       setCheckPassword("영문, 슛저 조합 8자 이상 입력해주세요.");
       setCheckPasswordColor("#FF2828");
+      setPasswordValue("");
+      setLoginBtnState(false);
     } else {
       setCheckPassword("비밀번호");
       setCheckPasswordColor("#8e8e93");
@@ -211,39 +185,63 @@ export function LoginModal({ setIsOpenLoginModal }: props) {
     isValidInput();
   };
 
+  const closeModal = () => {
+    setIsOpenLoginModal(false);
+  };
+
+  const openJoinModal = () => {
+    setIsOpenJoinModal(true);
+  };
+
+  const openFindPasswordModal = () => {
+    setIsOpenFindPasswordModal(true);
+  };
+
   return (
     <>
       <Modal
         width="18.75%"
-        minwidth="22.5%"
+        $minWidth="22.5%"
         height="640px"
-        minheight="620px"
-        top="13%"
-        left="39%"
-        minleft="36%"
-        // setIsOpenLoginModal={setIsOpenLoginModal}
+        $minHeight="620px"
+        $top="13%"
+        $left="39%"
+        $minLeft="36%"
         onClose={closeModal}
       >
         <StyledTitle>PROVIT</StyledTitle>
         <StyledLoginContainer>
           <StyledLoginDiv>
-            <StyledInputTitle color={checkEmailColor}>
-              {checkEmail}
-            </StyledInputTitle>
-            <StyledLoginInput
+            <CommonInputBox
+              text={checkEmail}
+              color={checkEmailColor}
               type="text"
               placeholder="이메일을 입력해주세요."
               onChange={handleEmail}
-            ></StyledLoginInput>
-            <StyledInputTitle color={checkPasswordColor}>
-              {checkPassword}
-            </StyledInputTitle>
-            <StyledLoginInput
+            />
+            <CommonInputBox
+              text={checkPassword}
+              color={checkPasswordColor}
               type="password"
               placeholder="비밀번호를 입력해주세요."
               onChange={handlePassword}
-            ></StyledLoginInput>
-            <StyledLoginBtn onClick={clickLoginButton}>로그인</StyledLoginBtn>
+              value={passwordValue}
+            />
+            {loginBtnState ? (
+              <ActiveButton
+                text="로그인"
+                onClick={clickLoginButton}
+                $bgColor="#446FF6"
+                color="#fff"
+                $hoverColor="#4168e5"
+              />
+            ) : (
+              <InActiveButton
+                text="로그인"
+                $bgColor="#636366"
+                color="#8E8E93"
+              />
+            )}
           </StyledLoginDiv>
           <StyledOtherLogin>
             <StyledOther onClick={openJoinModal}>회원가입</StyledOther>

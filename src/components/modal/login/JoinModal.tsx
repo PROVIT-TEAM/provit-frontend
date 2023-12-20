@@ -12,10 +12,11 @@ import naverIcon from "../../../assets/img/button/naver_icon.png";
 import googleIcon from "../../../assets/img/button/google_icon.png";
 import { useState } from "react";
 import { EmailLoginModal } from "./EmailLoginModal";
+import { ActiveButton } from "../../commonButton/ActiveButton";
 
 const StyledTitle = styled.p`
   text-align: center;
-  font-size: 3rem;
+  font-size: 2rem;
   margin-top: 90px;
   margin-bottom: 140px;
   color: #fff;
@@ -77,37 +78,10 @@ const StyledLoginIcon = styled.div`
   }
 `;
 
-const StyledKakaoBtn = styled.button`
-  width: 100%;
-  height: 56px;
-  margin-bottom: 15px;
-  background-color: #fee500;
-  border-radius: 10px;
-  font-size: 1.1rem;
-  line-height: 56px;
-  border: none;
-  cursor: pointer;
-  img {
-    position: relative;
-    top: 5px;
-    left: 0%;
-  }
-`;
-
-const StyledEmailBtn = styled.button`
-  width: 100%;
-  height: 56px;
-  font-size: 1.1rem;
-  line-height: 56px;
-  background-color: #446ff6;
-  color: #fff;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  &:hover {
-    transition: all 0.3s;
-    background-color: #3d62db;
-  }
+const StyledKaKaoImg = styled.img`
+  position: relative;
+  top: -40px;
+  left: 30%;
 `;
 
 const StyledCheckText = styled.p`
@@ -161,24 +135,33 @@ export function JoinModal({
     <>
       <Modal
         width="18.75%"
-        minwidth="22.5%"
+        $minWidth="22.5%"
         height="640px"
-        minheight="620px"
-        top="13%"
-        left="39%"
-        minleft="36%"
+        $minHeight="620px"
+        $top="13%"
+        $left="39%"
+        $minLeft="36%"
         onClose={closeModal}
       >
         <StyledTitle>PROVIT</StyledTitle>
         <StyledLoginContainer>
           <StyledLogoDiv>
             <StyledLoginLogo>
-              <StyledKakaoBtn>
-                <img src={kakaoLogin} /> 카카오로 시작하기
-              </StyledKakaoBtn>
-              <StyledEmailBtn onClick={gotoEmail}>
-                이메일로 가입하기
-              </StyledEmailBtn>
+              <ActiveButton
+                text="카카오로 시작하기"
+                $bgColor="#fee500"
+                color="#000"
+                $paddingLeft="10%"
+                $hoverColor="#ecd500"
+              />
+              <StyledKaKaoImg src={kakaoLogin} />
+              <ActiveButton
+                text="이메일로 가입하기"
+                $bgColor="#446FF6"
+                color="#fff"
+                onClick={gotoEmail}
+                $hoverColor="#4168e5"
+              />
             </StyledLoginLogo>
             <StyledBar></StyledBar>
             <StyledEasyText>또는</StyledEasyText>

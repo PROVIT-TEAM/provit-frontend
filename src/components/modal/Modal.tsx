@@ -6,16 +6,16 @@ const StyledModalContainer = styled.div<styleProps>`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   position: absolute;
-  top: ${(props) => props.top};
-  left: ${(props) => props.left};
+  top: ${(props) => props.$top};
+  left: ${(props) => props.$left};
   z-index: 99;
   background-color: #2c2c2e;
   border-radius: 20px;
   padding: 30px;
   @media (max-width: 1600px) {
-    width: ${(props) => props.minwidth};
-    height: ${(props) => props.minheight};
-    left: ${(props) => props.minleft};
+    width: ${(props) => props.$minWidth};
+    height: ${(props) => props.$minHeight};
+    left: ${(props) => props.$minLeft};
   }
 `;
 
@@ -31,12 +31,12 @@ const StyledCloseBtn = styled.button`
 
 interface styleProps {
   width?: string;
-  minwidth?: string;
+  $minWidth?: string;
   height?: string;
-  top?: string;
-  left?: string;
-  minleft?: string;
-  minheight?: string;
+  $top?: string;
+  $left?: string;
+  $minLeft?: string;
+  $minHeight?: string;
 }
 
 interface props {
@@ -48,12 +48,12 @@ interface props {
 
 export function Modal({
   width = "40%",
-  minwidth = "28%",
+  $minWidth = "28%",
   height = "600px",
-  top = "20%",
-  left = "30%",
-  minleft = "33%",
-  minheight = "600px",
+  $top = "20%",
+  $left = "30%",
+  $minLeft = "33%",
+  $minHeight = "600px",
   onClose,
   children,
 }: styleProps & props) {
@@ -67,11 +67,11 @@ export function Modal({
     <StyledModalContainer
       width={width}
       height={height}
-      top={top}
-      left={left}
-      minwidth={minwidth}
-      minleft={minleft}
-      minheight={minheight}
+      $top={$top}
+      $left={$left}
+      $minWidth={$minWidth}
+      $minLeft={$minLeft}
+      $minHeight={$minHeight}
     >
       <StyledCloseBtn onClick={closeModal}>
         <img src={closeModalBtn} />

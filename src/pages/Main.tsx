@@ -6,8 +6,8 @@
 
 import { useState } from "react";
 import styled from "styled-components";
-import { Header } from "../components/Header.tsx";
-import { LoginModal, JoinModal } from "../components/modal";
+import { Header } from "../components/header";
+import { LoginModal, JoinModal } from "../components";
 
 const StyledMainContainer = styled.div`
   width: 100%;
