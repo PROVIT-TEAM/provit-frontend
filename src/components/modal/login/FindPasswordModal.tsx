@@ -10,13 +10,14 @@ import { Modal } from "../Modal";
 
 const StyledTitle = styled.p`
   text-align: center;
-  font-size: 3rem;
-  margin-top: 60px;
+  font-size: 1rem;
+  margin-top: 0px;
   margin-bottom: 70px;
   color: #fff;
   @media (max-width: 1600px) {
-    margin-top: 60px;
-    margin-bottom: 55px;
+    margin-top: 6px;
+    margin-bottom: 150px;
+    margin-left: 5%;
   }
 `;
 
