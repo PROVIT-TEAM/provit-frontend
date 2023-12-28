@@ -1,36 +1,13 @@
-import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Header from "../components/organisms/Header";
-import LoginModalContainer from "./LoginModalContainer";
-import SigninModalContainer from "./SigninModalContainer";
 
 const HeaderContainer = () => {
-  const [isOpenLoginModal, setIspenLoginModal] = useState(false);
-  const [isOpenSigninModal, setIsOpenSigninModal] = useState(false);
-
-  const openLoginModal = () => {
-    setIspenLoginModal(true);
-  };
-
-  const closeLoginModal = () => {
-    setIspenLoginModal(false);
-  };
-
-  const openSigninModal = () => {
-    setIsOpenSigninModal(true);
-  };
-
-  const closeSigninModal = () => {
-    setIsOpenSigninModal(false);
-  };
-
   return (
     <Header>
-      <div onClick={openLoginModal}>로그인</div>
-      {isOpenLoginModal && <LoginModalContainer closeModal={closeLoginModal} />}
-      <div onClick={openSigninModal}>회원가입</div>
-      {isOpenSigninModal && (
-        <SigninModalContainer closeModal={closeSigninModal} />
-      )}
+      <nav>
+        <Link to="/login">로그인</Link>
+        <Link to="/signin">회원가입</Link>
+      </nav>
     </Header>
   );
 };

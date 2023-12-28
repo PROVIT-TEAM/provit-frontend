@@ -3,7 +3,9 @@ import Button from "../atoms/Button";
 import Icon from "../atoms/Icon";
 import Text from "../atoms/Text";
 import Flex from "../layouts/Flex";
-import ValidLavelInput from "../molecules/ValidLavelInput";
+import Input from "../atoms/Input";
+import Label from "../atoms/Label";
+import { Link } from "react-router-dom";
 
 export type SigninFormData = {
   username: string;
@@ -20,39 +22,42 @@ interface SigninFormProps {
 /**
  * 로그인폼
  */
-const LoginForm = ({ onSignin }: SigninFormProps) => {
+const LoginForm = ({ handleSubmit, handleChange }: any) => {
   // React Hook Form 사용
-  const [errors, setErrors] = useState({
-    username: "",
-    password: "",
-  });
-  const onSubmit = (data: SigninFormData) => {
-    const { username, password } = data;
 
-    onSignin && onSignin(username, password);
+  const onSubmit = (e: any) => {
+    e.preventDefault();
+    handleSubmit(e);
   };
 
   return (
-    <form>
-      <Flex flexDirection="column" gap="24px 0" margin={"6px"}>
-        <ValidLavelInput
-          label="이메일"
-          type="text"
-          placeholder="이메일을 입력해주세요."
-        />
+    <form onSubmit={onSubmit}>
+      <Flex flexDirection="column" gap="24px 0">
+        <Flex flexDirection="column" gap="4px">
+          <Label>이메일</Label>
+          <Input
+            name="username"
+            type="text"
+            placeholder="이메일을 입력해주세요."
+            onChange={handleChange}
+          />
+        </Flex>
+        <Flex flexDirection="column" gap="4px">
+          <Label>비밀번호</Label>
+          <Input
+            type="password"
+            name="password"
+            placeholder="비밀번호를 입력해주세요."
+            onChange={handleChange}
+          />
+        </Flex>
 
-        <ValidLavelInput
-          label="비밀번호"
-          type="password"
-          placeholder="비밀번호를 입력해주세요."
-        />
-
-        <Button variant="large" kind="primary" type="submit">
+        <Button variant="primary" type="submit">
           로그인
         </Button>
         <Flex justifyContent="center" gap="24px">
           <Text variant="small" color="#8E8E93">
-            회원가입
+            <Link to="/signin">회원가입</Link>
           </Text>
           <Text variant="small" color="#8E8E93">
             비밀번호 찾기

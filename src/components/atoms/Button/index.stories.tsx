@@ -38,26 +38,26 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const SmallPrimary: Story = {
-  args: { variant: "small", kind: "primary", children: "Primary Button" },
-};
+// export const SmallPrimary: Story = {
+//   args: { variant: "small", kind: "primary", children: "Primary Button" },
+// };
 
-export const MediumPrimary: Story = {
-  args: { variant: "medium", kind: "primary", children: "Primary Button" },
-};
+// export const MediumPrimary: Story = {
+//   args: { variant: "medium", kind: "primary", children: "Primary Button" },
+// };
 
-export const LargePrimary: Story = {
-  args: { variant: "large", kind: "primary", children: "Primary Button" },
-};
+// export const LargePrimary: Story = {
+//   args: { variant: "large", kind: "primary", children: "Primary Button" },
+// };
 
-export const SmallSuccess: Story = {
-  args: { variant: "small", kind: "success", children: "Success Button" },
-};
+// export const SmallSuccess: Story = {
+//   args: { variant: "small", kind: "success", children: "Success Button" },
+// };
 
-export const MediumSuccess: Story = {
-  args: { variant: "medium", kind: "success", children: "Success Button" },
-};
+// export const MediumSuccess: Story = {
+//   args: { variant: "medium", kind: "success", children: "Success Button" },
+// };
 
-export const LargeSuccess: Story = {
-  args: { variant: "large", kind: "success", children: "Success Button" },
-};
+// export const LargeSuccess: Story = {
+//   args: { variant: "large", kind: "success", children: "Success Button" },
+// };

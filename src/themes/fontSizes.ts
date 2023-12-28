@@ -1,10 +1,8 @@
 const fontSizes = {
-  extraSmall: "12px",
-  small: "14px",
-  medium: "16px",
-  mediumLarge: "20px",
-  large: "24px",
-  extraLarge: "32px",
+  small: "12px",
+  mediumSmall: "14px", // holder
+  medium: "16px", // text
+  large: "32px;", // title
 };
 
 export default fontSizes;

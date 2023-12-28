@@ -1,4 +1,6 @@
 const apis = {
-  login: "/mocks/login.json",
+  login: "/login",
+  logout: "/logout",
+  kakao: "/kakao",
 };
 export default apis;

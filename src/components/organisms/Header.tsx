@@ -1,8 +1,9 @@
 import React from "react";
 
 import { authAtom } from "../../recoil/auth";
-import { useRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import logout from "../../api/services/logout";
 
 const StyledHeader = styled.header`
   position: fixed;
@@ -32,20 +33,20 @@ const StyledLogo = styled.div`
 `;
 
 const Header = ({ children }: any) => {
-  const [auth, setAuth] = useRecoilState(authAtom);
+  const { auth } = useRecoilValue(authAtom);
+  const setAuth = useSetRecoilState(authAtom);
 
-  const logout = () => {
-    sessionStorage.removeItem("jwt");
-    setAuth(false);
+  const handleLogout = () => {
+    logout();
+    setAuth({ auth: false });
   };
-
   return (
     <StyledHeader>
       <StyledNav>
         <StyledLogo>Provit</StyledLogo>
         {auth && (
           <div>
-            <div onClick={logout}>로그아웃</div>
+            <button onClick={handleLogout}>로그아웃</button>
           </div>
         )}
         {!auth && <StyledNavWrapper>{children}</StyledNavWrapper>}

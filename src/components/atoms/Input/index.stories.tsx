@@ -37,17 +37,17 @@ type Story = StoryObj<typeof meta>;
 
 const text = `sample text.`;
 
-export const Small: Story = {
-  args: {
-    variant: "small",
-    placeholder: "월",
-  },
-};
+// export const Small: Story = {
+//   args: {
+//     variant: "small",
+//     placeholder: "월",
+//   },
+// };
 
-export const Medium: Story = {
-  args: { variant: "medium", placeholder: text },
-};
+// export const Medium: Story = {
+//   args: { variant: "medium", placeholder: text },
+// };
 
-export const Large: Story = {
-  args: { variant: "large", placeholder: text },
-};
+// export const Large: Story = {
+//   args: { variant: "large", placeholder: text },
+// };

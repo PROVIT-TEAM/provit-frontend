@@ -10,11 +10,11 @@ import Flex from "../../layouts/Flex";
 import Box from "../../layouts/Box";
 import Signin from "../Signin";
 
-const SigninMainModal = ({ closeModal, changeModal }: any) => {
+const SigninMainModal = ({ changeModal }: any) => {
   return (
-    <ModalOverlay closeModal={closeModal}>
+    <ModalOverlay>
       <Flex flexDirection="column" justifyContent="center" alignItems="center">
-        <Box marginTop="64px" marginBottom="64px">
+        <Box marginTop="112px" marginBottom="132px">
           <Text variant="large">PROVIT</Text>
         </Box>
 

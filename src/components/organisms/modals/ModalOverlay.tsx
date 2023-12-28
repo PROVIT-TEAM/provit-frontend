@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import Icon from "../../atoms/Icon";
 
@@ -9,7 +10,7 @@ const StyledModalContainer = styled.div`
   z-index: 10;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: prgba(0, 0, 0, 0.2);
 `;
 
 const StyledModalWrap = styled.div`
@@ -32,20 +33,23 @@ const StyledModalCloseButton = styled.div`
   top: 24px;
 `;
 
-const ModalOverlay = ({ closeModal, children }: any) => {
+const ModalOverlay = ({ children }: any) => {
   const modalRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   const modalOutSideClick = (e: any) => {
     if (modalRef.current === e.target) {
-      closeModal();
+      navigate("/");
     }
   };
 
   return (
     <StyledModalContainer ref={modalRef} onClick={modalOutSideClick}>
       <StyledModalWrap>
-        <StyledModalCloseButton onClick={closeModal}>
-          <Icon iconName="close" />
+        <StyledModalCloseButton>
+          <Link to="/">
+            <Icon iconName="close" />
+          </Link>
         </StyledModalCloseButton>
         {children}
       </StyledModalWrap>

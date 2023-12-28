@@ -5,19 +5,16 @@ import SigninMainModal from "../components/organisms/modals/SigninMainModal";
 const SigninModalContainer = (props: any) => {
   const [changeModal, setChangeModal] = useState(false);
 
-  const { closeModal } = props;
   const onChangeModal = () => {
     setChangeModal(true);
   };
+
   return (
     <>
       {!changeModal && (
-        <SigninMainModal
-          closeModal={closeModal}
-          changeModal={onChangeModal}
-        ></SigninMainModal>
+        <SigninMainModal changeModal={onChangeModal}></SigninMainModal>
       )}
-      {changeModal && <SigninModal closeModal={closeModal}></SigninModal>}
+      {changeModal && <SigninModal changeModal={setChangeModal}></SigninModal>}
     </>
   );
 };

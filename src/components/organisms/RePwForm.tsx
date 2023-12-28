@@ -51,7 +51,7 @@ const RePwForm = ({ onSignin }: SigninFormProps) => {
           </Text>
         )}
       </Box>
-      <Button variant="large" kind="primary" type="submit">
+      <Button variant="primary" type="submit">
         로그인
       </Button>
     </form>
