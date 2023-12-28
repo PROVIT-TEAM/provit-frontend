@@ -16,6 +16,7 @@ const StyledButton = styled.button<styleProps>`
   }
   margin-left: ${(props) => props.$marginLeft};
   margin-top: ${(props) => props.$marginTop};
+  margin-right: ${(props) => props.$marginRight};
 `;
 
 interface props {
@@ -31,6 +32,7 @@ interface styleProps {
   $height?: string;
   $marginLeft?: string;
   $marginTop?: string;
+  $marginRight?: string;
 }
 export function ActiveButton({
   text,
@@ -43,6 +45,7 @@ export function ActiveButton({
   $height = "56px",
   $marginLeft,
   $marginTop,
+  $marginRight,
 }: props & styleProps) {
   const handleClickAction = () => {
     if (onClick) onClick();
@@ -59,6 +62,7 @@ export function ActiveButton({
       $height={$height}
       $marginLeft={$marginLeft}
       $marginTop={$marginTop}
+      $marginRight={$marginRight}
     >
       {text}
     </StyledButton>

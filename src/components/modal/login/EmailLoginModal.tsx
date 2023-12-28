@@ -13,6 +13,9 @@ import { useEffect } from "react";
 import { CommonInputBox } from "../../commonInput/CommonInputBox";
 import { ActiveButton } from "../../commonButton/ActiveButton";
 import { InActiveButton } from "../../commonButton/InActiveButton";
+import { useRecoilState } from "recoil";
+import { UserInfoAtom } from "../../../recoil/UserInfoAtom";
+import { useToasts } from "react-toast-notifications";
 
 const StyledTitle = styled.p`
   text-align: center;
@@ -27,7 +30,7 @@ const StyledTitle = styled.p`
   }
 `;
 
-const StyledLoginContainer = styled.p`
+const StyledLoginContainer = styled.div`
   width: 100%;
   height: auto;
 `;
@@ -86,8 +89,12 @@ const StyledCheckText = styled.span`
 
 interface props {
   setIsOpenEmailLoginModal: Dispatch<SetStateAction<boolean>>;
+  setIsOpenMembershipModal?: Dispatch<SetStateAction<boolean>>;
 }
-export function EmailLoginModal({ setIsOpenEmailLoginModal }: props) {
+export function EmailLoginModal({
+  setIsOpenEmailLoginModal,
+  setIsOpenMembershipModal,
+}: props) {
   const currentYear = new Date().getFullYear();
   const [yearOption, setYearOption] = useState<number[]>([]);
   const [monthOption, setMonthOption] = useState<number[]>([]);
@@ -111,7 +118,17 @@ export function EmailLoginModal({ setIsOpenEmailLoginModal }: props) {
   const [selectYearValue, setSelectYearValue] = useState<string>("년");
   const [selectMonthValue, setSelectMonthValue] = useState<string>("월");
   const [selectDayValue, setSelectDayValue] = useState<string>("일");
+  const [selectRadioValue, setSelectRadioValue] = useState<string>("");
   const [signBtnState, setSignBtnState] = useState<boolean>(false);
+  const [userInfo, setUserInfo] = useRecoilState(UserInfoAtom);
+  const [isValid, setIsValid] = useState<boolean>(false);
+  const { addToast } = useToasts();
+
+  useEffect(() => {
+    getYear();
+    getMonth();
+    getDate();
+  }, []);
 
   useEffect(() => {
     if (
@@ -122,9 +139,7 @@ export function EmailLoginModal({ setIsOpenEmailLoginModal }: props) {
       selectMonthValue !== "월" &&
       selectDayValue !== "일"
     ) {
-      setSignBtnState(true);
-    } else {
-      setSignBtnState(false);
+      isValidInput();
     }
   }, [
     emailValue,
@@ -133,13 +148,16 @@ export function EmailLoginModal({ setIsOpenEmailLoginModal }: props) {
     selectYearValue,
     selectMonthValue,
     selectDayValue,
+    certificationText,
+    isValidPassword,
+    selectRadioValue,
   ]);
 
   useEffect(() => {
-    getYear();
-    getMonth();
-    getDate();
-  }, []);
+    if (isValid) {
+      setSignBtnState(true);
+    }
+  }, [isValid]);
 
   useEffect(() => {
     if (isSuccessCheck) {
@@ -192,51 +210,48 @@ export function EmailLoginModal({ setIsOpenEmailLoginModal }: props) {
    * 모든 항목 잘 입력했는지 체크 함수
    */
   const isValidInput = () => {
-    if (emailValue === "") {
-      setCheckEmail("이메일을 입력해주세요");
-      setCheckEmailColor("#FF2828");
-    } else if (certificationText === "인증받기") {
+    let isValid = true;
+
+    if (certificationText === "인증받기") {
       setCheckEmail("이메일 인증을 완료해주세요");
       setCheckEmailColor("#FF2828");
+      isValid = false;
     } else {
       setCheckEmail("이메일");
       setCheckEmailColor("#8e8e93");
     }
-    if (passwordValue === "") {
-      setCheckPassword("비밀번호를 입력해주세요");
-      setCheckPasswordColor("#FF2828");
-    } else if (isValidPassword === false) {
+
+    if (isValidPassword === false) {
       setCheckPassword("영문, 슛저 조합 8자 이상 입력해주세요.");
       setCheckPasswordColor("#FF2828");
+      isValid = false;
     } else {
       setCheckPassword("비밀번호");
       setCheckPasswordColor("#8e8e93");
     }
-    if (nameValue === "") {
-      setCheckName("이름을 입력해주세요");
-      setCheckNameColor("#FF2828");
-    } else {
-      setCheckName("이름");
-      setCheckNameColor("#8e8e93");
-    }
-    if (
-      selectYearValue === "년" ||
-      selectMonthValue === "월" ||
-      selectDayValue === "일"
-    ) {
-      setCheckBirth("생년월일을 선택해주세요");
-      setCheckBirthColor("#FF2828");
-    } else {
-      setCheckBirth("생년월일");
-      setCheckBirthColor("#8e8e93");
-    }
+
+    setIsValid(isValid);
   };
 
   /**
    * 가입하기 버튼 클릭 시 실행되는 함수
    */
   const handleJoinButton = () => {
-    isValidInput();
+    if (selectRadioValue === "") {
+      addToast("서비스 이용 약관에 동의해주세요", { appearance: "warning" });
+    } else {
+      if (isValid) {
+        const data = {
+          email: emailValue,
+          password: passwordValue,
+          name: nameValue,
+        };
+        setUserInfo([data]);
+        setIsOpenEmailLoginModal(false);
+        if (setIsOpenMembershipModal) setIsOpenMembershipModal(false);
+        addToast("회원가입되었습니다.", { appearance: "success" });
+      }
+    }
   };
 
   const handleEmail = (event: any) => {
@@ -249,7 +264,7 @@ export function EmailLoginModal({ setIsOpenEmailLoginModal }: props) {
     // console.log(event.target.value);
 
     // 영문, 숫자 조합 8자 이상인지 체크
-    const isValidPassword = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(passwordValue);
+    const isValidPassword = /^(?=.*[A-Za-z])(?=.*\d).{7,}$/.test(passwordValue);
     setIsValidPassword(isValidPassword);
   };
 
@@ -274,6 +289,9 @@ export function EmailLoginModal({ setIsOpenEmailLoginModal }: props) {
     setIsOpenEmailLoginModal(false);
   };
 
+  const handleRadioChange = (event: any) => {
+    setSelectRadioValue(event.target.value);
+  };
   return (
     <>
       <Modal
@@ -353,7 +371,11 @@ export function EmailLoginModal({ setIsOpenEmailLoginModal }: props) {
                 ))}
               </StyledSelect>
             </StyledSelectBoxDiv>
-            <StyledRadiobox type="radio" />
+            <StyledRadiobox
+              type="radio"
+              onChange={handleRadioChange}
+              value="1"
+            />
             <StyledCheckText>
               프루빗의 <span>서비스 이용 약관</span>과
               <span>개인정보 보호 정책</span>을 읽었으며 동의합니다.

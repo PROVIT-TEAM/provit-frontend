@@ -177,7 +177,10 @@ export function JoinModal({
         </StyledLoginContainer>
       </Modal>
       {isOpenEmailLoginModal && (
-        <EmailLoginModal setIsOpenEmailLoginModal={setIsOpenEmailLoginModal} />
+        <EmailLoginModal
+          setIsOpenEmailLoginModal={setIsOpenEmailLoginModal}
+          setIsOpenMembershipModal={setIsOpenMembershipModal}
+        />
       )}
     </>
   );

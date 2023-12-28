@@ -17,6 +17,9 @@ import { CommonInputBox } from "../../commonInput/CommonInputBox";
 import { ActiveButton } from "../../commonButton/ActiveButton";
 import { useEffect } from "react";
 import { InActiveButton } from "../../commonButton/InActiveButton";
+import { useRecoilState } from "recoil";
+import { UserInfoAtom } from "../../../recoil/UserInfoAtom";
+import { useToasts } from "react-toast-notifications";
 
 const StyledTitle = styled.p`
   text-align: center;
@@ -115,6 +118,7 @@ const StyledLoginLogo = styled.div`
 interface props {
   setIsOpenLoginModal: Dispatch<SetStateAction<boolean>>;
 }
+
 export function LoginModal({ setIsOpenLoginModal }: props) {
   const [isOpenJoinModal, setIsOpenJoinModal] = useState<boolean>(false);
   const [isOpenFindPasswordModal, setIsOpenFindPasswordModal] =
@@ -128,6 +132,13 @@ export function LoginModal({ setIsOpenLoginModal }: props) {
   const [checkPasswordColor, setCheckPasswordColor] =
     useState<string>("#8e8e93");
   const [loginBtnState, setLoginBtnState] = useState<boolean>(false);
+  const [userInfo, setUserInfo] = useRecoilState(UserInfoAtom);
+  const { addToast } = useToasts();
+
+  const mockUserData = [
+    { email: "user1", password: "asdf1234", name: "홍길동1" },
+    { email: "user2", password: "asdf1234", name: "홍길동2" },
+  ];
 
   useEffect(() => {
     if (emailValue !== "" && passwordValue !== "") {
@@ -144,7 +155,7 @@ export function LoginModal({ setIsOpenLoginModal }: props) {
   const handlePassword = (event: any) => {
     setPasswordValue(event.target.value);
     // 영문, 숫자 조합 8자 이상인지 체크
-    const isValidPassword = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(passwordValue);
+    const isValidPassword = /^(?=.*[A-Za-z])(?=.*\d).{7,}$/.test(passwordValue);
     setIsValidPassword(isValidPassword);
   };
 
@@ -159,11 +170,7 @@ export function LoginModal({ setIsOpenLoginModal }: props) {
     if (emailValue === "") {
       setCheckEmail("이메일을 입력해주세요");
       setCheckEmailColor("#FF2828");
-    } else {
-      setCheckEmail("이메일");
-      setCheckEmailColor("#8e8e93");
-    }
-    if (passwordValue === "") {
+    } else if (passwordValue === "") {
       setCheckPassword("비밀번호를 입력해주세요");
       setCheckPasswordColor("#FF2828");
       setLoginBtnState(false);
@@ -173,8 +180,11 @@ export function LoginModal({ setIsOpenLoginModal }: props) {
       setPasswordValue("");
       setLoginBtnState(false);
     } else {
+      setCheckEmail("이메일");
+      setCheckEmailColor("#8e8e93");
       setCheckPassword("비밀번호");
       setCheckPasswordColor("#8e8e93");
+      return true;
     }
   };
 
@@ -182,7 +192,25 @@ export function LoginModal({ setIsOpenLoginModal }: props) {
    * 로그인 버튼 클릭 시 실행되는 함수
    */
   const clickLoginButton = () => {
-    isValidInput();
+    if (isValidInput()) {
+      const user = mockUserData.find(
+        (user) => user.email === emailValue && user.password === passwordValue
+      );
+      if (user) {
+        const data = {
+          email: user.email,
+          password: user.password,
+          name: user.name,
+        };
+        setUserInfo([data]);
+        setIsOpenLoginModal(false);
+        addToast("로그인되었습니다.", { appearance: "success" });
+      } else {
+        addToast("이메일 또는 비밀번호가 틀렸습니다.", {
+          appearance: "warning",
+        });
+      }
+    }
   };
 
   const closeModal = () => {

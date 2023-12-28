@@ -6,3 +6,4 @@ export * from "./modal/login/FindPasswordModal";
 export * from "./commonInput/CommonInputBox";
 export * from "./commonButton/ActiveButton";
 export * from "./commonButton/InActiveButton";
+export * from "./modal/ConfirmModal";
