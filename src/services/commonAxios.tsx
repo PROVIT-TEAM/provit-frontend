@@ -36,9 +36,9 @@ const postData = async (endpoint: any, data: any) => {
 /**
  * PUT 요청을 담당하는 함수
  */
-const putData = async (endpoin: any, data: any) => {
+const putData = async (endpoint: any, data: any) => {
   try {
-    const response = await instance.put(endpoin, data);
+    const response = await instance.put(endpoint, data);
     return response.data;
   } catch (error) {
     console.error("PUT 요청 중 에러 발생:", error);
