@@ -1,41 +1,37 @@
 /**
- * component 설명 : 로그인 버튼 클릭 시 열리는 모달
+ * component 설명 : 로그인 모달
  * 작업자 : 김연정
- * 수정일 : 2023/12/15
+ * 수정일 : 2024/1/9
  */
 
-import { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import { Modal } from "../Modal";
-import { useState } from "react";
-import { JoinModal } from "./JoinModal";
-import { FindPasswordModal } from "./FindPasswordModal";
 import { LoginForm } from "../../login/LoginForm";
-import { SocialLogin } from "../../login/SocialLogin";
+import Text from "../../atoms/Text";
+import Box from "../../layouts/Box";
+import Flex from "../../layouts/Flex";
+import Icon from "../../atoms/Icon";
 
-const StyledTitle = styled.p`
+const StyledEasyText = styled.p`
+  width: 30%;
+  padding: 3%;
   text-align: center;
-  font-size: 2rem;
-  margin-top: 60px;
-  margin-bottom: 70px;
-  color: #fff;
+  color: #636366;
+  position: relative;
+  left: 31.5%;
+  top: -20px;
+  background-color: #2c2c2e;
   @media (max-width: 1600px) {
-    margin-top: 60px;
-    margin-bottom: 55px;
+    width: 24%;
+    left: 34.5%;
   }
 `;
 
-const StyledLoginContainer = styled.div`
+const StyledBar = styled.span`
   width: 100%;
-  height: auto;
-`;
-
-const StyledOtherLogin = styled.div`
-  width: 50%;
-  margin: 0 auto;
-  @media (max-width: 1600px) {
-    width: 54%;
-  }
+  height: 1px;
+  display: block;
+  background-color: #636366;
 `;
 
 const StyledOther = styled.p`
@@ -49,27 +45,29 @@ const StyledOther = styled.p`
   }
 `;
 
-interface props {
-  setIsOpenLoginModal: Dispatch<SetStateAction<boolean>>;
+interface LoginModalProps {
+  onClose: () => void;
+  onSignInModal: () => void;
+  onFindPwdModal: () => void;
+  handleSubmit: () => void;
+  handleEmail: (event: any) => void;
+  handlePassword: (event: any) => void;
+  emailValue?: string;
+  passwordValue?: string;
+  loginBtnState?: boolean;
 }
 
-export function LoginModal({ setIsOpenLoginModal }: props) {
-  const [isOpenJoinModal, setIsOpenJoinModal] = useState<boolean>(false);
-  const [isOpenFindPasswordModal, setIsOpenFindPasswordModal] =
-    useState<boolean>(false);
-
-  const closeModal = () => {
-    setIsOpenLoginModal(false);
-  };
-
-  const openJoinModal = () => {
-    setIsOpenJoinModal(true);
-  };
-
-  const openFindPasswordModal = () => {
-    setIsOpenFindPasswordModal(true);
-  };
-
+export function LoginModal({
+  onClose,
+  onSignInModal,
+  onFindPwdModal,
+  handleSubmit,
+  handleEmail,
+  handlePassword,
+  emailValue,
+  passwordValue,
+  loginBtnState,
+}: LoginModalProps) {
   return (
     <>
       <Modal
@@ -80,26 +78,37 @@ export function LoginModal({ setIsOpenLoginModal }: props) {
         $top="13%"
         $left="39%"
         $minLeft="36%"
-        onClose={closeModal}
+        onClose={onClose}
       >
-        <StyledTitle>PROVIT</StyledTitle>
-        <StyledLoginContainer>
-          <LoginForm setIsOpenLoginModal={setIsOpenLoginModal} />
-          <StyledOtherLogin>
-            <StyledOther onClick={openJoinModal}>회원가입</StyledOther>
-            <StyledOther onClick={openFindPasswordModal}>
-              비밀번호 찾기
-            </StyledOther>
-          </StyledOtherLogin>
-          <SocialLogin />
-        </StyledLoginContainer>
+        <Box $marginTop="64px" $marginBottom="63px">
+          <Flex $flexDirection="column" $alignItems="center">
+            <Text variant="large">PROVIT</Text>
+          </Flex>
+        </Box>
+        <Box $marginTop="24px">
+          <LoginForm
+            handleSubmit={handleSubmit}
+            handleEmail={handleEmail}
+            handlePassword={handlePassword}
+            emailValue={emailValue}
+            passwordValue={passwordValue}
+            loginBtnState={loginBtnState}
+          />
+        </Box>
+        <Box $marginBottom="40px">
+          <Flex $alignItems="center" $justifyContent="center">
+            <StyledOther onClick={onSignInModal}>회원가입</StyledOther>
+            <StyledOther onClick={onFindPwdModal}>비밀번호 찾기</StyledOther>
+          </Flex>
+        </Box>
+        <StyledBar></StyledBar>
+        <StyledEasyText>간편로그인</StyledEasyText>
+        <Flex $justifyContent="center" $gap="16px">
+          <Icon iconName="kakao" />
+          <Icon iconName="naver" />
+          <Icon iconName="google" />
+        </Flex>
       </Modal>
-      {isOpenJoinModal && <JoinModal setIsOpenJoinModal={setIsOpenJoinModal} />}
-      {isOpenFindPasswordModal && (
-        <FindPasswordModal
-          setIsOpenFindPasswordModal={setIsOpenFindPasswordModal}
-        />
-      )}
     </>
   );
 }

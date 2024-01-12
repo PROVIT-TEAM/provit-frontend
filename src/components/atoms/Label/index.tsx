@@ -28,7 +28,8 @@ const Label = styled.label<LabelProps>`
       `;
     }
   }}
-
+  display:inline-block;
+  margin-bottom: 5px;
   color: ${(props) => props.color};
   font-style: normal;
   line-height: 150%;

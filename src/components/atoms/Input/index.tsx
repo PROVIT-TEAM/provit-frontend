@@ -1,60 +1,58 @@
-import styled, { css } from "styled-components";
+import React from "react";
+import styled from "styled-components";
+import colors from "../../../themes/colors";
+import fontSizes from "../../../themes/fontSizes";
 
-export type InputVariant = "small" | "medium" | "large" | "auto";
-
-export type InputProps = {
-  variant?: InputVariant;
-};
-
-const variants = {
-  small: {
-    width: "96px",
-    height: "48px",
-  },
-  medium: {
-    width: "238px",
-    height: "48px",
-  },
-  large: {
-    width: "312px",
-    height: "48px",
-  },
-  auto: {
-    width: "auto",
-    height: "auto",
-  },
-};
-
-const Input = styled.input<InputProps>`
-  ${({ variant }) => {
-    if (variant && variants[variant]) {
-      const style = variants[variant];
-      return css`
-        width: ${style.width};
-        height: ${style.height};
-      `;
-    }
-  }}
-
-  box-sizing: border-box;
-  outline: none;
-  border: 1px solid;
-  border-radius: 8px 8px;
-  font-size: 16px;
-  line-height: 150%;
+const StyledInput = styled.input<props>`
+  height: 48px;
+  width: ${(props) => props.$width};
+  font-size: ${fontSizes.ml};
   font-weight: 400;
-  background: #3a3a3c;
-  padding: 0px 16px;
-  color: #ffffff;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #666;
+  background-color: #3a3a3c;
+  padding-left: 5%;
   border: none;
-
-  &::placeholder {
-    color: #636366;
+  color: ${colors.white};
+  ::placeholder {
+    color: ${colors.disabled};
   }
 `;
 
-Input.defaultProps = {
-  variant: "large",
-};
-
-export default Input;
+interface props {
+  text?: string;
+  color?: string;
+  type?: string;
+  placeholder?: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
+  $width?: string;
+  name?: string;
+}
+export function Input({
+  text,
+  color,
+  type,
+  onChange,
+  placeholder,
+  value,
+  $width = "95%",
+  name,
+}: props) {
+  const handleInputValue = (event: any) => {
+    onChange(event);
+  };
+  return (
+    <React.Fragment>
+      <StyledInput
+        type={type}
+        placeholder={placeholder}
+        onChange={handleInputValue}
+        value={value}
+        $width={$width}
+        name={name}
+      ></StyledInput>
+    </React.Fragment>
+  );
+}

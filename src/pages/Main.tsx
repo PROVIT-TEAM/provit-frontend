@@ -4,10 +4,8 @@
  * 수정일 : 2023/12/15
  */
 
-import { useState } from "react";
 import styled from "styled-components";
-import { Header } from "../components/header";
-import { LoginModal, JoinModal } from "../components";
+import HeaderContainer from "../containers/headerContainer/HeaderContainer";
 
 const StyledMainContainer = styled.div`
   width: 100%;
@@ -15,26 +13,10 @@ const StyledMainContainer = styled.div`
   background-color: #dddddd;
 `;
 export function Main() {
-  const [isOpenLoginModal, setIsOpenLoginModal] = useState<boolean>(false);
-  const [isOpenMembershipModal, setIsOpenMembershipModal] =
-    useState<boolean>(false);
-
   return (
     <>
-      <Header
-        setIsOpenLoginModal={setIsOpenLoginModal}
-        setIsOpenMembershipModal={setIsOpenMembershipModal}
-      />
+      <HeaderContainer />
       <StyledMainContainer></StyledMainContainer>
-      {isOpenLoginModal && (
-        <LoginModal setIsOpenLoginModal={setIsOpenLoginModal} />
-      )}
-      {isOpenMembershipModal && (
-        <JoinModal
-          setIsOpenMembershipModal={setIsOpenMembershipModal}
-          setIsOpenLoginModal={setIsOpenLoginModal}
-        />
-      )}
     </>
   );
 }

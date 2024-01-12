@@ -1,43 +1,40 @@
+/**
+ * component 설명 : 이메일 회원가입 폼
+ * 작업자 : 김연정
+ * 수정일 : 2024/1/12
+ */
+
 import { SetStateAction, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { CommonInputBox } from "../commonInput/CommonInputBox";
 import { useToasts } from "react-toast-notifications";
 import { useEffect } from "react";
 import { UserInfoAtom } from "../../recoil/UserInfoAtom";
 import successCheckImg from "../../assets/img/button/success_check.png";
 import { Dispatch } from "react";
-import { CommonSelectBox } from "../commonInput/CommonSelectBox";
-import { ActiveButton, InActiveButton } from "../commonButton";
-
-const StyledInputTitle = styled.p`
-  color: ${(props) => props.color};
-  margin-bottom: 5px;
-`;
+import { Input } from "../atoms/Input";
+import Label from "../atoms/Label";
+import colors from "../../themes/colors";
+import Button from "../atoms/Button";
+import Text from "../atoms/Text";
+import Box from "../layouts/Box";
+import { BirthSelect } from "../../hooks/BirthSelect";
 
 const StyledSuccessCheck = styled.img`
-  margin-left: -48px;
-  margin-right: 9.5%;
-`;
-
-const StyledSelectBoxDiv = styled.div`
-  :nth-of-type(2) {
-    margin: 0 3.5%;
-  }
+  margin-left: -30px;
+  margin-right: 4%;
 `;
 
 const StyledRadiobox = styled.input`
   margin-right: 3%;
   margin-top: 13px;
-  display: inline-block;
   /* height: 40px; */
 `;
 
 const StyledCheckText = styled.span`
   color: #fff;
-  line-height: 10px;
+  line-height: 150%;
   font-weight: lighter;
-
   span {
     color: #446ff6;
   }
@@ -51,10 +48,6 @@ export function JoinForm({
   setIsOpenEmailLoginModal,
   setIsOpenMembershipModal,
 }: props) {
-  const currentYear = new Date().getFullYear();
-  const [yearOption, setYearOption] = useState<number[]>([]);
-  const [monthOption, setMonthOption] = useState<number[]>([]);
-  const [dayOption, setDayOption] = useState<number[]>([]);
   const [certificationText, setCertificationText] =
     useState<string>("인증받기");
   const [isSuccessCheck, setIsSuccessCheck] = useState<boolean>(false);
@@ -67,29 +60,20 @@ export function JoinForm({
   const [checkPasswordColor, setCheckPasswordColor] =
     useState<string>("#8e8e93");
   const [isValidPassword, setIsValidPassword] = useState<boolean>(false);
-  const [selectYearValue, setSelectYearValue] = useState<string>("년");
-  const [selectMonthValue, setSelectMonthValue] = useState<string>("월");
-  const [selectDayValue, setSelectDayValue] = useState<string>("일");
-  const [selectRadioValue, setSelectRadioValue] = useState<string>("");
+  const [selectRadioValue, setSelectRadioValue] = useState<string[]>([]);
   const [signBtnState, setSignBtnState] = useState<boolean>(false);
   const [userInfo, setUserInfo] = useRecoilState(UserInfoAtom);
   const [isValid, setIsValid] = useState<boolean>(false);
   const { addToast } = useToasts();
-
-  useEffect(() => {
-    getYear();
-    getMonth();
-    getDate();
-  }, []);
+  const [birth, setBirth] = useState<string>("");
 
   useEffect(() => {
     if (
       emailValue !== "" &&
       passwordValue !== "" &&
       nameValue !== "" &&
-      selectYearValue !== "년" &&
-      selectMonthValue !== "월" &&
-      selectDayValue !== "일"
+      birth !== "" &&
+      selectRadioValue.length === 3
     ) {
       isValidInput();
     }
@@ -97,19 +81,19 @@ export function JoinForm({
     emailValue,
     passwordValue,
     nameValue,
-    selectYearValue,
-    selectMonthValue,
-    selectDayValue,
+    birth,
     certificationText,
     isValidPassword,
     selectRadioValue,
   ]);
 
   useEffect(() => {
-    if (isValid) {
+    if (isValid && selectRadioValue.length === 3) {
       setSignBtnState(true);
+    } else {
+      setSignBtnState(false);
     }
-  }, [isValid]);
+  }, [isValid, selectRadioValue]);
 
   useEffect(() => {
     if (isSuccessCheck) {
@@ -117,30 +101,6 @@ export function JoinForm({
       setCheckEmailColor("#8e8e93");
     }
   }, [isSuccessCheck]);
-
-  const getYear = () => {
-    let year = [];
-    for (let i = 1900; i <= currentYear; i++) {
-      year.push(i);
-    }
-    setYearOption(year);
-  };
-
-  const getMonth = () => {
-    let month = [];
-    for (let i = 1; i <= 12; i++) {
-      month.push(i);
-    }
-    setMonthOption(month);
-  };
-
-  const getDate = () => {
-    let day = [];
-    for (let i = 1; i <= 31; i++) {
-      day.push(i);
-    }
-    setDayOption(day);
-  };
 
   /**
    * 인증 버튼 텍스트 변경 & 인증 성공 체크 이미지 상태 변경 함수
@@ -189,20 +149,16 @@ export function JoinForm({
    * 가입하기 버튼 클릭 시 실행되는 함수
    */
   const handleJoinButton = () => {
-    if (selectRadioValue === "") {
-      addToast("서비스 이용 약관에 동의해주세요", { appearance: "warning" });
-    } else {
-      if (isValid) {
-        const data = {
-          email: emailValue,
-          password: passwordValue,
-          name: nameValue,
-        };
-        setUserInfo([data]);
-        setIsOpenEmailLoginModal(false);
-        if (setIsOpenMembershipModal) setIsOpenMembershipModal(false);
-        addToast("회원가입되었습니다.", { appearance: "success" });
-      }
+    if (isValid) {
+      const data = {
+        email: emailValue,
+        password: passwordValue,
+        name: nameValue,
+      };
+      setUserInfo([data]);
+      setIsOpenEmailLoginModal(false);
+      if (setIsOpenMembershipModal) setIsOpenMembershipModal(false);
+      addToast("회원가입되었습니다.", { appearance: "success" });
     }
   };
 
@@ -221,27 +177,19 @@ export function JoinForm({
     setNameValue(event.target.value);
   };
 
-  const handleYear = (event: any) => {
-    setSelectYearValue(event.target.value);
-  };
-
-  const handleMonth = (event: any) => {
-    setSelectMonthValue(event.target.value);
-  };
-
-  const handleDay = (event: any) => {
-    setSelectDayValue(event.target.value);
-  };
-
-  const handleRadioChange = (event: any) => {
-    setSelectRadioValue(event.target.value);
+  const handleRadioChange = (value: string) => {
+    setSelectRadioValue((prevValues) =>
+      prevValues.includes(value)
+        ? prevValues.filter((val) => val !== value)
+        : [...prevValues, value]
+    );
   };
 
   return (
     <>
-      <CommonInputBox
-        text={checkEmail}
-        color={checkEmailColor}
+      <Label color={checkEmailColor}>{checkEmail}</Label>
+      <br></br>
+      <Input
         type="text"
         placeholder="이메일을 입력해주세요."
         onChange={handleEmail}
@@ -249,58 +197,75 @@ export function JoinForm({
         value={emailValue}
       />
       {isSuccessCheck && <StyledSuccessCheck src={successCheckImg} />}
-      <ActiveButton
-        $width="24%"
-        $height="47px"
-        $bgColor="#446ff6"
-        color="#fff"
+      <Button
+        variant="active"
+        width="24%"
+        height="47px"
         $marginLeft="5%"
-        text={certificationText}
         onClick={handleCertification}
-      />
-      <CommonInputBox
-        text={checkPassword}
-        color={checkPasswordColor}
+      >
+        {certificationText}
+      </Button>
+      <Label color={checkPasswordColor}>{checkPassword}</Label>
+      <Input
         type="password"
         placeholder="비밀번호를 입력해주세요."
         onChange={handlePassword}
         value={passwordValue}
       />
-      <CommonInputBox
+      <Label>이름</Label>
+      <Input
         text="이름"
-        color="#8e8e93"
         type="text"
         placeholder="홍길동"
         onChange={handleName}
         value={nameValue}
       />
-      <StyledInputTitle color="#8e8e93">생년월일</StyledInputTitle>
-      <StyledSelectBoxDiv>
-        <CommonSelectBox onChange={handleYear} text="년" data={yearOption} />
-        <CommonSelectBox onChange={handleMonth} text="월" data={monthOption} />
-        <CommonSelectBox onChange={handleDay} text="일" data={dayOption} />
-      </StyledSelectBoxDiv>
-      <StyledRadiobox type="radio" onChange={handleRadioChange} value="1" />
+      <Text variant="small" color={colors.gray02}>
+        생년월일
+      </Text>
+      <Box $marginTop="5px">
+        <BirthSelect setBirth={setBirth} />
+      </Box>
+      <StyledRadiobox
+        type="checkbox"
+        onChange={() => handleRadioChange("1")}
+        value="1"
+      />
       <StyledCheckText>
-        프루빗의 <span>서비스 이용 약관</span>과<span>개인정보 보호 정책</span>
-        을 읽었으며 동의합니다.
+        프루빗의 <span>서비스 이용 약관</span>에 동의합니다.
+      </StyledCheckText>
+      <br></br>
+      <StyledRadiobox
+        type="checkbox"
+        onChange={() => handleRadioChange("2")}
+        value="2"
+      />
+      <StyledCheckText>
+        프루빗의 <span>개인정보 보호 정책</span>에 동의합니다.
+      </StyledCheckText>
+      <br></br>
+      <StyledRadiobox
+        type="checkbox"
+        onChange={() => handleRadioChange("3")}
+        value="3"
+      />
+      <StyledCheckText>
+        프루빗의 <span>마케팅 수신 동의</span>에 동의합니다.
       </StyledCheckText>
       {signBtnState ? (
-        <ActiveButton
-          text="가입하기"
+        <Button
+          variant="active"
           onClick={handleJoinButton}
-          $bgColor="#446FF6"
-          color="#fff"
-          $hoverColor="#4168e5"
+          width="100%"
           $marginTop="45px"
-        />
+        >
+          가입하기
+        </Button>
       ) : (
-        <InActiveButton
-          text="가입하기"
-          $bgColor="#636366"
-          color="#8E8E93"
-          $marginTop="45px"
-        />
+        <Button variant="inActive" width="100%" $marginTop="45px">
+          가입하기
+        </Button>
       )}
     </>
   );

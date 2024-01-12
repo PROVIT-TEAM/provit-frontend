@@ -1,4 +1,4 @@
-export * from "./EmailLoginModal";
-export * from "./FindPasswordModal";
-export * from "./JoinModal";
+export * from "./EmailJoinModal";
+export * from "./FindPwModal";
+export * from "./SignInModal";
 export * from "./LoginModal";

@@ -1,20 +1,21 @@
 import styled, { css } from "styled-components";
+import fontSizes from "../../../themes/fontSizes";
 
 const variants = {
   extraSmall: {
-    fontSize: "12px",
+    fontSize: fontSizes.sl,
     fontWeight: 500,
   },
   small: {
-    fontSize: "14px",
-    fontWeight: 500,
+    fontSize: fontSizes.mm,
+    fontWeight: 700,
   },
   medium: {
-    fontSize: "24px",
+    fontSize: fontSizes.ll,
     fontWeight: 500,
   },
   large: {
-    fontSize: "32px",
+    fontSize: fontSizes.xm,
     fontWeight: 700,
   },
 };
@@ -22,16 +23,20 @@ const variants = {
 export type TextVariant = "extraSmall" | "small" | "medium" | "large";
 
 export type TextProps = {
-  variant: TextVariant;
+  variant?: TextVariant;
+  fontSize?: string;
+  fontWeight?: string;
 };
 
-const Text = styled.span<TextProps>`
-  ${({ variant }) => {
-    const style = variants[variant];
-    return css`
-      font-size: ${style.fontSize};
-      font-weight: ${style.fontWeight};
-    `;
+const Text = styled.p<TextProps>`
+  ${({ variant, fontSize, fontWeight }) => {
+    if (variant && variants[variant]) {
+      const style = variants[variant];
+      return css`
+        font-size: ${fontSize || style.fontSize};
+        font-weight: ${fontWeight || style.fontWeight};
+      `;
+    }
   }}
 
   color: ${(props) => props.color || "#FFFFFF"};
