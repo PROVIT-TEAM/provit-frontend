@@ -6,10 +6,10 @@
 
 import { Dispatch, SetStateAction } from "react";
 import { Modal } from "../Modal";
-import { JoinForm } from "../../login/JoinForm";
 import Box from "../../layouts/Box";
 import Text from "../../atoms/Text";
 import Flex from "../../layouts/Flex";
+import { JoinForm } from "../../organisms/login";
 
 interface props {
   setIsOpenEmailLoginModal: Dispatch<SetStateAction<boolean>>;
@@ -23,7 +23,7 @@ export function EmailJoinModal({
 }: props) {
   return (
     <>
-      <Modal onClose={closeEmailJoinModal}>
+      <Modal onClose={closeEmailJoinModal} height="auto" $minHeight="700px">
         <Box $marginLeft="4%" $marginBottom="40px">
           <Flex $flexDirection="column" $alignItems="center">
             <Text fontSize="1rem" fontWeight="700">

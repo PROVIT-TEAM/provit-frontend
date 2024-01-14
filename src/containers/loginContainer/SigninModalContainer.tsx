@@ -7,8 +7,8 @@ import React, { Dispatch, useState } from "react";
 import { SignInModal } from "../../components";
 
 interface props {
-  setIsOpenSignInpModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsOpenLoginModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpenSignInpModal?: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpenLoginModal?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const SigninModalContainer = ({
   setIsOpenSignInpModal,

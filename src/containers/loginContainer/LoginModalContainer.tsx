@@ -13,7 +13,7 @@ import FindPwModalContainer from "./FindPwModalContainer";
 import SigninModalContainer from "./SigninModalContainer";
 
 interface props {
-  setIsOpenLoginModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpenLoginModal?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const LoginModalContainer = ({ setIsOpenLoginModal }: props) => {
   const [isOpenSignInModal, setIsOpenSignInModal] = useState<boolean>(false);
@@ -62,7 +62,7 @@ const LoginModalContainer = ({ setIsOpenLoginModal }: props) => {
   };
 
   const onCloseModal = () => {
-    setIsOpenLoginModal(false);
+    if (setIsOpenLoginModal) setIsOpenLoginModal(false);
   };
 
   const onSignInModal = () => {

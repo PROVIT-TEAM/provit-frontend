@@ -6,11 +6,11 @@
 
 import styled from "styled-components";
 import { Modal } from "../Modal";
-import { LoginForm } from "../../login/LoginForm";
 import Text from "../../atoms/Text";
 import Box from "../../layouts/Box";
 import Flex from "../../layouts/Flex";
 import Icon from "../../atoms/Icon";
+import { LoginForm } from "../../organisms/login";
 
 const StyledEasyText = styled.p`
   width: 30%;
@@ -70,16 +70,7 @@ export function LoginModal({
 }: LoginModalProps) {
   return (
     <>
-      <Modal
-        width="18.75%"
-        $minWidth="22.5%"
-        height="640px"
-        $minHeight="620px"
-        $top="13%"
-        $left="39%"
-        $minLeft="36%"
-        onClose={onClose}
-      >
+      <Modal onClose={onClose}>
         <Box $marginTop="64px" $marginBottom="63px">
           <Flex $flexDirection="column" $alignItems="center">
             <Text variant="large">PROVIT</Text>
