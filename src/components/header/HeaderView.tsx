@@ -4,6 +4,7 @@
  * 수정일 : 2024/1/9
  */
 
+import { Link, Outlet } from "react-router-dom";
 import styled from "styled-components";
 
 const StyledHeaderSection = styled.div`

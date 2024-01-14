@@ -1,4 +1,4 @@
-import { Dispatch, ReactNode, SetStateAction } from "react";
+import { ReactNode } from "react";
 import styled from "styled-components";
 import closeModalBtn from "../../assets/img/button/closeBtn.png";
 
@@ -27,6 +27,7 @@ const StyledModalWrap = styled.div<styleProps>`
     width: ${(props) => props.$minWidth};
     height: ${(props) => props.$minHeight};
   }
+  overflow-y: scroll;
 `;
 
 const StyledCloseBtn = styled.button`
@@ -68,8 +69,18 @@ export function Modal({
     }
   };
 
+  // 모달 외부 클릭 시 모달 닫기
+  const handleContainerClick = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    // 모달 내부에서 발생한 클릭은 모달을 닫지 않도록 함
+    if (e.target === e.currentTarget) {
+      closeModal();
+    }
+  };
+
   return (
-    <StyledModalContainer>
+    <StyledModalContainer onClick={handleContainerClick}>
       <StyledModalWrap
         width={width}
         height={height}

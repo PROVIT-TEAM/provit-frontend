@@ -1,11 +1,11 @@
 /**
  * component 설명 : 생년월일 select box
  * 작업자 : 김연정
- * 수정일 : 2024/1/12
+ * 수정일 : 2024/1/14
  */
 
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { CommonSelectBox } from "../components";
+import { CommonSelectBox } from "../../commonInput";
 
 interface props {
   setBirth: Dispatch<SetStateAction<string>>;

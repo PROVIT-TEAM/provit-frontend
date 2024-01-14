@@ -74,6 +74,7 @@ type ButtonProps = {
       backgroundColor?: string;
     };
   };
+  $hoverColor?: string;
 };
 
 const Button = styled.button<ButtonProps>`
@@ -111,6 +112,10 @@ const Button = styled.button<ButtonProps>`
   border-radius: 8px;
   outline: 0;
   margin-bottom: 16px;
+  background-color: ${(props) => props.backgroundColor};
+  &:hover {
+    background-color: ${(props) => props.$hoverColor};
+  }
 `;
 
 Button.defaultProps = {

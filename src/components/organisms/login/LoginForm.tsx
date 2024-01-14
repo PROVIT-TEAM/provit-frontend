@@ -1,8 +1,8 @@
-import { Input } from "../atoms/Input";
-import Label from "../atoms/Label";
-import Button from "../atoms/Button";
-import Flex from "../layouts/Flex";
-import Box from "../layouts/Box";
+import Button from "../../atoms/Button";
+import { Input } from "../../atoms/Input";
+import Label from "../../atoms/Label";
+import Box from "../../layouts/Box";
+import Flex from "../../layouts/Flex";
 
 interface props {
   handleSubmit: () => void;
