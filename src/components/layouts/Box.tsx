@@ -9,6 +9,7 @@ export type BoxProps = {
   $marginTop?: string;
   $marginBottom?: string;
   $marginLeft?: string;
+  $bgColor?: string;
 };
 const Box = styled.div<BoxProps>`
   width: ${(props) => props.width || undefined};
@@ -19,6 +20,7 @@ const Box = styled.div<BoxProps>`
   margin-top: ${(props) => props.$marginTop || undefined};
   margin-bottom: ${(props) => props.$marginBottom || undefined};
   margin-left: ${(props) => props.$marginLeft || undefined};
+  background-color: ${(props) => props.$bgColor || undefined};
 `;
 
 export default Box;
