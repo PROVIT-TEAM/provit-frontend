@@ -12,11 +12,14 @@ interface props {
 }
 
 const SideSheetBox = styled.div<props>`
-  width: 89.09%;
+  width: 92%;
   height: ${(props) => props.height};
   padding: 1rem;
   background-color: ${colors.gray06};
   border-radius: 8px;
+  @media (max-width: 1600px) {
+    width: 90%;
+  }
 `;
 
 export default SideSheetBox;

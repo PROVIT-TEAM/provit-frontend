@@ -5,7 +5,7 @@
  */
 import colors from "../../../themes/colors";
 import Text from "../../atoms/Text";
-import SideSheetBox from "./SidesheetBox";
+import SideSheetBox from "../../common/sidesheet/SidesheetBox";
 import fontSizes from "../../../themes/fontSizes";
 import styled from "styled-components";
 import Box from "../../layouts/Box";

@@ -8,6 +8,7 @@ import Box from "../../layouts/Box";
 import colors from "../../../themes/colors";
 import { Calender } from "./Calender";
 import { AchievementRate } from "./AchievementRate";
+import { RecodeStudy } from "./RecodeStudy";
 
 export function SideSheet() {
   return (
@@ -23,6 +24,9 @@ export function SideSheet() {
         </Box>
         <Box $marginBottom="16px">
           <AchievementRate />
+        </Box>
+        <Box $marginBottom="24px">
+          <RecodeStudy />
         </Box>
       </Box>
     </>
