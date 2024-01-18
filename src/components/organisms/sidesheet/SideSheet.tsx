@@ -9,26 +9,35 @@ import colors from "../../../themes/colors";
 import { Calender } from "./Calender";
 import { AchievementRate } from "./AchievementRate";
 import { RecodeStudy } from "./RecodeStudy";
+import Tabs from "./Tabs";
+import styled from "styled-components";
+
+const StyledSideSheetContainer = styled.div`
+  width: 22.916%;
+  height: 88vh;
+  max-height: 88vh;
+  background-color: ${colors.gray07};
+  padding: 24px;
+  overflow-y: scroll;
+`;
 
 export function SideSheet() {
   return (
     <>
-      <Box
-        width="22.916%"
-        height="100vh"
-        $bgColor={colors.gray07}
-        padding="24px"
-      >
+      <StyledSideSheetContainer>
         <Box $marginBottom="16px">
           <Calender />
         </Box>
         <Box $marginBottom="16px">
           <AchievementRate />
         </Box>
-        <Box $marginBottom="24px">
+        <Box $marginBottom="20px">
           <RecodeStudy />
         </Box>
-      </Box>
+        <Box>
+          <Tabs />
+        </Box>
+      </StyledSideSheetContainer>
     </>
   );
 }

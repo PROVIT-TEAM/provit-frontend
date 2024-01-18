@@ -11,7 +11,6 @@ import HeaderContainer from "../containers/headerContainer/HeaderContainer";
 const StyledMainContainer = styled.div`
   width: 100vw;
   height: 100vh;
-  overflow-y: hidden;
   background-color: #efefef;
 `;
 export function Main() {
