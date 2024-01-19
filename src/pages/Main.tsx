@@ -5,18 +5,21 @@
  */
 
 import styled from "styled-components";
+import { SideSheet } from "../components/organisms/sidesheet/SideSheet";
 import HeaderContainer from "../containers/headerContainer/HeaderContainer";
 
 const StyledMainContainer = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 100vh;
-  background-color: #dddddd;
+  background-color: #efefef;
 `;
 export function Main() {
   return (
     <>
-      <HeaderContainer />
-      <StyledMainContainer></StyledMainContainer>
+      <StyledMainContainer>
+        <HeaderContainer />
+        <SideSheet />
+      </StyledMainContainer>
     </>
   );
 }

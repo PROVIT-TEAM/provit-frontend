@@ -5,4 +5,6 @@ export * from "./modal/login/FindPwModal";
 export * from "./modal/ConfirmModal";
 export * from "./organisms/login/JoinForm";
 export * from "./organisms/login/LoginForm";
+export * from "./organisms/sidesheet";
 export * from "./layouts";
+export * from "./common";
