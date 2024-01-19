@@ -1,7 +1,7 @@
 /**
  * component 설명 : 사이드시트 - 카테고리, 상태 타이틀
  * 작업자 : 김연정
- * 수정일 : 2024/1/15
+ * 수정일 : 2024/1/19
  */
 
 import styled from "styled-components";
@@ -13,6 +13,9 @@ interface props {
   $color?: string;
   $bgcolor?: string;
   $radius?: string;
+  state?: string;
+  finish?: string;
+  continue?: string;
 }
 
 const Category = styled.span<props>`
@@ -27,11 +30,17 @@ const Category = styled.span<props>`
 `;
 
 const Span = styled.span<props>`
-  color: ${(props) => props.$color};
+  color: ${(props) =>
+    props.state === "진행중" ? props.finish : props.continue};
   margin-left: 8px;
 `;
 
-export function CategoryStatusTitle() {
+interface dataProps {
+  state?: string;
+  category?: string;
+}
+
+export function CategoryStatusTitle({ state, category }: dataProps) {
   return (
     <>
       <Text variant="small" color={colors.gray02}>
@@ -40,9 +49,12 @@ export function CategoryStatusTitle() {
           $bgcolor="rgba(68, 111, 246, 0.20)"
           $radius="4px"
         >
-          독서
+          {category}
         </Category>
-        오늘의 목표<Span $color={colors.mainColor}>진행중</Span>
+        오늘의 목표
+        <Span state={state} finish="#446FF6" continue="#ED662C">
+          {state}
+        </Span>
       </Text>
     </>
   );

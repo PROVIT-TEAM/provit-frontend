@@ -1,3 +1,9 @@
+/**
+ * component 설명 : 사이드시트 - 스케줄 일정
+ * 작업자 : 김연정
+ * 수정일 : 2024/1/19
+ */
+
 import Box from "../../layouts/Box";
 import SideSheetBox from "../../common/sidesheet/SidesheetBox";
 import { CategoryStatusTitle } from "../../common";
@@ -7,9 +13,6 @@ import Icon from "../../atoms/Icon";
 import styled from "styled-components";
 import colors from "../../../themes/colors";
 
-interface props {
-  color?: string;
-}
 const Span = styled.span<props>`
   font-size: ${fontSizes.mm};
   position: relative;
@@ -28,33 +31,44 @@ const Date = styled.span<props>`
   text-align: right;
 `;
 
-export function Schedule() {
+interface props {
+  color?: string;
+}
+
+interface dataProps {
+  data?: any;
+}
+
+export function Schedule({ data }: dataProps) {
   return (
     <>
-      <Box $marginBottom="8px">
-        <SideSheetBox>
-          <Box>
-            <Box $marginBottom="17.5px">
-              <CategoryStatusTitle />
-            </Box>
-            <Box $marginBottom="24px">
-              <Text fontSize={fontSizes.ml}>
-                영화 감상 및 독후감 작성(일정 이름)
-              </Text>
-              <Text fontSize={fontSizes.mm} color="#8E8E93">
-                센과 치히로의 행방불명(결과물 제목)
-              </Text>
-            </Box>
+      {data?.map((item: any) => (
+        <Box $marginBottom="8px">
+          <SideSheetBox>
             <Box>
-              <Icon iconName="clock" />
-              <Span>3시간20분</Span>
-              <Icon iconName="clip" />
-              <Span>결과물 링크</Span>
-              <Date color={colors.label}>2023.11.29</Date>
+              <Box $marginBottom="17.5px">
+                <CategoryStatusTitle
+                  state={item.state}
+                  category={item.category}
+                />
+              </Box>
+              <Box $marginBottom="24px">
+                <Text fontSize={fontSizes.ml}>{item?.title}</Text>
+                <Text fontSize={fontSizes.mm} color="#8E8E93">
+                  {item?.content}
+                </Text>
+              </Box>
+              <Box>
+                <Icon iconName="clock" />
+                <Span>{item?.time}</Span>
+                <Icon iconName="clip" />
+                <Span>{item?.link}</Span>
+                <Date color={colors.label}>{item?.ate}</Date>
+              </Box>
             </Box>
-          </Box>
-        </SideSheetBox>
-      </Box>
+          </SideSheetBox>
+        </Box>
+      ))}
     </>
   );
 }
