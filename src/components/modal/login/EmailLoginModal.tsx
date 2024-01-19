@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { CommonInputBox } from "../../commonInput/CommonInputBox";
 import { ActiveButton } from "../../commonButton/ActiveButton";
 import { InActiveButton } from "../../commonButton/InActiveButton";
+import signupService from "../../../api/services/signupService";
 
 const StyledTitle = styled.p`
   text-align: center;
@@ -235,8 +236,19 @@ export function EmailLoginModal({ setIsOpenEmailLoginModal }: props) {
   /**
    * 가입하기 버튼 클릭 시 실행되는 함수
    */
-  const handleJoinButton = () => {
+  const handleJoinButton = async () => {
     isValidInput();
+    try {
+      const response = await signupService({
+        username: emailValue,
+        password: passwordValue,
+        name: nameValue,
+      });
+
+      if (response.status === 200) {
+        setIsOpenEmailLoginModal(false);
+      }
+    } catch (error) {}
   };
 
   const handleEmail = (event: any) => {

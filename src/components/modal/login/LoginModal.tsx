@@ -17,7 +17,8 @@ import { CommonInputBox } from "../../commonInput/CommonInputBox";
 import { ActiveButton } from "../../commonButton/ActiveButton";
 import { useEffect } from "react";
 import { InActiveButton } from "../../commonButton/InActiveButton";
-
+import loginService from "../../../api/services/loginService";
+import { handleKakaoLogin } from "../../../api/services/kakaoOAuthService";
 const StyledTitle = styled.p`
   text-align: center;
   font-size: 2rem;
@@ -181,8 +182,18 @@ export function LoginModal({ setIsOpenLoginModal }: props) {
   /**
    * 로그인 버튼 클릭 시 실행되는 함수
    */
-  const clickLoginButton = () => {
+  const clickLoginButton = async () => {
     isValidInput();
+
+    try {
+      const response = await loginService({
+        username: emailValue,
+        password: passwordValue,
+      });
+      if (response.status === 200) {
+        console.log("success");
+      }
+    } catch (error) {}
   };
 
   const closeModal = () => {
@@ -195,6 +206,10 @@ export function LoginModal({ setIsOpenLoginModal }: props) {
 
   const openFindPasswordModal = () => {
     setIsOpenFindPasswordModal(true);
+  };
+
+  const kakaoLogin = async () => {
+    handleKakaoLogin();
   };
 
   return (
@@ -255,6 +270,8 @@ export function LoginModal({ setIsOpenLoginModal }: props) {
             <StyledLogoDiv>
               <StyledLoginLogo>
                 <img src={kakaoIcon} />
+                <button onClick={kakaoLogin}>카카오 로그인</button>
+
                 <img src={naverIcon} />
                 <img src={googleIcon} />
               </StyledLoginLogo>
