@@ -1,3 +1,9 @@
+/**
+ * component 설명 : 사이드시트 - 텝 메뉴(전체, 개인일정, 스터디)
+ * 작업자 : 김연정
+ * 수정일 : 2024/1/19
+ */
+
 import { useState } from "react";
 import styled from "styled-components";
 import colors from "../../../themes/colors";
@@ -22,7 +28,6 @@ const TabTitle = styled.button<props>`
   font-size: ${fontSizes.lm};
   font-weight: 700;
   height: 40px;
-  /* color: #fff; */
   background-color: transparent;
   border: none;
   border-bottom: ${(props) =>
