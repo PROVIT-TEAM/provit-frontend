@@ -44,7 +44,11 @@ export function RecodeStudy() {
       <SideSheetBox>
         <Box>
           <Box $marginBottom="14px">
-            <CategoryStatusTitle />
+            <CategoryStatusTitle
+              state="진행중"
+              category="독서"
+              title="개인일정"
+            />
           </Box>
           <Box $marginBottom="10px">
             <Text fontSize={fontSizes.ml} fontWeight="700">

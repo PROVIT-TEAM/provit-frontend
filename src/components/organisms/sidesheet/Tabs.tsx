@@ -88,7 +88,7 @@ const Tabs = () => {
       <Box $marginBottom="-3px">
         <Flex $justifyContent="flex-end" width="99%" $gap="2%">
           <TabTitle onClick={checkBtn} style={{ marginTop: "-6.5px" }}>
-            {checkState ? (
+            {!checkState ? (
               <Icon iconName="check" />
             ) : (
               <Icon iconName="nonCheck" />
@@ -99,9 +99,9 @@ const Tabs = () => {
           </Text>
         </Flex>
       </Box>
-      {activeTab === "all" && <AllSchedul />}
-      {activeTab === "personal" && <PersonalSchedule />}
-      {activeTab === "study" && <StudySchedule />}
+      {activeTab === "all" && <AllSchedul checkState={checkState} />}
+      {activeTab === "personal" && <PersonalSchedule checkState={checkState} />}
+      {activeTab === "study" && <StudySchedule checkState={checkState} />}
     </>
   );
 };

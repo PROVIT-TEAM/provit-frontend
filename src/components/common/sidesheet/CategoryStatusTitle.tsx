@@ -38,9 +38,10 @@ const Span = styled.span<props>`
 interface dataProps {
   state?: string;
   category?: string;
+  title?: string;
 }
 
-export function CategoryStatusTitle({ state, category }: dataProps) {
+export function CategoryStatusTitle({ state, category, title }: dataProps) {
   return (
     <>
       <Text variant="small" color={colors.gray02}>
@@ -51,7 +52,7 @@ export function CategoryStatusTitle({ state, category }: dataProps) {
         >
           {category}
         </Category>
-        오늘의 목표
+        {title}
         <Span state={state} finish="#446FF6" continue="#ED662C">
           {state}
         </Span>

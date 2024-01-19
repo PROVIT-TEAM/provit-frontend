@@ -4,6 +4,7 @@
  * 수정일 : 2024/1/19
  */
 
+import { useEffect, useState } from "react";
 import { Schedule } from "./Schedule";
 
 const dummyData = [
@@ -49,10 +50,24 @@ const dummyData = [
   },
 ];
 
-const AllSchedul = () => {
+interface props {
+  checkState?: boolean;
+}
+
+const AllSchedul = ({ checkState }: props) => {
+  const [data, setData] = useState([{}]);
+
+  useEffect(() => {
+    if (checkState) {
+      setData(dummyData.filter((item: any) => item.state !== "완료"));
+    } else {
+      setData(dummyData);
+    }
+  }, [checkState]);
+
   return (
     <>
-      <Schedule data={dummyData} />
+      <Schedule data={data} />
     </>
   );
 };

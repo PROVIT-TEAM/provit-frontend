@@ -50,6 +50,7 @@ export function Schedule({ data }: dataProps) {
                 <CategoryStatusTitle
                   state={item.state}
                   category={item.category}
+                  title={item.studyName}
                 />
               </Box>
               <Box $marginBottom="24px">
@@ -63,7 +64,7 @@ export function Schedule({ data }: dataProps) {
                 <Span>{item?.time}</Span>
                 <Icon iconName="clip" />
                 <Span>{item?.link}</Span>
-                <Date color={colors.label}>{item?.ate}</Date>
+                <Date color={colors.label}>{item?.date}</Date>
               </Box>
             </Box>
           </SideSheetBox>
