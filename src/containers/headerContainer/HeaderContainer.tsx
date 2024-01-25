@@ -10,17 +10,15 @@ import { ConfirmModal } from "../../components";
 import { UserInfoAtom } from "../../recoil/UserInfoAtom";
 import { useToasts } from "react-toast-notifications";
 import { HeaderView } from "../../components/header";
-import LoginModalContainer from "../loginContainer/LoginModalContainer";
-import SigninModalContainer from "../loginContainer/SigninModalContainer";
+import { useNavigate } from "react-router-dom";
 
 const HeaderContainer = () => {
-  const [isOpenLoginModal, setIsOpenLoginModal] = useState<boolean>(false);
-  const [isOpenSignInModal, setIsOpenSignInModal] = useState<boolean>(false);
   const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
   const [logoutState, setLogoutState] = useState<boolean>(false);
   const [userInfo, setUserInfo] = useRecoilState(UserInfoAtom);
   const UserInfo = useRecoilValue(UserInfoAtom);
   const { addToast } = useToasts();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (logoutState) {
@@ -31,35 +29,22 @@ const HeaderContainer = () => {
     }
   }, [logoutState]);
 
-  const handleLogin = () => {
-    setIsOpenLoginModal(true);
-  };
-
   const handleLogout = () => {
     setShowConfirmModal(true);
-  };
-
-  const handleSignIn = () => {
-    setIsOpenSignInModal(true);
   };
 
   return (
     <>
       <HeaderView
-        onLogin={handleLogin}
+        onLogin={() => {
+          navigate("/signin");
+        }}
         onLogout={handleLogout}
-        onSignIn={handleSignIn}
+        onSignIn={() => {
+          navigate("/signup");
+        }}
         isLoggedIn={UserInfo.length > 0}
       ></HeaderView>
-      {isOpenLoginModal && (
-        <LoginModalContainer setIsOpenLoginModal={setIsOpenLoginModal} />
-      )}
-      {isOpenSignInModal && (
-        <SigninModalContainer
-          setIsOpenSignInpModal={setIsOpenSignInModal}
-          setIsOpenLoginModal={setIsOpenLoginModal}
-        />
-      )}
       {showConfirmModal && (
         <ConfirmModal
           setShowConfirmModal={setShowConfirmModal}

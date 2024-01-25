@@ -5,7 +5,7 @@ export type LoginParams = {
   /**
    * 사용자 명
    */
-  username: string;
+  email: string;
 
   /**
    * 비밀번호

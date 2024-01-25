@@ -7,6 +7,7 @@
 import styled from "styled-components";
 import { SideSheet } from "../components/organisms/sidesheet/SideSheet";
 import HeaderContainer from "../containers/headerContainer/HeaderContainer";
+import { Outlet } from "react-router-dom";
 
 const StyledMainContainer = styled.div`
   width: 100vw;
@@ -18,6 +19,7 @@ export function Main() {
     <>
       <StyledMainContainer>
         <HeaderContainer />
+        <Outlet />
         <SideSheet />
       </StyledMainContainer>
     </>

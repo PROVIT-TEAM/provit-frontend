@@ -2,9 +2,13 @@ import axios from "axios";
 import axiosInstance from "../axios";
 import apis from "../apis";
 
-const KAKAO_CLIENT_ID = "6dc43dc13fee89e168e598325d9e3972";
-const KAKAO_CLIENT_SECRET = "8puU1MRj7cDAWOE4Xic0ixtjwzY88czG";
+const KAKAO_CLIENT_ID = "e736da8e5142cb5f83ca4b119ccadce9";
+const KAKAO_CLIENT_SECRET = "9lt7yOsjsayLqWyJYW8W1468otgpyBSo";
 const KAKAO_REDIRECT_URI = "http://localhost:3000/oauth";
+
+const NAVER_CLIENT_ID = "Oe_3Q2yQxIU56xUhKhh5";
+const NAVER_CLIENT_SECRET = "9YGOZyfyHL";
+const NAVER_REDIRECT_URI = "http://localhost:3000/oauth";
 
 const getKakaoAuthUrl = () => {
   return `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;

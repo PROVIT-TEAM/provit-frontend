@@ -1,24 +1,26 @@
 /**
- * component 설명 : 회원가입 모달
+ * component 설명 : 로그인 모달
  * 작업자 : 김연정
- * 수정일 : 2024/1/10
+ * 수정일 : 2024/1/9
  */
+
 import styled from "styled-components";
 import { Modal } from "../Modal";
-import Button from "../../atoms/Button";
-import Icon from "../../atoms/Icon";
 import Text from "../../atoms/Text";
 import Box from "../../layouts/Box";
 import Flex from "../../layouts/Flex";
-import { EmailJoinModal } from "./EmailJoinModal";
+import Icon from "../../atoms/Icon";
+import { LoginForm } from "../../organisms/login";
+import KakaoLoginComponent from "../../organisms/login/KakaoLoginComponent";
+import { useNavigate } from "react-router-dom";
 
 const StyledEasyText = styled.p`
-  width: 10%;
+  width: 30%;
   padding: 3%;
   text-align: center;
   color: #636366;
   position: relative;
-  left: 41.5%;
+  left: 31.5%;
   top: -20px;
   background-color: #2c2c2e;
   @media (max-width: 1600px) {
@@ -34,75 +36,73 @@ const StyledBar = styled.span`
   background-color: #636366;
 `;
 
-const StyledGotoLogin = styled.span`
-  margin-left: 2%;
-  color: #446ff6;
+const StyledOther = styled.p`
+  float: left;
+  color: #8e8e93;
+  margin: 10px 9px;
   cursor: pointer;
   &:hover {
     transition: all 0.3s;
-    color: #4168e5;
+    color: #707077;
   }
 `;
 
-interface props {
-  closeModal: () => void;
-  goToLogin: () => void;
-  gotoEmail: () => void;
-  setIsOpenEmailLoginModal: React.Dispatch<React.SetStateAction<boolean>>;
-  isOpenEmailLoginModal?: boolean;
-  closeEmailJoinModal?: () => void;
+interface SignInModalProps {
+  onClose: () => void;
+  handleSubmit: () => void;
+  handleEmail: (event: any) => void;
+  handlePassword: (event: any) => void;
+  emailValue?: string;
+  passwordValue?: string;
+  loginBtnState?: boolean;
 }
+
 export function SignInModal({
-  closeModal,
-  goToLogin,
-  gotoEmail,
-  setIsOpenEmailLoginModal,
-  isOpenEmailLoginModal,
-  closeEmailJoinModal,
-}: props) {
+  onClose,
+  handleSubmit,
+  handleEmail,
+  handlePassword,
+  emailValue,
+  passwordValue,
+  loginBtnState,
+}: SignInModalProps) {
+  const navigate = useNavigate();
   return (
     <>
-      <Modal onClose={closeModal}>
-        <Box $marginTop="112px" $marginBottom="134px">
+      <Modal onClose={onClose}>
+        <Box $marginTop="64px" $marginBottom="63px">
           <Flex $flexDirection="column" $alignItems="center">
             <Text variant="large">PROVIT</Text>
           </Flex>
         </Box>
+        <Box $marginTop="24px">
+          <LoginForm
+            handleSubmit={handleSubmit}
+            handleEmail={handleEmail}
+            handlePassword={handlePassword}
+            emailValue={emailValue}
+            passwordValue={passwordValue}
+            loginBtnState={loginBtnState}
+          />
+        </Box>
         <Box $marginBottom="40px">
-          <Button variant="kakao" width="100%">
-            <Flex $alignItems="center" $justifyContent="center" $gap="-10px">
-              <Icon iconName="kakao" />
-              카카오톡으로 시작하기
-            </Flex>
-          </Button>
-          <Button variant="active" onClick={gotoEmail} width="100%">
-            이메일로 가입하기
-          </Button>
-        </Box>
-        <Box>
-          <StyledBar></StyledBar>
-          <StyledEasyText>또는</StyledEasyText>
-          <Flex $justifyContent="center" $gap="16px">
-            <Icon iconName="naver" />
-            <Icon iconName="google" />
-          </Flex>
-        </Box>
-        <Box $marginTop="40px">
           <Flex $alignItems="center" $justifyContent="center">
-            <Text fontSize="16px" fontWeight="400">
-              이미 회원이신가요?
-            </Text>
-            <StyledGotoLogin onClick={goToLogin}>로그인하기</StyledGotoLogin>
+            <StyledOther onClick={() => navigate("/signup")}>
+              회원가입
+            </StyledOther>
+            <StyledOther onClick={() => navigate("/find-password")}>
+              비밀번호 찾기
+            </StyledOther>
           </Flex>
         </Box>
+        <StyledBar></StyledBar>
+        <StyledEasyText>간편로그인</StyledEasyText>
+        <Flex $justifyContent="center" $gap="16px">
+          <KakaoLoginComponent type={false} />
+          <Icon iconName="naver" />
+          <Icon iconName="google" />
+        </Flex>
       </Modal>
-      {isOpenEmailLoginModal && (
-        <EmailJoinModal
-          setIsOpenEmailLoginModal={setIsOpenEmailLoginModal}
-          closeEmailJoinModal={closeEmailJoinModal}
-          // setIsOpenSignInpModal={setIsOpenSignInpModal}
-        />
-      )}
     </>
   );
 }

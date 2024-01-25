@@ -5,16 +5,13 @@
  */
 
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FindPwModal } from "../../components";
 
-interface props {
-  setIsOpenFindPasswordModal?: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const FindPwModalContainer = ({ setIsOpenFindPasswordModal }: props) => {
+const FindPwModalContainer = () => {
   const [emailValue, setEmailValue] = useState<string>("");
   const [btnState, setBtnState] = useState<boolean>(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (emailValue !== "") {
       setBtnState(true);
@@ -24,7 +21,7 @@ const FindPwModalContainer = ({ setIsOpenFindPasswordModal }: props) => {
   }, [emailValue]);
 
   const closeModal = () => {
-    if (setIsOpenFindPasswordModal) setIsOpenFindPasswordModal(false);
+    navigate("/");
   };
 
   const handleEmail = (event: any) => {
