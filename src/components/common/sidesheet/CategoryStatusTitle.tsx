@@ -1,7 +1,7 @@
 /**
  * component 설명 : 사이드시트 - 카테고리, 상태 타이틀
  * 작업자 : 김연정
- * 수정일 : 2024/1/19
+ * 수정일 : 2024/1/24
  */
 
 import styled from "styled-components";
@@ -18,7 +18,7 @@ interface props {
   continue?: string;
 }
 
-const Category = styled.span<props>`
+const StyledCategory = styled.span<props>`
   color: ${(props) => props.$color};
   background-color: ${(props) => props.$bgcolor};
   border-radius: ${(props) => props.$radius};
@@ -29,7 +29,7 @@ const Category = styled.span<props>`
   margin-right: 8px;
 `;
 
-const Span = styled.span<props>`
+const StyledSpan = styled.span<props>`
   color: ${(props) =>
     props.state === "진행중" ? props.finish : props.continue};
   margin-left: 8px;
@@ -45,17 +45,17 @@ export function CategoryStatusTitle({ state, category, title }: dataProps) {
   return (
     <>
       <Text variant="small" color={colors.gray02}>
-        <Category
+        <StyledCategory
           $color={colors.mainColor}
           $bgcolor="rgba(68, 111, 246, 0.20)"
           $radius="4px"
         >
           {category}
-        </Category>
+        </StyledCategory>
         {title}
-        <Span state={state} finish="#446FF6" continue="#ED662C">
+        <StyledSpan state={state} finish="#446FF6" continue="#ED662C">
           {state}
-        </Span>
+        </StyledSpan>
       </Text>
     </>
   );
