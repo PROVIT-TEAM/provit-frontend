@@ -50,16 +50,16 @@ interface dataProps {
 }
 
 export function Schedule({ data }: dataProps) {
-  const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
-  const openMenu = () => {
-    setIsOpenMenu((prev) => !prev);
+  const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
+  const openMenu = (index: number) => {
+    setOpenMenuIndex(index === openMenuIndex ? null : index);
   };
   return (
     <>
-      {data?.map((item: any) => (
+      {data?.map((item: any, index: number) => (
         <Box $marginBottom="8px">
           <SideSheetBox>
-            <Box>
+            <Box style={{ position: "relative" }}>
               <Box $marginBottom="17.5px">
                 <CategoryStatusTitle
                   state={item.state}
@@ -67,11 +67,11 @@ export function Schedule({ data }: dataProps) {
                   title={item.studyName}
                 />
                 <Flex $justifyContent="right" $marginTop="-27px">
-                  <StyledMenuBtn onClick={openMenu}>
+                  <StyledMenuBtn onClick={() => openMenu(index)}>
                     <Icon iconName="menu" />
                   </StyledMenuBtn>
                 </Flex>
-                {isOpenMenu && <Menu />}
+                {openMenuIndex === index && <Menu />}
               </Box>
               <Box $marginBottom="24px">
                 <Text fontSize={fontSizes.ml}>{item?.title}</Text>
