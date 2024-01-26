@@ -26,6 +26,7 @@ export type TextProps = {
   variant?: TextVariant;
   fontSize?: string;
   fontWeight?: string;
+  cursor?: string;
 };
 
 const Text = styled.p<TextProps>`
@@ -38,7 +39,7 @@ const Text = styled.p<TextProps>`
       `;
     }
   }}
-
+  cursor: ${(props) => props.cursor};
   color: ${(props) => props.color || "#FFFFFF"};
   line-height: 150%;
 `;

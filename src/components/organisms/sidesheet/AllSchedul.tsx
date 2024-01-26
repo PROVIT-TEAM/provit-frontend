@@ -9,6 +9,16 @@ import { Schedule } from "./Schedule";
 
 const dummyData = [
   {
+    category: "독서",
+    studyName: "PROVIT(스터디 이름)",
+    state: "",
+    title: "영화 감상 및 독후감 작성(일정 이름)",
+    content: "센과 치히로의 행방불명(결과물 제목)",
+    time: "3시간20분",
+    link: "결과물 링크",
+    date: "2023.1.1",
+  },
+  {
     category: "개발공부",
     studyName: "자바스크립트 스터디",
     state: "진행중",
