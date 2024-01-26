@@ -14,6 +14,7 @@ const StyledMainContainer = styled.div`
   height: 100vh;
   background-color: #efefef;
 `;
+
 export function Main() {
   return (
     <>
