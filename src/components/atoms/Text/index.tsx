@@ -27,6 +27,7 @@ export type TextProps = {
   fontSize?: string;
   fontWeight?: string;
   cursor?: string;
+  $marginTop?: string;
 };
 
 const Text = styled.p<TextProps>`
@@ -42,6 +43,7 @@ const Text = styled.p<TextProps>`
   cursor: ${(props) => props.cursor};
   color: ${(props) => props.color || "#FFFFFF"};
   line-height: 150%;
+  margin-top: ${(props) => props.$marginTop};
 `;
 
 Text.defaultProps = {

@@ -1,7 +1,7 @@
 /**
  * component 설명 : 헤더 컨테이너
  * 작업자 : 김연정
- * 수정일 : 2024/1/9
+ * 수정일 : 2024/1/27
  */
 
 import { useEffect, useState } from "react";
@@ -49,6 +49,7 @@ const HeaderContainer = () => {
         <ConfirmModal
           setShowConfirmModal={setShowConfirmModal}
           setLogoutState={setLogoutState}
+          title="로그아웃하시겠습니까?"
         />
       )}
     </>

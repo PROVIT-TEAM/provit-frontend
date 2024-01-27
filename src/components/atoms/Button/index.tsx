@@ -75,6 +75,7 @@ type ButtonProps = {
     };
   };
   $hoverColor?: string;
+  $marginBottom?: string;
 };
 
 const Button = styled.button<ButtonProps>`
@@ -111,7 +112,7 @@ const Button = styled.button<ButtonProps>`
   border: none;
   border-radius: 8px;
   outline: 0;
-  margin-bottom: 16px;
+  margin-bottom: ${(props) => props.$marginBottom || "16px"};
   background-color: ${(props) => props.backgroundColor};
   &:hover {
     background-color: ${(props) => props.$hoverColor};

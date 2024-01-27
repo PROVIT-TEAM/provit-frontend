@@ -1,3 +1,9 @@
+/**
+ * component 설명 : 모달 컨테이너
+ * 작업자 : 김연정
+ * 수정일 : 2024/1/27
+ */
+
 import { ReactNode } from "react";
 import styled from "styled-components";
 import closeModalBtn from "../../assets/img/button/closeBtn.png";
@@ -21,13 +27,14 @@ const StyledModalWrap = styled.div<styleProps>`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   background-color: #2c2c2e;
-  border-radius: 20px;
+  border-radius: ${(props) => props.$radius};
   padding: 30px;
   @media (max-width: 1600px) {
     width: ${(props) => props.$minWidth};
     height: ${(props) => props.$minHeight};
   }
   overflow-y: scroll;
+  padding: ${(props) => props.$padding};
 `;
 
 const StyledCloseBtn = styled.button`
@@ -48,6 +55,8 @@ interface styleProps {
   $left?: string;
   $minLeft?: string;
   $minHeight?: string;
+  $padding?: string;
+  $radius?: string;
 }
 
 interface props {
@@ -62,6 +71,8 @@ export function Modal({
   $minHeight = "640px",
   onClose,
   children,
+  $padding,
+  $radius = "20px",
 }: styleProps & props) {
   const closeModal = () => {
     if (onClose) {
@@ -86,6 +97,8 @@ export function Modal({
         height={height}
         $minWidth={$minWidth}
         $minHeight={$minHeight}
+        $padding={$padding}
+        $radius={$radius}
       >
         <StyledCloseBtn onClick={closeModal}>
           <img src={closeModalBtn} />

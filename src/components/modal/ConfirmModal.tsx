@@ -1,6 +1,13 @@
+/**
+ * component 설명 : 확인모달
+ * 작업자 : 김연정
+ * 수정일 : 2024/1/27
+ */
+
 import { Dispatch } from "react";
 import { SetStateAction } from "react";
 import styled from "styled-components";
+import colors from "../../themes/colors";
 import Button from "../atoms/Button";
 import Text from "../atoms/Text";
 import Box from "../layouts/Box";
@@ -10,8 +17,19 @@ import { Modal } from "./Modal";
 interface props {
   setShowConfirmModal?: Dispatch<SetStateAction<boolean>>;
   setLogoutState?: Dispatch<SetStateAction<boolean>>;
+  title?: string;
+  contnet?: string;
+  buttonTxt1?: string;
+  buttonTxt2?: string;
 }
-export function ConfirmModal({ setShowConfirmModal, setLogoutState }: props) {
+export function ConfirmModal({
+  setShowConfirmModal,
+  setLogoutState,
+  title,
+  contnet,
+  buttonTxt1,
+  buttonTxt2,
+}: props) {
   const handleLogOutButton = () => {
     if (setLogoutState) setLogoutState(true);
   };
@@ -20,15 +38,30 @@ export function ConfirmModal({ setShowConfirmModal, setLogoutState }: props) {
   };
   return (
     <Modal
-      width="20%"
-      height="250px"
-      $left="40%"
-      $minHeight="250px"
+      width="22.916%"
+      $minWidth="27.5%"
+      $minHeight="auto"
       onClose={handleCancelButton}
+      $padding="24px"
+      $radius="8px"
     >
-      <Box $marginTop="64px" $marginBottom="63px">
+      <Box $marginTop="64px" $marginBottom="72px">
         <Flex $flexDirection="column" $alignItems="center">
-          <Text variant="medium">로그아웃하시겠습니까?</Text>
+          {title && (
+            <Text fontSize="20px" fontWeight="700">
+              {title}
+            </Text>
+          )}
+          {contnet && (
+            <Text
+              fontSize="16px"
+              fontWeight="500"
+              color={colors.gray02}
+              $marginTop="16px"
+            >
+              {contnet}
+            </Text>
+          )}
         </Flex>
       </Box>
       <Box>
@@ -36,18 +69,25 @@ export function ConfirmModal({ setShowConfirmModal, setLogoutState }: props) {
           <Button
             variant="active"
             width="50%"
-            height="40px"
-            onClick={handleLogOutButton}
+            height="56px"
+            fontWeight="500"
+            $marginBottom="0px"
+            onClick={handleCancelButton}
+            backgroundColor={colors.gray05}
+            $hoverColor={colors.gray04}
+            cursor="pointer"
           >
-            확인
+            {buttonTxt1}
           </Button>
           <Button
-            variant="inActive"
+            variant="active"
             width="50%"
-            height="40px"
-            onClick={handleCancelButton}
+            height="56px"
+            fontWeight="500"
+            $marginBottom="0px"
+            onClick={handleLogOutButton}
           >
-            취소
+            {buttonTxt2}
           </Button>
         </Flex>
       </Box>
