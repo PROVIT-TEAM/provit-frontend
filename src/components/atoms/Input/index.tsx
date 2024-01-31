@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import colors from "../../../themes/colors";
-import fontSizes from "../../../themes/fontSizes";
+import React from 'react'
+import styled from 'styled-components'
+import colors from '../../../themes/colors'
+import fontSizes from '../../../themes/fontSizes'
 
 const StyledInput = styled.input<props>`
   height: 48px;
@@ -18,17 +18,20 @@ const StyledInput = styled.input<props>`
   ::placeholder {
     color: ${colors.disabled};
   }
-`;
+  &:focus {
+    outline: none;
+  }
+`
 
 interface props {
-  text?: string;
-  color?: string;
-  type?: string;
-  placeholder?: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  value?: string;
-  $width?: string;
-  name?: string;
+  text?: string
+  color?: string
+  type?: string
+  placeholder?: string
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  value?: string
+  $width?: string
+  name?: string
 }
 export function Input({
   text,
@@ -37,12 +40,12 @@ export function Input({
   onChange,
   placeholder,
   value,
-  $width = "95%",
+  $width = '95%',
   name,
 }: props) {
   const handleInputValue = (event: any) => {
-    onChange(event);
-  };
+    onChange(event)
+  }
   return (
     <React.Fragment>
       <StyledInput
@@ -54,5 +57,5 @@ export function Input({
         name={name}
       ></StyledInput>
     </React.Fragment>
-  );
+  )
 }

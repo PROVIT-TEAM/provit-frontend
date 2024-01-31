@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -8,4 +8,7 @@ export const GlobalStyle = createGlobalStyle`
   ol, ul {
     list-style: none;
   }
-`;
+  select:focus {
+    outline: none;
+  }
+`
