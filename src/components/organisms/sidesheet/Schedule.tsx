@@ -80,22 +80,29 @@ export function Schedule({ data }: dataProps) {
                 </Text>
               </Box>
               <Box $marginBottom="-5px">
-                <Icon iconName="clock" />
-                <Span>{item?.time}</Span>
-                <Icon iconName="clip" />
-                <Span>{item?.link}</Span>
+                {item.state !== "" && (
+                  <>
+                    <Icon iconName="clock" />
+                    <Span>{item?.time}</Span>
+                  </>
+                )}
+                {item.state === "완료" && (
+                  <>
+                    <Icon iconName="clip" />
+                    <Span>{item?.link}</Span>
+                  </>
+                )}
                 {item.state === "" ? (
-                  <Flex $justifyContent="right" $marginTop="-30px">
-                    <Button
-                      width="24%"
-                      height="32px"
-                      variant="active"
-                      fontSize={fontSizes.mm}
-                      fontWeight="500"
-                    >
-                      시작하기
-                    </Button>
-                  </Flex>
+                  <Button
+                    width="100%"
+                    height="32px"
+                    variant="active"
+                    fontSize={fontSizes.mm}
+                    fontWeight="500"
+                    $marginBottom="12px"
+                  >
+                    시작하기
+                  </Button>
                 ) : (
                   <Date color={colors.label}>{item?.date}</Date>
                 )}

@@ -7,6 +7,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import colors from "../../../themes/colors";
+import Button from "../../atoms/Button";
 import Icon from "../../atoms/Icon";
 import Text from "../../atoms/Text";
 import Flex from "../../layouts/Flex";
@@ -45,25 +46,34 @@ export function Menu() {
     <>
       <StyledMenuContainer>
         <StyledList>
-          <Flex $gap="8px">
+          <Button
+            color={colors.white}
+            cursor="pointer"
+            height="auto"
+            width="auto"
+            $padding="4px 44px 4px 8px"
+            backgroundColor={colors.gray04}
+            $hoverColor={colors.gray03}
+            $marginBottom="0px"
+          >
             <Icon iconName="editIcon" />
-            <Text variant="small" color={colors.gray02} cursor="pointer">
-              수정
-            </Text>
-          </Flex>
+            &nbsp; 수정
+          </Button>
         </StyledList>
         <StyledList>
-          <Flex $gap="8px">
+          <Button
+            color={colors.white}
+            cursor="pointer"
+            height="auto"
+            width="auto"
+            $padding="4px 44px 4px 8px"
+            backgroundColor={colors.gray04}
+            $hoverColor={colors.gray03}
+            $marginBottom="0px"
+          >
             <Icon iconName="deleteIcon" />
-            <Text
-              variant="small"
-              color={colors.gray02}
-              cursor="pointer"
-              onClick={handleDeleteConFirmModal}
-            >
-              삭제
-            </Text>
-          </Flex>
+            &nbsp; 삭제
+          </Button>
         </StyledList>
       </StyledMenuContainer>
       {isOpenDeleteConFirmModal && (
