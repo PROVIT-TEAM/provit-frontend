@@ -5,9 +5,14 @@
  */
 
 import { useEffect, useState } from "react";
+import Text from "../../atoms/Text";
 import { Schedule } from "./Schedule";
+import colors from "../../../themes/colors";
+import fontSizes from "../../../themes/fontSizes";
+import Flex from "../../layouts/Flex";
+import Button from "../../atoms/Button";
 
-const dummyData = [
+const dummyData: any = [
   {
     category: "독서",
     studyName: "PROVIT(스터디 이름)",
@@ -77,7 +82,32 @@ const AllSchedul = ({ checkState }: props) => {
 
   return (
     <>
-      <Schedule data={data} />
+      {data.length > 0 ? (
+        <Schedule data={data} />
+      ) : (
+        <>
+          <Flex $justifyContent="center">
+            <Text
+              color={colors.gray02}
+              fontSize={fontSizes.lm}
+              fontWeight="500"
+              $marginTop="40px"
+            >
+              등록된 일정이 없습니다.
+            </Text>
+          </Flex>
+          <Button
+            width="100%"
+            height="56px"
+            variant="active"
+            fontSize={fontSizes.ml}
+            fontWeight="500"
+            $marginTop="40px"
+          >
+            일정 등록하기
+          </Button>
+        </>
+      )}
     </>
   );
 };
