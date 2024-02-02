@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import SocialLogin from "../components/modal/login/SocialLogin";
 import EmailContainer from "../containers/loginContainer/EmailContainer";
 import FindPwModalContainer from "../containers/loginContainer/FindPwModalContainer";
-import SignInModalContainer from "../containers/loginContainer/SignInModalContainer";
+import SignInModalContainer from "../containers/loginContainer/SigninModalContainer";
 import SignUpModalContainer from "../containers/loginContainer/SignUpModalContainer";
 import SignUpEmailModalContainer from "../containers/loginContainer/SignUpEmailModalContainer";
 import { Main } from "../pages";
