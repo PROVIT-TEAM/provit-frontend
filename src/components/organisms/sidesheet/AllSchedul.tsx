@@ -99,7 +99,7 @@ const AllSchedul = ({ checkState }: props) => {
           <Button
             width="100%"
             height="56px"
-            variant="active"
+            variant="$active"
             fontSize={fontSizes.ml}
             fontWeight="500"
             $marginTop="40px"

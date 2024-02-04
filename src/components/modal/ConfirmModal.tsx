@@ -78,20 +78,20 @@ export function ConfirmModal({
       <Box>
         <Flex $alignItems="center" $gap="5%">
           <Button
-            variant="active"
+            variant="$active"
             width="50%"
             height="56px"
             fontWeight="500"
             $marginBottom="0px"
             onClick={handleCancelButton}
-            backgroundColor={colors.gray05}
+            $backgroundColor={colors.gray05}
             $hoverColor={colors.gray04}
             cursor="pointer"
           >
             {buttonTxt1}
           </Button>
           <Button
-            variant="active"
+            variant="$active"
             width="50%"
             height="56px"
             fontWeight="500"

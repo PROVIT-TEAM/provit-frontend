@@ -2,10 +2,10 @@ import React from "react";
 import styled, { css } from "styled-components";
 import colors from "../../../themes/colors";
 
-export type ButtonVariant = "active" | "inActive" | "kakao";
+export type ButtonVariant = "$active" | "inActive" | "kakao";
 
 const variants = {
-  active: {
+  $active: {
     color: colors.white,
     backgroundColor: colors.mainColor,
     cursor: "pointer",
@@ -59,7 +59,7 @@ type ButtonProps = {
   height?: string;
   color?: string;
   cursor?: string;
-  backgroundColor?: string;
+  $backgroundColor?: string;
   lineHeight?: string;
   fontWeight?: string;
   $marginLeft?: string;
@@ -115,7 +115,7 @@ const Button = styled.button<ButtonProps>`
   outline: 0;
   margin-bottom: ${(props) => props.$marginBottom || "16px"};
   padding: ${(props) => props.$padding};
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.$backgroundColor};
   &:hover {
     background-color: ${(props) => props.$hoverColor};
   }
@@ -123,7 +123,7 @@ const Button = styled.button<ButtonProps>`
 `;
 
 Button.defaultProps = {
-  variant: "active",
+  variant: "$active",
 };
 
 export default Button;

@@ -48,7 +48,7 @@ export function FindPwModal({
             value={emailValue}
           />
           {btnState ? (
-            <Button variant="active" onClick={clickButton} width="100%">
+            <Button variant="$active" onClick={clickButton} width="100%">
               인증코드 발송
             </Button>
           ) : (

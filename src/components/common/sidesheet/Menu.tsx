@@ -65,7 +65,7 @@ export function Menu({ itemState }: props) {
             height="auto"
             width="auto"
             $padding="4px 44px 4px 8px"
-            backgroundColor={colors.gray04}
+            $backgroundColor={colors.gray04}
             $hoverColor={colors.gray03}
             $marginBottom="0px"
           >
@@ -80,7 +80,7 @@ export function Menu({ itemState }: props) {
             height="auto"
             width="auto"
             $padding="4px 44px 4px 8px"
-            backgroundColor={colors.gray04}
+            $backgroundColor={colors.gray04}
             $hoverColor={colors.gray03}
             $marginBottom="0px"
             onClick={handleDeleteConfirmModal}

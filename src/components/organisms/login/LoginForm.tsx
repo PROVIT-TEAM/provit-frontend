@@ -42,7 +42,7 @@ export function LoginForm({
             value={passwordValue}
           />
           {loginBtnState ? (
-            <Button width="100%" variant="active" onClick={handleSubmit}>
+            <Button width="100%" variant="$active" onClick={handleSubmit}>
               로그인
             </Button>
           ) : (

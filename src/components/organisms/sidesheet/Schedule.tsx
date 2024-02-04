@@ -71,7 +71,7 @@ export function Schedule({ data }: dataProps) {
   return (
     <>
       {data?.map((item: any, index: number) => (
-        <Box $marginBottom="8px">
+        <Box $marginBottom="8px" key={index}>
           <SideSheetBox>
             <Box style={{ position: "relative" }}>
               <Box $marginBottom="17.5px">
@@ -104,7 +104,7 @@ export function Schedule({ data }: dataProps) {
                   <Button
                     width="100%"
                     height="32px"
-                    variant="active"
+                    variant="$active"
                     fontSize={fontSizes.mm}
                     fontWeight="500"
                     $marginBottom="12px"
