@@ -56,7 +56,7 @@ const PersonalSchedule = ({ checkState }: props) => {
   }, [checkState]);
   return (
     <>
-      <Schedule data={data} />;
+      <Schedule data={data} />
     </>
   );
 };
