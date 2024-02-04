@@ -131,7 +131,6 @@ export function SignUpEmailForm() {
   /**
    * 인증 버튼 텍스트 변경 & 인증 성공 체크 이미지 상태 변경 함수
    */
-
   const handleEmailCertification = async () => {
     let emailRegex = new RegExp("[a-z0-9]+@[a-z]+.[a-z]{2,3}");
 
@@ -272,7 +271,7 @@ export function SignUpEmailForm() {
         <StyledSuccessCheck src={successCheckImg} />
       ) : (
         <Button
-          variant="active"
+          variant="$active"
           width="24%"
           height="47px"
           $marginLeft="5%"
@@ -331,7 +330,7 @@ export function SignUpEmailForm() {
       <AgreeCheckBox setSelectRadioValue={setSelectRadioValue} />
       {signBtnState ? (
         <Button
-          variant="active"
+          variant="$active"
           onClick={handleSignUp}
           width="100%"
           $marginTop="45px"
