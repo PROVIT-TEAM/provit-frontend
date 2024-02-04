@@ -26,6 +26,10 @@ const StyledMenuContainer = styled.div`
   display: inline;
   border-radius: 8px;
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.15);
+  @media (max-width: 1600px) {
+    width: 35%;
+    left: 61%;
+  }
 `;
 
 const StyledList = styled.div`
@@ -36,10 +40,17 @@ const StyledList = styled.div`
 `;
 
 export function Menu() {
-  const [isOpenDeleteConFirmModal, setIsOpenDeleteConFirmModal] =
+  const [isOpenDeleteConfirmModal, setIsOpenDeleteConfirmModal] =
     useState<boolean>(false);
-  const handleDeleteConFirmModal = () => {
-    setIsOpenDeleteConFirmModal(true);
+  const handleDeleteConfirmModal = () => {
+    setIsOpenDeleteConfirmModal(true);
+  };
+
+  /**
+   * 삭제하기 버튼 클릭 액션
+   */
+  const handleDelete = () => {
+    setIsOpenDeleteConfirmModal(false);
   };
 
   return (
@@ -70,19 +81,21 @@ export function Menu() {
             backgroundColor={colors.gray04}
             $hoverColor={colors.gray03}
             $marginBottom="0px"
+            onClick={handleDeleteConfirmModal}
           >
             <Icon iconName="deleteIcon" />
             &nbsp; 삭제
           </Button>
         </StyledList>
       </StyledMenuContainer>
-      {isOpenDeleteConFirmModal && (
+      {isOpenDeleteConfirmModal && (
         <ConfirmModal
           title="해당 일정을 삭제하시겠습니까?"
           contnet="일정을 삭제하시면, 일정 시트에서 사라집니다."
           buttonTxt1="취소"
           buttonTxt2="삭제하기"
-          setShowConfirmModal={setIsOpenDeleteConFirmModal}
+          setShowConfirmModal={setIsOpenDeleteConfirmModal}
+          handleAction={handleDelete}
         />
       )}
     </>
