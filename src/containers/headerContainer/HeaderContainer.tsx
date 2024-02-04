@@ -33,6 +33,10 @@ const HeaderContainer = () => {
     setShowConfirmModal(true);
   };
 
+  const handleLogOutButton = () => {
+    if (setLogoutState) setLogoutState(true);
+  };
+
   return (
     <>
       <HeaderView
@@ -49,7 +53,8 @@ const HeaderContainer = () => {
         <ConfirmModal
           setShowConfirmModal={setShowConfirmModal}
           setLogoutState={setLogoutState}
-          title="로그아웃하시겠습니까?"
+          title1="로그아웃하시겠습니까?"
+          handleAction={handleLogOutButton}
         />
       )}
     </>

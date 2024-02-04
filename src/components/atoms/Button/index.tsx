@@ -119,6 +119,7 @@ const Button = styled.button<ButtonProps>`
   &:hover {
     background-color: ${(props) => props.$hoverColor};
   }
+  white-space: nowrap;
 `;
 
 Button.defaultProps = {

@@ -6,7 +6,6 @@
 
 import { Dispatch } from "react";
 import { SetStateAction } from "react";
-import styled from "styled-components";
 import colors from "../../themes/colors";
 import Button from "../atoms/Button";
 import Text from "../atoms/Text";
@@ -17,25 +16,31 @@ import { Modal } from "./Modal";
 interface props {
   setShowConfirmModal?: Dispatch<SetStateAction<boolean>>;
   setLogoutState?: Dispatch<SetStateAction<boolean>>;
-  title?: string;
+  title1?: string;
+  title2?: string;
   contnet?: string;
   buttonTxt1?: string;
   buttonTxt2?: string;
+  handleAction?: () => void;
 }
 export function ConfirmModal({
   setShowConfirmModal,
   setLogoutState,
-  title,
+  title1,
+  title2,
   contnet,
   buttonTxt1,
   buttonTxt2,
+  handleAction,
 }: props) {
-  const handleLogOutButton = () => {
-    if (setLogoutState) setLogoutState(true);
-  };
   const handleCancelButton = () => {
     if (setShowConfirmModal) setShowConfirmModal(false);
   };
+
+  const handleActionButton = () => {
+    if (handleAction) handleAction();
+  };
+
   return (
     <Modal
       width="22.916%"
@@ -44,12 +49,18 @@ export function ConfirmModal({
       onClose={handleCancelButton}
       $padding="24px"
       $radius="8px"
+      height="294px"
     >
       <Box $marginTop="64px" $marginBottom="72px">
         <Flex $flexDirection="column" $alignItems="center">
-          {title && (
+          {title1 && (
             <Text fontSize="20px" fontWeight="700">
-              {title}
+              {title1}
+            </Text>
+          )}
+          {title2 && (
+            <Text fontSize="20px" fontWeight="700">
+              {title2}
             </Text>
           )}
           {contnet && (
@@ -85,7 +96,7 @@ export function ConfirmModal({
             height="56px"
             fontWeight="500"
             $marginBottom="0px"
-            onClick={handleLogOutButton}
+            onClick={handleActionButton}
           >
             {buttonTxt2}
           </Button>
