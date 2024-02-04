@@ -9,8 +9,6 @@ import styled from "styled-components";
 import colors from "../../../themes/colors";
 import Button from "../../atoms/Button";
 import Icon from "../../atoms/Icon";
-import Text from "../../atoms/Text";
-import Flex from "../../layouts/Flex";
 import { ConfirmModal } from "../../modal";
 
 const StyledMenuContainer = styled.div`
@@ -39,7 +37,11 @@ const StyledList = styled.div`
   }
 `;
 
-export function Menu() {
+interface props {
+  itemState?: string;
+}
+
+export function Menu({ itemState }: props) {
   const [isOpenDeleteConfirmModal, setIsOpenDeleteConfirmModal] =
     useState<boolean>(false);
   const handleDeleteConfirmModal = () => {
@@ -88,16 +90,27 @@ export function Menu() {
           </Button>
         </StyledList>
       </StyledMenuContainer>
-      {isOpenDeleteConfirmModal && (
-        <ConfirmModal
-          title="해당 일정을 삭제하시겠습니까?"
-          contnet="일정을 삭제하시면, 일정 시트에서 사라집니다."
-          buttonTxt1="취소"
-          buttonTxt2="삭제하기"
-          setShowConfirmModal={setIsOpenDeleteConfirmModal}
-          handleAction={handleDelete}
-        />
-      )}
+      {isOpenDeleteConfirmModal &&
+        (itemState !== "완료" ? (
+          <ConfirmModal
+            title1="해당 일정을 삭제하시겠습니까?"
+            contnet="일정을 삭제하시면, 일정 시트에서 사라집니다."
+            buttonTxt1="취소"
+            buttonTxt2="삭제하기"
+            setShowConfirmModal={setIsOpenDeleteConfirmModal}
+            handleAction={handleDelete}
+          />
+        ) : (
+          <ConfirmModal
+            title1="완료된 일정입니다."
+            title2="해당 일정을 삭제하시겠습니까?"
+            contnet="일정을 삭제하시면, 기록도 함께 사라집니다."
+            buttonTxt1="취소"
+            buttonTxt2="삭제하기"
+            setShowConfirmModal={setIsOpenDeleteConfirmModal}
+            handleAction={handleDelete}
+          />
+        ))}
     </>
   );
 }
