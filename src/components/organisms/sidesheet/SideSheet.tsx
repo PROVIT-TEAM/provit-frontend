@@ -48,7 +48,12 @@ export function SideSheet() {
         </Box>
         <Box>
           <Tabs />
-          <Button width="100%" height="56px" onClick={handleSchedule}>
+          <Button
+            width="100%"
+            height="56px"
+            onClick={handleSchedule}
+            $marginTop="8px"
+          >
             일정 등록하기
           </Button>
           {isOpenScheduleModal && (
