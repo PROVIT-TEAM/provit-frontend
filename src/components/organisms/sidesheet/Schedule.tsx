@@ -16,6 +16,7 @@ import Button from "../../atoms/Button";
 import Flex from "../../layouts/Flex";
 import { Menu } from "../../common/sidesheet/Menu";
 import { useState } from "react";
+import { ConfirmModal } from "../../modal";
 
 const Span = styled.span<props>`
   font-size: ${fontSizes.mm};
@@ -51,8 +52,21 @@ interface dataProps {
 
 export function Schedule({ data }: dataProps) {
   const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
-  const openMenu = (index: number) => {
+  const [itemState, setItemState] = useState<string>("");
+  const [isOpenStartScheduleModal, setIsOpenStartScheduleModal] =
+    useState<boolean>(false);
+
+  const openMenu = (index: number, item: { state: string }) => {
     setOpenMenuIndex(index === openMenuIndex ? null : index);
+    setItemState(item.state);
+  };
+
+  const handleStartSchedule = () => {
+    setIsOpenStartScheduleModal(true);
+  };
+
+  const handleCloseStartScheduleModla = () => {
+    setIsOpenStartScheduleModal(false);
   };
   return (
     <>
@@ -67,11 +81,11 @@ export function Schedule({ data }: dataProps) {
                   title={item.studyName}
                 />
                 <Flex $justifyContent="right" $marginTop="-27px">
-                  <StyledMenuBtn onClick={() => openMenu(index)}>
+                  <StyledMenuBtn onClick={() => openMenu(index, item)}>
                     <Icon iconName="menu" />
                   </StyledMenuBtn>
                 </Flex>
-                {openMenuIndex === index && <Menu />}
+                {openMenuIndex === index && <Menu itemState={itemState} />}
               </Box>
               <Box $marginBottom="24px">
                 <Text fontSize={fontSizes.ml}>{item?.title}</Text>
@@ -80,19 +94,13 @@ export function Schedule({ data }: dataProps) {
                 </Text>
               </Box>
               <Box $marginBottom="-5px">
-                {item.state !== "" && (
+                {item.state !== "" ? (
                   <>
                     <Icon iconName="clock" />
                     <Span>{item?.time}</Span>
+                    <Date color={colors.label}>{item?.date}</Date>
                   </>
-                )}
-                {item.state === "완료" && (
-                  <>
-                    <Icon iconName="clip" />
-                    <Span>{item?.link}</Span>
-                  </>
-                )}
-                {item.state === "" ? (
+                ) : (
                   <Button
                     width="100%"
                     height="32px"
@@ -100,17 +108,32 @@ export function Schedule({ data }: dataProps) {
                     fontSize={fontSizes.mm}
                     fontWeight="500"
                     $marginBottom="12px"
+                    onClick={handleStartSchedule}
                   >
                     시작하기
                   </Button>
-                ) : (
-                  <Date color={colors.label}>{item?.date}</Date>
+                )}
+                {item.state === "완료" && (
+                  <>
+                    <Icon iconName="clip" />
+                    <Span>{item?.link}</Span>
+                  </>
                 )}
               </Box>
             </Box>
           </SideSheetBox>
         </Box>
       ))}
+      {isOpenStartScheduleModal && (
+        <ConfirmModal
+          title1="일정을 시작하시겠습니까?"
+          contnet="일정을 시작하시면 완료 후, 다른 일정을 시작할 수 있습니다."
+          buttonTxt1="취소"
+          buttonTxt2="시작하기"
+          setShowConfirmModal={setIsOpenStartScheduleModal}
+          handleAction={handleCloseStartScheduleModla}
+        />
+      )}
     </>
   );
 }
