@@ -8,16 +8,16 @@
  * 수정사항 : 일정등록 버튼 추가
  */
 
-import Box from '../../layouts/Box'
-import colors from '../../../themes/colors'
-import { Calender } from './Calender'
-import { AchievementRate } from './AchievementRate'
-import { RecodeStudy } from './RecodeStudy'
-import Tabs from './Tabs'
-import styled from 'styled-components'
-import Button from '../../atoms/Button'
-import AddScheduleModalContainer from '../../../containers/sideSheetContainer/AddScheduleModalContainer'
-import { useState } from 'react'
+import Box from "../../layouts/Box";
+import colors from "../../../themes/colors";
+import { Calender } from "./Calender";
+import { AchievementRate } from "./AchievementRate";
+import { RecodeStudy } from "./RecodeStudy";
+import Tabs from "./Tabs";
+import styled from "styled-components";
+import Button from "../../atoms/Button";
+import AddScheduleModalContainer from "../../../containers/sideSheetContainer/AddScheduleModalContainer";
+import { useState } from "react";
 
 const StyledSideSheetContainer = styled.div`
   width: 22.916%;
@@ -26,13 +26,14 @@ const StyledSideSheetContainer = styled.div`
   background-color: ${colors.gray07};
   padding: 24px;
   overflow-y: scroll;
-`
+`;
 
 export function SideSheet() {
-  const [isOpenScheduleModal, setIsOpenScheduleModal] = useState<boolean>(false)
+  const [isOpenScheduleModal, setIsOpenScheduleModal] =
+    useState<boolean>(false);
   const handleSchedule = () => {
-    setIsOpenScheduleModal(true)
-  }
+    setIsOpenScheduleModal(true);
+  };
   return (
     <>
       <StyledSideSheetContainer>
@@ -47,7 +48,7 @@ export function SideSheet() {
         </Box>
         <Box>
           <Tabs />
-          <Button width="392px" height="56px" onClick={handleSchedule}>
+          <Button width="100%" height="56px" onClick={handleSchedule}>
             일정 등록하기
           </Button>
           {isOpenScheduleModal && (
@@ -58,5 +59,5 @@ export function SideSheet() {
         </Box>
       </StyledSideSheetContainer>
     </>
-  )
+  );
 }
