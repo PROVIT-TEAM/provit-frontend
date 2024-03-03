@@ -8,16 +8,17 @@
  * 수정사항 : 일정등록 버튼 추가
  */
 
-import Box from "../../layouts/Box";
-import colors from "../../../themes/colors";
-import { Calender } from "./Calender";
-import { AchievementRate } from "./AchievementRate";
-import { RecodeStudy } from "./RecodeStudy";
-import Tabs from "./Tabs";
-import styled from "styled-components";
-import Button from "../../atoms/Button";
-import AddScheduleModalContainer from "../../../containers/sideSheetContainer/AddScheduleModalContainer";
-import { useState } from "react";
+import Box from '../../layouts/Box'
+import colors from '../../../themes/colors'
+import { Calender } from './Calender'
+import { AchievementRate } from './AchievementRate'
+import { RecodeStudy } from './RecodeStudy'
+import Tabs from './Tabs'
+import styled from 'styled-components'
+import Button from '../../atoms/Button'
+import AddScheduleModalContainer from '../../../containers/sideSheetContainer/AddScheduleModalContainer'
+import { useState } from 'react'
+import { PlusIcon } from '../../../assets/img/button/plus_icon'
 
 const StyledSideSheetContainer = styled.div`
   width: 22.916%;
@@ -26,14 +27,13 @@ const StyledSideSheetContainer = styled.div`
   background-color: ${colors.gray07};
   padding: 24px;
   overflow-y: scroll;
-`;
+`
 
 export function SideSheet() {
-  const [isOpenScheduleModal, setIsOpenScheduleModal] =
-    useState<boolean>(false);
+  const [isOpenScheduleModal, setIsOpenScheduleModal] = useState<boolean>(false)
   const handleSchedule = () => {
-    setIsOpenScheduleModal(true);
-  };
+    setIsOpenScheduleModal(true)
+  }
   return (
     <>
       <StyledSideSheetContainer>
@@ -52,17 +52,19 @@ export function SideSheet() {
             width="100%"
             height="56px"
             onClick={handleSchedule}
-            $marginTop="8px"
+            $backgroundColor={colors.gray07}
           >
-            일정 등록하기
+            <PlusIcon width="24" height="24" top="5px" marginright="10px" />
+            추가하기
           </Button>
           {isOpenScheduleModal && (
             <AddScheduleModalContainer
+              modaltitle="새로운 일정 등록"
               setIsOpenScheduleModal={setIsOpenScheduleModal}
             />
           )}
         </Box>
       </StyledSideSheetContainer>
     </>
-  );
+  )
 }

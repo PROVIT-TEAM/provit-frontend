@@ -8,6 +8,7 @@ import SignUpEmailModalContainer from '../containers/loginContainer/SignUpEmailM
 import { Main } from '../pages'
 import PublicRouter from './PublicRouter'
 import PrivateRouter from './PrivateRouter'
+import AddScheduleModalContainer from '../containers/sideSheetContainer/AddScheduleModalContainer'
 
 const Router = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
   return (
@@ -21,6 +22,7 @@ const Router = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
           <Route path="find-account" element={<SignUpModalContainer />} />
           <Route path="/email/:email/:code" element={<EmailContainer />} />
           <Route path="/oauth" element={<SocialLogin />} />
+          <Route path="/add_schedule" element={<AddScheduleModalContainer />} />
         </Route>
         <Route
           element={<PrivateRouter isAuthenticated={isAuthenticated} />}

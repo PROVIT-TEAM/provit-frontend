@@ -4,76 +4,77 @@
  * 수정일 : 2024/1/19
  */
 
-import Box from "../../layouts/Box";
-import SideSheetBox from "../../common/sidesheet/SidesheetBox";
-import { CategoryStatusTitle } from "../../common";
-import Text from "../../atoms/Text";
-import fontSizes from "../../../themes/fontSizes";
-import Icon from "../../atoms/Icon";
-import styled from "styled-components";
-import colors from "../../../themes/colors";
-import Button from "../../atoms/Button";
-import Flex from "../../layouts/Flex";
-import { Menu } from "../../common/sidesheet/Menu";
-import { useState } from "react";
-import { ConfirmModal } from "../../modal";
+import Box from '../../layouts/Box'
+import SideSheetBox from '../../common/sidesheet/SidesheetBox'
+import { CategoryStatusTitle } from '../../common'
+import Text from '../../atoms/Text'
+import fontSizes from '../../../themes/fontSizes'
+import Icon from '../../atoms/Icon'
+import styled from 'styled-components'
+import colors from '../../../themes/colors'
+import Button from '../../atoms/Button'
+import Flex from '../../layouts/Flex'
+import { Menu } from '../../common/sidesheet/Menu'
+import { useState } from 'react'
+import { ConfirmModal } from '../../modal'
 
 const Span = styled.span<props>`
   font-size: ${fontSizes.mm};
   position: relative;
   top: -4.5px;
   left: 2%;
-  color: ${(props) => props.color || "#fff"};
+  color: ${(props) => props.color || '#fff'};
   margin-right: 6%;
-`;
+`
 
 const Date = styled.span<props>`
   font-size: ${fontSizes.mm};
   position: relative;
   top: 3px;
-  color: ${(props) => props.color || "#fff"};
+  color: ${(props) => props.color || '#fff'};
   float: right;
   text-align: right;
-`;
+`
 
 const StyledMenuBtn = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
-`;
+`
 
 interface props {
-  color?: string;
+  color?: string
 }
 
 interface dataProps {
-  data?: any;
+  data?: any
 }
 
 export function Schedule({ data }: dataProps) {
-  const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
-  const [itemState, setItemState] = useState<string>("");
+  const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null)
+  const [itemState, setItemState] = useState<string>('')
   const [isOpenStartScheduleModal, setIsOpenStartScheduleModal] =
-    useState<boolean>(false);
+    useState<boolean>(false)
 
   const openMenu = (index: number, item: { state: string }) => {
-    setOpenMenuIndex(index === openMenuIndex ? null : index);
-    setItemState(item.state);
-  };
+    setOpenMenuIndex(index === openMenuIndex ? null : index)
+    setItemState(item.state)
+  }
 
   const handleStartSchedule = () => {
-    setIsOpenStartScheduleModal(true);
-  };
+    setIsOpenStartScheduleModal(true)
+  }
 
   const handleCloseStartScheduleModla = () => {
-    setIsOpenStartScheduleModal(false);
-  };
+    setIsOpenStartScheduleModal(false)
+  }
+
   return (
     <>
       {data?.map((item: any, index: number) => (
         <Box $marginBottom="8px" key={index}>
           <SideSheetBox>
-            <Box style={{ position: "relative" }}>
+            <Box style={{ position: 'relative' }}>
               <Box $marginBottom="17.5px">
                 <CategoryStatusTitle
                   state={item.state}
@@ -94,7 +95,7 @@ export function Schedule({ data }: dataProps) {
                 </Text>
               </Box>
               <Box $marginBottom="-5px">
-                {item.state !== "" ? (
+                {item.state !== '' ? (
                   <>
                     <Icon iconName="clock" />
                     <Span>{item?.time}</Span>
@@ -113,7 +114,7 @@ export function Schedule({ data }: dataProps) {
                     시작하기
                   </Button>
                 )}
-                {item.state === "완료" && (
+                {item.state === '완료' && (
                   <>
                     <Icon iconName="clip" />
                     <Span>{item?.link}</Span>
@@ -135,5 +136,5 @@ export function Schedule({ data }: dataProps) {
         />
       )}
     </>
-  );
+  )
 }

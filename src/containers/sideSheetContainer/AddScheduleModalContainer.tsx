@@ -2,9 +2,13 @@ import React, { ChangeEvent, useState } from 'react'
 import { AddScheduleModal } from '../../components/modal/schedule'
 
 interface props {
+  modaltitle?: string
   setIsOpenScheduleModal?: React.Dispatch<React.SetStateAction<boolean>>
 }
-const AddScheduleModalContainer = ({ setIsOpenScheduleModal }: props) => {
+const AddScheduleModalContainer = ({
+  modaltitle,
+  setIsOpenScheduleModal,
+}: props) => {
   const [category, setCategoryValue] = useState<string>('')
   const [title, setTitleValue] = useState<string>('')
   const [start, setStartValue] = useState<string>('')
@@ -54,6 +58,7 @@ const AddScheduleModalContainer = ({ setIsOpenScheduleModal }: props) => {
   return (
     <>
       <AddScheduleModal
+        modaltitle={modaltitle}
         category={category}
         start={start}
         end={end}

@@ -4,9 +4,9 @@
  * 수정일 : 2024/1/27
  */
 
-import { ReactNode } from "react";
-import styled from "styled-components";
-import closeModalBtn from "../../assets/img/button/closeBtn.png";
+import { ReactNode } from 'react'
+import styled from 'styled-components'
+import closeModalBtn from '../../assets/img/button/closeBtn.png'
 
 const StyledModalContainer = styled.div`
   position: fixed;
@@ -15,7 +15,7 @@ const StyledModalContainer = styled.div`
   z-index: 10;
   width: 100vw;
   height: 100vh;
-`;
+`
 
 const StyledModalWrap = styled.div<styleProps>`
   position: absolute;
@@ -33,9 +33,9 @@ const StyledModalWrap = styled.div<styleProps>`
     width: ${(props) => props.$minWidth};
     height: ${(props) => props.$minHeight};
   }
-  overflow-y: scroll;
+  overflow-y: ${(props) => props.overflow || 'scroll'};
   padding: ${(props) => props.$padding};
-`;
+`
 
 const StyledCloseBtn = styled.button`
   float: right;
@@ -45,40 +45,42 @@ const StyledCloseBtn = styled.button`
   img {
     cursor: pointer;
   }
-`;
+`
 
 interface styleProps {
-  width?: string;
-  $minWidth?: string;
-  height?: string;
-  $top?: string;
-  $left?: string;
-  $minLeft?: string;
-  $minHeight?: string;
-  $padding?: string;
-  $radius?: string;
+  width?: string
+  $minWidth?: string
+  height?: string
+  $top?: string
+  $left?: string
+  $minLeft?: string
+  $minHeight?: string
+  $padding?: string
+  $radius?: string
+  overflow?: string
 }
 
 interface props {
-  onClose?: () => void;
-  children?: ReactNode;
+  onClose?: () => void
+  children?: ReactNode
 }
 
 export function Modal({
-  width = "18.75%",
-  $minWidth = "22.5%",
-  height = "640px",
-  $minHeight = "640px",
+  width = '18.75%',
+  $minWidth = '22.5%',
+  height = '640px',
+  $minHeight = '640px',
   onClose,
   children,
   $padding,
-  $radius = "20px",
+  $radius = '20px',
+  overflow,
 }: styleProps & props) {
   const closeModal = () => {
     if (onClose) {
-      onClose();
+      onClose()
     }
-  };
+  }
 
   // 모달 외부 클릭 시 모달 닫기
   const handleContainerClick = (
@@ -86,9 +88,9 @@ export function Modal({
   ) => {
     // 모달 내부에서 발생한 클릭은 모달을 닫지 않도록 함
     if (e.target === e.currentTarget) {
-      closeModal();
+      closeModal()
     }
-  };
+  }
 
   return (
     <StyledModalContainer onClick={handleContainerClick}>
@@ -99,6 +101,7 @@ export function Modal({
         $minHeight={$minHeight}
         $padding={$padding}
         $radius={$radius}
+        overflow={overflow}
       >
         <StyledCloseBtn onClick={closeModal}>
           <img src={closeModalBtn} />
@@ -106,5 +109,5 @@ export function Modal({
         {children}
       </StyledModalWrap>
     </StyledModalContainer>
-  );
+  )
 }

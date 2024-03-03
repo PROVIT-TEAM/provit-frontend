@@ -4,12 +4,14 @@
  * 수정일 : 2024/1/26
  */
 
-import { useState } from "react";
-import styled from "styled-components";
-import colors from "../../../themes/colors";
-import Button from "../../atoms/Button";
-import Icon from "../../atoms/Icon";
-import { ConfirmModal } from "../../modal";
+import { useState } from 'react'
+import styled from 'styled-components'
+import colors from '../../../themes/colors'
+import Button from '../../atoms/Button'
+import Icon from '../../atoms/Icon'
+import { ConfirmModal } from '../../modal'
+import { AddScheduleModal } from '../../modal/schedule'
+import AddScheduleModalContainer from '../../../containers/sideSheetContainer/AddScheduleModalContainer'
 
 const StyledMenuContainer = styled.div`
   width: 28%;
@@ -28,32 +30,36 @@ const StyledMenuContainer = styled.div`
     width: 35%;
     left: 61%;
   }
-`;
+`
 
 const StyledList = styled.div`
   padding: 4px;
   :first {
     margin-bottom: 4px;
   }
-`;
+`
 
 interface props {
-  itemState?: string;
+  itemState?: string
 }
 
 export function Menu({ itemState }: props) {
   const [isOpenDeleteConfirmModal, setIsOpenDeleteConfirmModal] =
-    useState<boolean>(false);
+    useState<boolean>(false)
   const handleDeleteConfirmModal = () => {
-    setIsOpenDeleteConfirmModal(true);
-  };
+    setIsOpenDeleteConfirmModal(true)
+  }
 
   /**
    * 삭제하기 버튼 클릭 액션
    */
   const handleDelete = () => {
-    setIsOpenDeleteConfirmModal(false);
-  };
+    setIsOpenDeleteConfirmModal(false)
+  }
+  const [isOpenModifyModal, setIsOpenModifyModal] = useState<boolean>(false)
+  const handleSchedule = () => {
+    setIsOpenModifyModal(true)
+  }
 
   return (
     <>
@@ -68,11 +74,18 @@ export function Menu({ itemState }: props) {
             $backgroundColor={colors.gray04}
             $hoverColor={colors.gray03}
             $marginBottom="0px"
+            onClick={handleSchedule}
           >
             <Icon iconName="editIcon" />
             &nbsp; 수정
           </Button>
         </StyledList>
+        {isOpenModifyModal && (
+          <AddScheduleModalContainer
+            modaltitle="일정 수정"
+            setIsOpenScheduleModal={setIsOpenModifyModal}
+          />
+        )}
         <StyledList>
           <Button
             color={colors.white}
@@ -91,7 +104,7 @@ export function Menu({ itemState }: props) {
         </StyledList>
       </StyledMenuContainer>
       {isOpenDeleteConfirmModal &&
-        (itemState !== "완료" ? (
+        (itemState !== '완료' ? (
           <ConfirmModal
             title1="해당 일정을 삭제하시겠습니까?"
             contnet="일정을 삭제하시면, 일정 시트에서 사라집니다."
@@ -112,5 +125,5 @@ export function Menu({ itemState }: props) {
           />
         ))}
     </>
-  );
+  )
 }
