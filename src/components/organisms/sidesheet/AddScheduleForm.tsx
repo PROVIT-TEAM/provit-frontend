@@ -207,7 +207,6 @@ export function AddScheduleForm({
         <Flex $flexDirection="column">
           <Label>제목</Label>
           <Input
-            $width="100%"
             type="text"
             name="title"
             placeholder="일정 이름을 입력해주세요."

@@ -6,6 +6,7 @@ import Text from '../../atoms/Text'
 import { AddScheduleForm } from '../../organisms/sidesheet/AddScheduleForm'
 
 interface ScheduleModalProps {
+  modaltitle?: string
   category?: string
   start?: string
   end?: string
@@ -24,6 +25,7 @@ interface ScheduleModalProps {
 }
 
 export function AddScheduleModal({
+  modaltitle,
   category,
   start,
   end,
@@ -47,11 +49,12 @@ export function AddScheduleModal({
         height="535px"
         $minWidth="640px"
         $minHeight="535px"
+        overflow="none"
       >
         <Box $marginTop="0px" $marginBottom="40px">
           <Flex $flexDirection="column" $alignItems="center">
             <Text fontSize="1rem" fontWeight="700">
-              새로운 일정 등록
+              {modaltitle || 'PROVIT'}
             </Text>
           </Flex>
         </Box>

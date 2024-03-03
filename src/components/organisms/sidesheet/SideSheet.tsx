@@ -18,6 +18,7 @@ import styled from 'styled-components'
 import Button from '../../atoms/Button'
 import AddScheduleModalContainer from '../../../containers/sideSheetContainer/AddScheduleModalContainer'
 import { useState } from 'react'
+import { PlusIcon } from '../../../assets/img/button/plus_icon'
 
 const StyledSideSheetContainer = styled.div`
   width: 22.916%;
@@ -47,11 +48,18 @@ export function SideSheet() {
         </Box>
         <Box>
           <Tabs />
-          <Button width="392px" height="56px" onClick={handleSchedule}>
-            일정 등록하기
+          <Button
+            width="100%"
+            height="56px"
+            onClick={handleSchedule}
+            backgroundColor={colors.gray07}
+          >
+            <PlusIcon width="24" height="24" top="5px" marginright="10px" />
+            추가하기
           </Button>
           {isOpenScheduleModal && (
             <AddScheduleModalContainer
+              modaltitle="새로운 일정 등록"
               setIsOpenScheduleModal={setIsOpenScheduleModal}
             />
           )}

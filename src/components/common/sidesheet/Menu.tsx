@@ -4,13 +4,15 @@
  * 수정일 : 2024/1/26
  */
 
-import { useState } from "react";
-import styled from "styled-components";
-import colors from "../../../themes/colors";
-import Icon from "../../atoms/Icon";
-import Text from "../../atoms/Text";
-import Flex from "../../layouts/Flex";
-import { ConfirmModal } from "../../modal";
+import { useState } from 'react'
+import styled from 'styled-components'
+import colors from '../../../themes/colors'
+import Icon from '../../atoms/Icon'
+import Text from '../../atoms/Text'
+import Flex from '../../layouts/Flex'
+import { ConfirmModal } from '../../modal'
+import { AddScheduleModal } from '../../modal/schedule'
+import AddScheduleModalContainer from '../../../containers/sideSheetContainer/AddScheduleModalContainer'
 
 const StyledMenuContainer = styled.div`
   width: 28%;
@@ -25,21 +27,25 @@ const StyledMenuContainer = styled.div`
   display: inline;
   border-radius: 8px;
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.15);
-`;
+`
 
 const StyledList = styled.div`
   padding: 4px;
   :first {
     margin-bottom: 4px;
   }
-`;
+`
 
 export function Menu() {
   const [isOpenDeleteConFirmModal, setIsOpenDeleteConFirmModal] =
-    useState<boolean>(false);
+    useState<boolean>(false)
   const handleDeleteConFirmModal = () => {
-    setIsOpenDeleteConFirmModal(true);
-  };
+    setIsOpenDeleteConFirmModal(true)
+  }
+  const [isOpenModifyModal, setIsOpenModifyModal] = useState<boolean>(false)
+  const handleSchedule = () => {
+    setIsOpenModifyModal(true)
+  }
 
   return (
     <>
@@ -47,11 +53,22 @@ export function Menu() {
         <StyledList>
           <Flex $gap="8px">
             <Icon iconName="editIcon" />
-            <Text variant="small" color={colors.gray02} cursor="pointer">
+            <Text
+              variant="small"
+              color={colors.gray02}
+              cursor="pointer"
+              onClick={handleSchedule}
+            >
               수정
             </Text>
           </Flex>
         </StyledList>
+        {isOpenModifyModal && (
+          <AddScheduleModalContainer
+            modaltitle="일정 수정"
+            setIsOpenScheduleModal={setIsOpenModifyModal}
+          />
+        )}
         <StyledList>
           <Flex $gap="8px">
             <Icon iconName="deleteIcon" />
@@ -76,5 +93,5 @@ export function Menu() {
         />
       )}
     </>
-  );
+  )
 }
