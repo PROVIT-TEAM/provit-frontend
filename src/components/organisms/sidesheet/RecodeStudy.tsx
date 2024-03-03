@@ -63,16 +63,16 @@ export function RecodeStudy() {
           <Box $marginBottom="-14px">
             <Flex $gap="4%">
               <Button
-                variant="active"
+                variant="$active"
                 width="48%"
                 height="48px"
-                backgroundColor={colors.gray05}
+                $backgroundColor={colors.gray05}
                 $hoverColor={colors.gray04}
                 onClick={startStopwatch}
               >
                 {running ? "일시정지" : "재생"}
               </Button>
-              <Button variant="active" width="48%" height="48px">
+              <Button variant="$active" width="48%" height="48px">
                 완료하기
               </Button>
             </Flex>

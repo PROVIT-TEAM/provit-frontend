@@ -52,7 +52,7 @@ export function SideSheet() {
             width="100%"
             height="56px"
             onClick={handleSchedule}
-            backgroundColor={colors.gray07}
+            $backgroundColor={colors.gray07}
           >
             <PlusIcon width="24" height="24" top="5px" marginright="10px" />
             추가하기

@@ -60,7 +60,7 @@ export function SignUpModal({ signUpClose, signUpEmail, signIn }: props) {
         </Box>
         <Box $marginBottom="40px">
           <KakaoLoginComponent type={true} />
-          <Button variant="active" onClick={signUpEmail} width="100%">
+          <Button variant="$active" onClick={signUpEmail} width="100%">
             이메일로 가입하기
           </Button>
         </Box>
