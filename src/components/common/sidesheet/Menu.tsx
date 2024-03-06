@@ -83,6 +83,7 @@ export function Menu({ itemState }: props) {
         {isOpenModifyModal && (
           <AddScheduleModalContainer
             modaltitle="일정 수정"
+            btntext="수정하기"
             setIsOpenScheduleModal={setIsOpenModifyModal}
           />
         )}
