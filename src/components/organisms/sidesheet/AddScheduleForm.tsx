@@ -8,6 +8,8 @@ import Button from '../../atoms/Button'
 import { useState } from 'react'
 import fontSizes from '../../../themes/fontSizes'
 import CategoryModal from '../../modal/schedule/CategoryModal'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 interface StyledSelectProp {
   width?: string
@@ -22,6 +24,17 @@ const StyledSelect = styled.select<StyledSelectProp>`
   color: ${colors.gray02};
   font-weight: bold;
   padding: 8px;
+  border: none;
+  border-radius: 6px;
+  margin: 0px 8px 0px 0px;
+`
+const StyledSelect2 = styled.div<StyledSelectProp>`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height || '48px'};
+  background-color: ${colors.gray05};
+  color: ${colors.gray02};
+  font-weight: bold;
+  padding: 0px;
   border: none;
   border-radius: 6px;
   margin: 0px 8px 0px 0px;
@@ -155,6 +168,17 @@ export function AddScheduleForm({
       width: width,
     })
   }
+  const [datepicker, isOpenDatePicker] = useState<boolean>()
+  const [startDate, setStartDate] = useState(new Date())
+  const [endDate, setEndDate] = useState(null)
+  const onChange = (dates: any) => {
+    const [start, end] = dates
+    setStartDate(start)
+    setEndDate(end)
+  }
+  const datePickerHandler = () => {
+    isOpenDatePicker(!datepicker)
+  }
 
   return (
     <>
@@ -172,8 +196,33 @@ export function AddScheduleForm({
           {categoryBox && (
             <CategoryModal updateCategory={updateCategory}></CategoryModal>
           )}
-
           <StyledSelect
+            name="start"
+            width="102px"
+            height="32px"
+            value={start}
+            onChange={handleStartDate}
+            onClick={datePickerHandler}
+          ></StyledSelect>
+          {datepicker && (
+            <DatePicker
+              selected={startDate}
+              onChange={onChange}
+              startDate={startDate}
+              endDate={endDate}
+              selectsRange
+              inline
+            />
+          )}
+          {/* <DatePicker
+            selected={startDate}
+            onChange={onChange}
+            startDate={startDate}
+            endDate={endDate}
+            selectsRange
+            inline
+          /> */}
+          {/* <StyledSelect
             name="start"
             width="102px"
             height="32px"
@@ -184,7 +233,7 @@ export function AddScheduleForm({
             <option value="2024.01.28">2024.01.19</option>
             <option value="2024.01.29">2024.01.29</option>
             <option value="2024.01.30">2024.01.30</option>
-          </StyledSelect>
+          </StyledSelect> */}
 
           <StyledSeperator>-</StyledSeperator>
 

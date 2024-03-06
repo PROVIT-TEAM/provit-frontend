@@ -1,12 +1,15 @@
 import React, { ChangeEvent, useState } from 'react'
 import { AddScheduleModal } from '../../components/modal/schedule'
+import { NewScheduleModal } from '../../components/modal/schedule/NewScheduleModal'
 
 interface props {
   modaltitle?: string
+  btntext?: string
   setIsOpenScheduleModal?: React.Dispatch<React.SetStateAction<boolean>>
 }
 const AddScheduleModalContainer = ({
   modaltitle,
+  btntext,
   setIsOpenScheduleModal,
 }: props) => {
   const [category, setCategoryValue] = useState<string>('')
@@ -14,7 +17,7 @@ const AddScheduleModalContainer = ({
   const [start, setStartValue] = useState<string>('')
   const [end, setEndValue] = useState<string>('')
   const [content, setContentValue] = useState<string>('')
-  const [visibility, setVisibility] = useState<boolean>(false)
+  const [visibility, setVisibility] = useState<string>('')
 
   const handleRegist = () => {
     console.log(
@@ -48,16 +51,15 @@ const AddScheduleModalContainer = ({
     setContentValue(event.target.value)
   }
   const handleVisibility = (event: any) => {
-    setVisibility(!visibility)
+    setVisibility('true')
   }
   const onCloseModal = () => {
     if (setIsOpenScheduleModal) setIsOpenScheduleModal(false)
-    console.log('close btn cliked')
   }
 
   return (
     <>
-      <AddScheduleModal
+      {/* <AddScheduleModal
         modaltitle={modaltitle}
         category={category}
         start={start}
@@ -72,7 +74,21 @@ const AddScheduleModalContainer = ({
         handleContent={handleContent}
         handleVisibility={handleVisibility}
         handleRegist={handleRegist}
-      ></AddScheduleModal>
+      ></AddScheduleModal> */}
+      <NewScheduleModal
+        data={{ category, start, end, title, content, visibility }}
+        handler={{
+          onClose: onCloseModal,
+          handleCategory: handleCategory,
+          handleStartDate: handleStartDate,
+          handleEndDate: handleEndDate,
+          handleTitle: handleTitle,
+          handleContent: handleContent,
+          handleVisibility: handleVisibility,
+          handleRegist: handleRegist,
+        }}
+        text={{ modaltitle, btntext }}
+      />
     </>
   )
 }

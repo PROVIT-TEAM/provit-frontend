@@ -19,6 +19,7 @@ import Button from '../../atoms/Button'
 import AddScheduleModalContainer from '../../../containers/sideSheetContainer/AddScheduleModalContainer'
 import { useState } from 'react'
 import { PlusIcon } from '../../../assets/img/button/plus_icon'
+import { NewScheduleModal } from '../../modal/schedule/NewScheduleModal'
 
 const StyledSideSheetContainer = styled.div`
   width: 22.916%;
@@ -60,6 +61,7 @@ export function SideSheet() {
           {isOpenScheduleModal && (
             <AddScheduleModalContainer
               modaltitle="새로운 일정 등록"
+              btntext="등록하기"
               setIsOpenScheduleModal={setIsOpenScheduleModal}
             />
           )}
