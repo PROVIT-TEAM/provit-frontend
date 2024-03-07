@@ -1,13 +1,12 @@
-import React, { ChangeEvent, useState } from 'react'
-import { AddScheduleModal } from '../../components/modal/schedule'
-import { NewScheduleModal } from '../../components/modal/schedule/NewScheduleModal'
+import React, { useState } from 'react'
+import { ScheduleModal } from '../../components/modal/schedule/ScheduleModal'
 
 interface props {
   modaltitle?: string
   btntext?: string
   setIsOpenScheduleModal?: React.Dispatch<React.SetStateAction<boolean>>
 }
-const AddScheduleModalContainer = ({
+const ScheduleModalContainer = ({
   modaltitle,
   btntext,
   setIsOpenScheduleModal,
@@ -17,10 +16,12 @@ const AddScheduleModalContainer = ({
   const [start, setStartValue] = useState<string>('')
   const [end, setEndValue] = useState<string>('')
   const [content, setContentValue] = useState<string>('')
-  const [visibility, setVisibility] = useState<string>('')
+  const [visibility, setVisibility] = useState<boolean>(false)
 
   const handleRegist = () => {
     console.log(
+      '\n category: ',
+      category,
       '\n startDate: ',
       start,
       '\n endDate: ',
@@ -33,25 +34,21 @@ const AddScheduleModalContainer = ({
       visibility
     )
   }
-  const handleCategory = (event: any) => {
-    setCategoryValue(event.target.value)
+  const handleCategory = (category: string) => {
+    setCategoryValue(category)
   }
   const handleTitle = (event: any) => {
     setTitleValue(event.target.value)
   }
-  const handleStartDate = (event: ChangeEvent<HTMLSelectElement>) => {
-    const selected = event.target.value
-    console.log(selected)
-    setStartValue(event.target.value)
-  }
-  const handleEndDate = (event: any) => {
-    setEndValue(event.target.value)
+  const handleDates = (dates: Date[]) => {
+    setStartValue(dates[0]?.toLocaleDateString())
+    setEndValue(dates[1]?.toLocaleDateString())
   }
   const handleContent = (event: any) => {
     setContentValue(event.target.value)
   }
   const handleVisibility = (event: any) => {
-    setVisibility('true')
+    setVisibility(!visibility)
   }
   const onCloseModal = () => {
     if (setIsOpenScheduleModal) setIsOpenScheduleModal(false)
@@ -59,29 +56,12 @@ const AddScheduleModalContainer = ({
 
   return (
     <>
-      {/* <AddScheduleModal
-        modaltitle={modaltitle}
-        category={category}
-        start={start}
-        end={end}
-        title={title}
-        content={content}
-        onClose={onCloseModal}
-        handleCategory={handleCategory}
-        handleStartDate={handleStartDate}
-        handleEndDate={handleEndDate}
-        handleTitle={handleTitle}
-        handleContent={handleContent}
-        handleVisibility={handleVisibility}
-        handleRegist={handleRegist}
-      ></AddScheduleModal> */}
-      <NewScheduleModal
+      <ScheduleModal
         data={{ category, start, end, title, content, visibility }}
         handler={{
           onClose: onCloseModal,
           handleCategory: handleCategory,
-          handleStartDate: handleStartDate,
-          handleEndDate: handleEndDate,
+          handleDates: handleDates,
           handleTitle: handleTitle,
           handleContent: handleContent,
           handleVisibility: handleVisibility,
@@ -93,4 +73,4 @@ const AddScheduleModalContainer = ({
   )
 }
 
-export default AddScheduleModalContainer
+export default ScheduleModalContainer

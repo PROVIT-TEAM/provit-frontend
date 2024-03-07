@@ -16,10 +16,9 @@ import { RecodeStudy } from './RecodeStudy'
 import Tabs from './Tabs'
 import styled from 'styled-components'
 import Button from '../../atoms/Button'
-import AddScheduleModalContainer from '../../../containers/sideSheetContainer/AddScheduleModalContainer'
+import AddScheduleModalContainer from '../../../containers/sideSheetContainer/ScheduleModalContainer'
 import { useState } from 'react'
 import { PlusIcon } from '../../../assets/img/button/plus_icon'
-import { NewScheduleModal } from '../../modal/schedule/NewScheduleModal'
 
 const StyledSideSheetContainer = styled.div`
   width: 22.916%;

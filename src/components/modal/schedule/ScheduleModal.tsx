@@ -12,7 +12,7 @@ import Button from '../../atoms/Button'
 import fontSizes from '../../../themes/fontSizes'
 import moment from 'moment'
 import 'react-datepicker/dist/react-datepicker.css'
-import { format } from 'date-fns'
+import { format, getDate, getDay, getMonth, getYear } from 'date-fns'
 import { CustomDatePicker } from '../../common/sidesheet/CustomDatePicker'
 
 interface ScheduleDataProp {
@@ -21,13 +21,12 @@ interface ScheduleDataProp {
   end?: string
   title?: string
   content?: string
-  visibility?: string
+  visibility?: boolean
 }
 interface ModalHandlerProp {
   onClose: () => void
   handleCategory: (event: any) => void
-  handleStartDate: (event: any) => void
-  handleEndDate: (event: any) => void
+  handleDates: (event: any) => void
   handleTitle: (event: any) => void
   handleContent: (event: any) => void
   handleVisibility: (event: any) => void
@@ -44,6 +43,175 @@ interface categoryLabelProps {
   width?: string
   height?: string
 }
+
+export function ScheduleModal({
+  data,
+  handler,
+  text,
+}: {
+  data: ScheduleDataProp
+  handler: ModalHandlerProp
+  text: ModalTextProp
+}) {
+  const [categoryBox, setCategoryBox] = useState(false)
+  const [categoryLabel, setCategoryLabel] = useState<categoryLabelProps>({
+    text: '분류',
+    color: '',
+    backgroundColor: '',
+    width: '41px',
+    height: '16px',
+  })
+  const handleCategoryBox = () => {
+    setCategoryBox(!categoryBox)
+  }
+  const updateCategory = (
+    text: string,
+    background?: string,
+    width?: string
+  ) => {
+    setCategoryLabel({
+      text: text,
+      color: 'white',
+      backgroundColor: background,
+      width: width,
+    })
+    handler.handleCategory(text)
+  }
+  const [getMoment, setMoment] = useState(moment())
+  const today: any = getMoment
+  const [datepicker, isOpenDatePicker] = useState<boolean>()
+  const [startDate, setStartDate] = useState<Date | null>(null)
+  const [endDate, setEndDate] = useState<Date | null>(null)
+  const dateFormatHandler = (date: Date): string => {
+    return date.toLocaleDateString(undefined, {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    })
+  }
+  const updateDate = (dates: any) => {
+    const [start, end] = dates
+    setStartDate(start)
+    setEndDate(end)
+    handler.handleDates(dates)
+  }
+  const datePickerHandler = () => {
+    isOpenDatePicker(!datepicker)
+  }
+
+  return (
+    <>
+      <Modal
+        onClose={handler.onClose}
+        width="640px"
+        height="535px"
+        $minWidth="640px"
+        $minHeight="535px"
+        overflow="none"
+      >
+        <Box $marginTop="0px" $marginBottom="40px">
+          <Flex $flexDirection="column" $alignItems="center">
+            <Text fontSize="1rem" fontWeight="700">
+              {text.modaltitle || 'PROVIT'}
+            </Text>
+          </Flex>
+        </Box>
+
+        <Box $marginBottom="16px">
+          <Flex>
+            <StyledCategory
+              onClick={handleCategoryBox}
+              id="category"
+              width={categoryLabel.width}
+              color={categoryLabel.color}
+              background={categoryLabel.backgroundColor}
+              onChange={handler.handleCategory}
+            >
+              {categoryLabel.text}
+            </StyledCategory>
+            {categoryBox && (
+              <CategoryModal updateCategory={updateCategory}></CategoryModal>
+            )}
+            <StyledDateLabel
+              width="102px"
+              height="32px"
+              onClick={datePickerHandler}
+            >
+              <Text fontSize={fontSizes.mm} fontWeight="500">
+                {startDate?.toLocaleDateString() || today.format('yyyy.MM.DD')}
+              </Text>
+            </StyledDateLabel>
+
+            <StyledSeperator>-</StyledSeperator>
+
+            <StyledDateLabel
+              width="102px"
+              height="32px"
+              onClick={datePickerHandler}
+            >
+              <Text fontSize={fontSizes.mm} fontWeight="500">
+                {endDate?.toLocaleDateString() || today.format('yyyy.MM.DD')}
+              </Text>
+            </StyledDateLabel>
+          </Flex>
+        </Box>
+        {datepicker && (
+          <CustomDatePicker
+            date={{
+              startDate,
+              endDate,
+              dateFormat: undefined,
+              updateDate,
+            }}
+          />
+        )}
+
+        <Box>
+          <Flex $flexDirection="column">
+            <Label>제목</Label>
+            <Input
+              type="text"
+              name="title"
+              placeholder="일정 이름을 입력해주세요."
+              value={data.title}
+              onChange={handler.handleTitle}
+            ></Input>
+
+            <Label>상세 설명(선택)</Label>
+            <StyledTextArea
+              placeholder="일정에 대한 설명을 적어주세요. 없다면 비워주셔도 됩니다."
+              value={data.content}
+              onChange={handler.handleContent}
+            ></StyledTextArea>
+
+            <Flex>
+              <StyledCheckBox
+                type="checkbox"
+                checked={data.visibility}
+                onChange={handler.handleVisibility}
+              />
+              <StyledText>
+                나만 보기
+                <StyledSpan>
+                  나만 보기를 체크하시면 다른 사람은 확인할 수 없어요.
+                </StyledSpan>
+              </StyledText>
+            </Flex>
+            <Button
+              width="100%"
+              height="56px"
+              $marginTop="32px"
+              onClick={handler.handleRegist}
+            >
+              {text.btntext}
+            </Button>
+          </Flex>
+        </Box>
+      </Modal>
+    </>
+  )
+}
+
 interface StyledSelectProp {
   width?: string
   height?: string
@@ -129,164 +297,3 @@ const StyledCheckBox = styled.input`
     left: 2px;
   }
 `
-
-export function NewScheduleModal({
-  data,
-  handler,
-  text,
-}: {
-  data: ScheduleDataProp
-  handler: ModalHandlerProp
-  text: ModalTextProp
-}) {
-  const [categoryBox, setCategoryBox] = useState(false)
-  const [categoryLabel, setCategoryLabel] = useState<categoryLabelProps>({
-    text: '분류',
-    color: '',
-    backgroundColor: '',
-    width: '41px',
-    height: '16px',
-  })
-  const handleCategoryBox = () => {
-    setCategoryBox(!categoryBox)
-  }
-  const updateCategory = (
-    text: string,
-    background?: string,
-    width?: string
-  ) => {
-    setCategoryLabel({
-      text: text,
-      color: 'white',
-      backgroundColor: background,
-      width: width,
-    })
-  }
-  const [getMoment, setMoment] = useState(moment())
-  const today: any = getMoment
-  const [datepicker, isOpenDatePicker] = useState<boolean>()
-  const [startDate, setStartDate] = useState<Date | null>(null)
-  const [endDate, setEndDate] = useState<Date | null>(null)
-  const dateFormatHandler = (date: Date): string => {
-    return format(date, 'yyyy.mm.dd')
-  }
-  const updateDate = (dates: any) => {
-    const [start, end] = dates
-    setStartDate(start)
-    setEndDate(end)
-  }
-  const datePickerHandler = () => {
-    isOpenDatePicker(!datepicker)
-  }
-
-  return (
-    <>
-      <Modal
-        onClose={handler.onClose}
-        width="640px"
-        height="535px"
-        $minWidth="640px"
-        $minHeight="535px"
-        overflow="none"
-      >
-        <Box $marginTop="0px" $marginBottom="40px">
-          <Flex $flexDirection="column" $alignItems="center">
-            <Text fontSize="1rem" fontWeight="700">
-              {text.modaltitle || 'PROVIT'}
-            </Text>
-          </Flex>
-        </Box>
-
-        <Box $marginBottom="16px">
-          <Flex>
-            <StyledCategory
-              onClick={handleCategoryBox}
-              id="category"
-              width={categoryLabel.width}
-              color={categoryLabel.color}
-              background={categoryLabel.backgroundColor}
-            >
-              {categoryLabel.text}
-            </StyledCategory>
-            {categoryBox && (
-              <CategoryModal updateCategory={updateCategory}></CategoryModal>
-            )}
-            <StyledDateLabel
-              width="102px"
-              height="32px"
-              onClick={datePickerHandler}
-            >
-              <Text fontSize={fontSizes.mm} fontWeight="500">
-                {startDate?.toLocaleDateString() || today.format('yyyy.MM.DD')}
-              </Text>
-            </StyledDateLabel>
-
-            <StyledSeperator>-</StyledSeperator>
-
-            <StyledDateLabel
-              width="102px"
-              height="32px"
-              onClick={datePickerHandler}
-            >
-              <Text fontSize={fontSizes.mm} fontWeight="500">
-                {endDate?.toLocaleDateString() || today.format('yyyy.MM.DD')}
-              </Text>
-            </StyledDateLabel>
-          </Flex>
-        </Box>
-        {datepicker && (
-          <CustomDatePicker
-            date={{
-              startDate,
-              endDate,
-              // dateFormat: 'yyy,MM,DD',
-              updateDate,
-            }}
-          />
-        )}
-
-        <Box>
-          <Flex $flexDirection="column">
-            <Label>제목</Label>
-            <Input
-              type="text"
-              name="title"
-              placeholder="일정 이름을 입력해주세요."
-              value={data.title}
-              onChange={handler.handleTitle}
-            ></Input>
-
-            <Label>상세 설명(선택)</Label>
-            <StyledTextArea
-              placeholder="일정에 대한 설명을 적어주세요. 없다면 비워주셔도 됩니다."
-              value={data.content}
-              onChange={handler.handleContent}
-            ></StyledTextArea>
-
-            <Flex>
-              <StyledCheckBox
-                type="checkbox"
-                value={data.visibility}
-                onChange={handler.handleVisibility}
-              />
-              <StyledText>
-                나만 보기
-                <StyledSpan>
-                  나만 보기를 체크하시면 다른 사람은 확인할 수 없어요.
-                </StyledSpan>
-              </StyledText>
-            </Flex>
-            <Button
-              width="100%"
-              height="56px"
-              $marginTop="32px"
-              onClick={handler.handleRegist}
-            >
-              {text.btntext}
-            </Button>
-          </Flex>
-        </Box>
-      </Modal>
-    </>
-  )
-}

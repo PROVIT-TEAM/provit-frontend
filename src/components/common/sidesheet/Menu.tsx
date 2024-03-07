@@ -10,8 +10,7 @@ import colors from '../../../themes/colors'
 import Button from '../../atoms/Button'
 import Icon from '../../atoms/Icon'
 import { ConfirmModal } from '../../modal'
-import { AddScheduleModal } from '../../modal/schedule'
-import AddScheduleModalContainer from '../../../containers/sideSheetContainer/AddScheduleModalContainer'
+import AddScheduleModalContainer from '../../../containers/sideSheetContainer/ScheduleModalContainer'
 
 const StyledMenuContainer = styled.div`
   width: 28%;
