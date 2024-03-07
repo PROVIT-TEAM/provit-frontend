@@ -8,7 +8,7 @@ import SignUpEmailModalContainer from '../containers/loginContainer/SignUpEmailM
 import { Main } from '../pages'
 import PublicRouter from './PublicRouter'
 import PrivateRouter from './PrivateRouter'
-import AddScheduleModalContainer from '../containers/sideSheetContainer/AddScheduleModalContainer'
+import AddScheduleModalContainer from '../containers/sideSheetContainer/ScheduleModalContainer'
 
 const Router = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
   return (

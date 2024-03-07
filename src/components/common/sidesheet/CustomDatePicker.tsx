@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import DatePicker from 'react-datepicker'
 import { ko } from 'date-fns/locale/ko'
 import 'react-datepicker/dist/react-datepicker.css'
