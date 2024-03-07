@@ -68,6 +68,7 @@ export function Schedule({ data }: dataProps) {
   const handleCloseStartScheduleModla = () => {
     setIsOpenStartScheduleModal(false)
   }
+
   return (
     <>
       {data?.map((item: any, index: number) => (

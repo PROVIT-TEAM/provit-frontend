@@ -16,7 +16,7 @@ import { RecodeStudy } from './RecodeStudy'
 import Tabs from './Tabs'
 import styled from 'styled-components'
 import Button from '../../atoms/Button'
-import AddScheduleModalContainer from '../../../containers/sideSheetContainer/AddScheduleModalContainer'
+import AddScheduleModalContainer from '../../../containers/sideSheetContainer/ScheduleModalContainer'
 import { useState } from 'react'
 import { PlusIcon } from '../../../assets/img/button/plus_icon'
 
@@ -60,6 +60,7 @@ export function SideSheet() {
           {isOpenScheduleModal && (
             <AddScheduleModalContainer
               modaltitle="새로운 일정 등록"
+              btntext="등록하기"
               setIsOpenScheduleModal={setIsOpenScheduleModal}
             />
           )}

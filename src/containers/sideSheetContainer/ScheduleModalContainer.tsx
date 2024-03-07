@@ -1,12 +1,14 @@
-import React, { ChangeEvent, useState } from 'react'
-import { AddScheduleModal } from '../../components/modal/schedule'
+import React, { useState } from 'react'
+import { ScheduleModal } from '../../components/modal/schedule/ScheduleModal'
 
 interface props {
   modaltitle?: string
+  btntext?: string
   setIsOpenScheduleModal?: React.Dispatch<React.SetStateAction<boolean>>
 }
-const AddScheduleModalContainer = ({
+const ScheduleModalContainer = ({
   modaltitle,
+  btntext,
   setIsOpenScheduleModal,
 }: props) => {
   const [category, setCategoryValue] = useState<string>('')
@@ -18,6 +20,8 @@ const AddScheduleModalContainer = ({
 
   const handleRegist = () => {
     console.log(
+      '\n category: ',
+      category,
       '\n startDate: ',
       start,
       '\n endDate: ',
@@ -30,19 +34,15 @@ const AddScheduleModalContainer = ({
       visibility
     )
   }
-  const handleCategory = (event: any) => {
-    setCategoryValue(event.target.value)
+  const handleCategory = (category: string) => {
+    setCategoryValue(category)
   }
   const handleTitle = (event: any) => {
     setTitleValue(event.target.value)
   }
-  const handleStartDate = (event: ChangeEvent<HTMLSelectElement>) => {
-    const selected = event.target.value
-    console.log(selected)
-    setStartValue(event.target.value)
-  }
-  const handleEndDate = (event: any) => {
-    setEndValue(event.target.value)
+  const handleDates = (dates: Date[]) => {
+    setStartValue(dates[0]?.toLocaleDateString())
+    setEndValue(dates[1]?.toLocaleDateString())
   }
   const handleContent = (event: any) => {
     setContentValue(event.target.value)
@@ -52,29 +52,25 @@ const AddScheduleModalContainer = ({
   }
   const onCloseModal = () => {
     if (setIsOpenScheduleModal) setIsOpenScheduleModal(false)
-    console.log('close btn cliked')
   }
 
   return (
     <>
-      <AddScheduleModal
-        modaltitle={modaltitle}
-        category={category}
-        start={start}
-        end={end}
-        title={title}
-        content={content}
-        onClose={onCloseModal}
-        handleCategory={handleCategory}
-        handleStartDate={handleStartDate}
-        handleEndDate={handleEndDate}
-        handleTitle={handleTitle}
-        handleContent={handleContent}
-        handleVisibility={handleVisibility}
-        handleRegist={handleRegist}
-      ></AddScheduleModal>
+      <ScheduleModal
+        data={{ category, start, end, title, content, visibility }}
+        handler={{
+          onClose: onCloseModal,
+          handleCategory: handleCategory,
+          handleDates: handleDates,
+          handleTitle: handleTitle,
+          handleContent: handleContent,
+          handleVisibility: handleVisibility,
+          handleRegist: handleRegist,
+        }}
+        text={{ modaltitle, btntext }}
+      />
     </>
   )
 }
 
-export default AddScheduleModalContainer
+export default ScheduleModalContainer
