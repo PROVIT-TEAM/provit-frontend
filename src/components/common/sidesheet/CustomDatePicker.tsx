@@ -1,7 +1,9 @@
 import DatePicker from 'react-datepicker'
 import { ko } from 'date-fns/locale/ko'
-import 'react-datepicker/dist/react-datepicker.css'
+// import 'react-datepicker/dist/react-datepicker.css'
 import styled from 'styled-components'
+import colors from '../../../themes/colors'
+import { getMonth, getYear } from 'date-fns'
 
 interface DateProp {
   startDate: any
@@ -21,6 +23,26 @@ interface StyleProp {
 const DatePickerContainer = styled.div`
   position: absolute;
   left: 85px;
+
+  &.react-datepicker {
+    background-color: ${colors.gray04};
+  }
+`
+const StyledDatePicker = styled(DatePicker)<StyleProp>`
+  &.styled-datepicker {
+    background-color: ${colors.gray04};
+    color: white;
+  }
+`
+const CustomHeaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${colors.gray04};
+  color: ${colors.white};
+  height: 100%;
+  margin-top: 8px;
+  padding: 0 12px 0 24px;
 `
 
 export function CustomDatePicker({
@@ -32,8 +54,7 @@ export function CustomDatePicker({
 }) {
   return (
     <DatePickerContainer>
-      <DatePicker
-        dateFormat={date.dateFormat || 'YYYY.MM.DD'}
+      <StyledDatePicker
         locale={ko}
         selected={date.startDate}
         onChange={date.updateDate}
@@ -41,6 +62,38 @@ export function CustomDatePicker({
         endDate={date.endDate}
         selectsRange
         inline
+        // dateFormat={date.dateFormat || 'yyyy.MM.dd'}
+        dateFormatCalendar={'yyyy.M'}
+        className="styled-datepicker"
+
+        // renderCustomHeader={({
+        //   date,
+        //   prevMonthButtonDisabled,
+        //   nextMonthButtonDisabled,
+        //   decreaseMonth,
+        //   increaseMonth,
+        // }) => (
+        //   <CustomHeaderContainer>
+        //     <div
+        //       className="btn_month btn_month-prev"
+        //       onClick={decreaseMonth}
+        //       // disabled={prevMonthButtonDisabled}
+        //     >
+        //       <img src="/static/images/arrow-black-left.png" />
+        //     </div>
+        //     <div className="month-day">
+        //       {getYear(date)}.{getMonth(date)}
+        //     </div>
+
+        //     <div
+        //       className="btn_month btn_month-next"
+        //       onClick={increaseMonth}
+        //       // disabled={nextMonthButtonDisabled}
+        //     >
+        //       <img src="/static/images/arrow-black-right.png" />
+        //     </div>
+        //   </CustomHeaderContainer>
+        // )}
       />
     </DatePickerContainer>
   )
