@@ -82,12 +82,10 @@ export function ScheduleModal({
   const [datepicker, isOpenDatePicker] = useState<boolean>()
   const [startDate, setStartDate] = useState<Date | null>(null)
   const [endDate, setEndDate] = useState<Date | null>(null)
-  const dateFormatHandler = (date: Date): string => {
-    return date.toLocaleDateString(undefined, {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    })
+  const optionss: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
   }
   const updateDate = (dates: any) => {
     const [start, end] = dates
@@ -138,7 +136,10 @@ export function ScheduleModal({
               onClick={datePickerHandler}
             >
               <Text fontSize={fontSizes.mm} fontWeight="500">
-                {startDate?.toLocaleDateString() || today.format('yyyy.MM.DD')}
+                {startDate
+                  ?.toLocaleDateString('ko-KR', optionss)
+                  .replaceAll('. ', '.')
+                  .slice(0, -1) || today.format('yyyy.MM.DD')}
               </Text>
             </StyledDateLabel>
 
@@ -150,7 +151,10 @@ export function ScheduleModal({
               onClick={datePickerHandler}
             >
               <Text fontSize={fontSizes.mm} fontWeight="500">
-                {endDate?.toLocaleDateString() || today.format('yyyy.MM.DD')}
+                {endDate
+                  ?.toLocaleDateString('ko-KR', optionss)
+                  .replaceAll('. ', '.')
+                  .slice(0, -1) || today.format('yyyy.MM.DD')}
               </Text>
             </StyledDateLabel>
           </Flex>
