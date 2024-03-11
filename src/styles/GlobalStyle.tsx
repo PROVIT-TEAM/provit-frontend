@@ -47,10 +47,8 @@ export const GlobalStyle = createGlobalStyle`
   .react-datepicker__day--keyboard-selected
   {
   background-color: ${colors.mainColor};
-  border-radius: 50%;
 
   &:hover {
-    border-radius: 50%;
     background-color: ${colors.mainColor};
     }
   }
@@ -68,6 +66,20 @@ export const GlobalStyle = createGlobalStyle`
 }
 .react-datepicker__day-name:nth-child(7){
     color:#8685FF;
+}
+.react-datepicker__day {
+  &:hover {
+    /* border-radius: 50%; */
+    background-color: ${colors.mainColor};
+  }
+  &:focus {
+    background-color: ${colors.mainColor};
+  }
+}
+
+.react-datepicker__day--range-start,
+.react-datepicker__day--range-end{
+  /* border-radius: 50%; */
 }
   
   .react-datepicker__current-month,

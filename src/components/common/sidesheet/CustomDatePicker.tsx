@@ -55,6 +55,7 @@ export function CustomDatePicker({
   return (
     <DatePickerContainer>
       <StyledDatePicker
+        dateFormat={date.dateFormat || 'yyyy.MM.dd'}
         locale={ko}
         selected={date.startDate}
         onChange={date.updateDate}
@@ -62,7 +63,6 @@ export function CustomDatePicker({
         endDate={date.endDate}
         selectsRange
         inline
-        // dateFormat={date.dateFormat || 'yyyy.MM.dd'}
         dateFormatCalendar={'yyyy.M'}
         className="styled-datepicker"
 
