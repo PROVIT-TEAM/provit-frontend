@@ -4,13 +4,14 @@ import fontSizes from '../../../themes/fontSizes'
 import { useState } from 'react'
 import { PlusIcon } from '../../../assets/img/button/plus_icon'
 import { CloseIcon } from '../../../assets/img/button/close_icon'
+import Icon from '../../atoms/Icon'
 
 const StyledBox = styled.div`
-  width: 286px;
+  width: 290px;
   height: 124px;
   position: absolute;
-  top: 125px;
-  left: 26px;
+  top: 130px;
+  left: 29px;
   color: ${colors.gray02};
   background-color: ${colors.gray05};
   border-radius: 6px;
@@ -22,7 +23,7 @@ const StyledInput = styled.input`
   border-radius: 8px;
   border: 1px solid #666;
   background-color: #3a3a3c;
-  /* padding-left: 5%; */
+  padding-left: 5%;
   text-indent: 3%;
   border: none;
   color: ${colors.white};
@@ -34,11 +35,13 @@ const StyledInput = styled.input`
   }
 `
 const StyledBar = styled.span`
-  width: 100%;
-  height: 2px;
+  width: 90%;
+  height: 1px;
   margin-bottom: 10px;
   display: block;
   background-color: #636366;
+  position: relative;
+  left: 14px;
 `
 interface LabelProps {
   labelLenght?: string
@@ -76,6 +79,11 @@ const StyledDelBtn = styled.span`
   top: -3px;
   cursor: pointer;
 `
+const StyledMenuBtn = styled.button`
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+`
 interface CategoryModalProps {
   updateCategory: (text: string, background?: string, width?: string) => void
 }
@@ -110,12 +118,25 @@ const CategoryModal = ({ updateCategory }: CategoryModalProps) => {
         <StyledBar></StyledBar>
 
         {createdLabel ? (
-          <StyledLabel labelLenght={createdLabelLenght}>
-            {createdLabel}
-            <StyledDelBtn onClick={deleteLabel}>
-              <CloseIcon />
-            </StyledDelBtn>
-          </StyledLabel>
+          <ul>
+            <li
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                paddingRight: '13px',
+              }}
+            >
+              <StyledLabel labelLenght={createdLabelLenght}>
+                {createdLabel}
+                <StyledDelBtn onClick={deleteLabel}>
+                  <CloseIcon />
+                </StyledDelBtn>
+              </StyledLabel>
+              <StyledMenuBtn style={{ marginLeft: 'auto' }}>
+                <Icon iconName="menu" />
+              </StyledMenuBtn>
+            </li>
+          </ul>
         ) : (
           <StyledLabel labelLenght={labelLenght}>
             <StyledPlusBtn onClick={createLabel}>
