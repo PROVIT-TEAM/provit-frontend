@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { PlusIcon } from '../../../assets/img/button/plus_icon'
 import { CloseIcon } from '../../../assets/img/button/close_icon'
 import Icon from '../../atoms/Icon'
+import LabelColorMenu from '../../common/sidesheet/LabelColorMenu'
 
 const StyledBox = styled.div`
   width: 290px;
@@ -14,7 +15,8 @@ const StyledBox = styled.div`
   left: 29px;
   color: ${colors.gray02};
   background-color: ${colors.gray05};
-  border-radius: 6px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.2);
 `
 const StyledInput = styled.input`
   height: 48px;
@@ -45,6 +47,7 @@ const StyledBar = styled.span`
 `
 interface LabelProps {
   labelLenght?: string
+  background?: string
 }
 const StyledLabel = styled.div<LabelProps>`
   display: flex;
@@ -54,7 +57,7 @@ const StyledLabel = styled.div<LabelProps>`
   height: 25px;
   padding: 4px 8px;
   margin-left: 12px;
-  background-color: #673932;
+  background-color: ${(props) => props.background || '#673932'};
   border-radius: 8px;
   color: ${colors.white};
   font-size: 14px;
@@ -84,6 +87,11 @@ const StyledMenuBtn = styled.button`
   border: none;
   cursor: pointer;
 `
+const Styledli = styled.li`
+  display: flex;
+  align-items: center;
+  padding-right: 13px;
+`
 interface CategoryModalProps {
   updateCategory: (text: string, background?: string, width?: string) => void
 }
@@ -93,6 +101,7 @@ const CategoryModal = ({ updateCategory }: CategoryModalProps) => {
   const [labelLenght, setLabelLenght] = useState<string>('')
   const [createdLabelLenght, setCreatedLabelLenght] = useState<string>('')
   const [labelColor, setLabelColor] = useState<string>('#673932')
+  const [colormenu, setOpenColorMenu] = useState<boolean>(false)
   const handleLabel = (event: any) => {
     // console.log(event.target.value)
     setCategoryLabel(event.target.value)
@@ -107,6 +116,13 @@ const CategoryModal = ({ updateCategory }: CategoryModalProps) => {
   const deleteLabel = () => {
     setCreatedLabel('')
   }
+  const openColorMenu = () => {
+    setOpenColorMenu(!colormenu)
+  }
+  const changeColor = (color: string) => {
+    setLabelColor(color)
+    updateCategory(categoryLabel, color)
+  }
 
   return (
     <>
@@ -119,23 +135,30 @@ const CategoryModal = ({ updateCategory }: CategoryModalProps) => {
 
         {createdLabel ? (
           <ul>
-            <li
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                paddingRight: '13px',
-              }}
-            >
-              <StyledLabel labelLenght={createdLabelLenght}>
+            <Styledli>
+              <StyledLabel
+                labelLenght={createdLabelLenght}
+                background={labelColor}
+              >
                 {createdLabel}
                 <StyledDelBtn onClick={deleteLabel}>
                   <CloseIcon />
                 </StyledDelBtn>
               </StyledLabel>
-              <StyledMenuBtn style={{ marginLeft: 'auto' }}>
+
+              <StyledMenuBtn
+                onClick={openColorMenu}
+                style={{ marginLeft: 'auto' }}
+              >
                 <Icon iconName="menu" />
               </StyledMenuBtn>
-            </li>
+            </Styledli>
+            {colormenu && (
+              <LabelColorMenu
+                labelColor={labelColor}
+                setLabelColor={changeColor}
+              />
+            )}
           </ul>
         ) : (
           <StyledLabel labelLenght={labelLenght}>
