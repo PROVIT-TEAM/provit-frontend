@@ -40,9 +40,9 @@ const ScheduleModalContainer = ({
   const handleTitle = (event: any) => {
     setTitleValue(event.target.value)
   }
-  const handleDates = (dates: Date[]) => {
-    setStartValue(dates[0]?.toLocaleDateString())
-    setEndValue(dates[1]?.toLocaleDateString())
+  const handleDates = (dates: string[]) => {
+    setStartValue(dates[0])
+    setEndValue(dates[1])
   }
   const handleContent = (event: any) => {
     setContentValue(event.target.value)
